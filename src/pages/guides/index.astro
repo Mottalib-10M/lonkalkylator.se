@@ -1,0 +1,33 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const guides = [
+  { title: 'Skattesatser 2025', description: 'Komplett guide till Sveriges skattesatser: kommunalskatt, statlig skatt, jobbskatteavdrag och grundavdrag.', href: '/guides/skattesatser-2025/', date: '2025-01-01' },
+  { title: 'Jobbskatteavdrag förklarat', description: 'Hur jobbskatteavdraget beräknas och vad det innebär för din nettolön.', href: '/guides/jobbskatteavdrag-forklarat/', date: '2025-01-01' },
+  { title: 'Kommunalskatt förklarat', description: 'Varför kommunalskatten varierar och vilka kommuner har högst och lägst skatt.', href: '/guides/kommunalskatt-forklarat/', date: '2025-01-01' },
+];
+
+const faqs = [
+  { question: 'Är guiderna uppdaterade för 2025?', answer: 'Ja. Alla guider använder Skatteverkets aktuella data för beskattningsåret 2025 inklusive prisbasbelopp, skiktgräns och kommunalskattesatser.' },
+];
+---
+
+<CalculatorLayout
+  slug="/guides"
+  title="Guider"
+  metaTitle="Skatteguider Sverige 2025 | Förstå din lön och skatt"
+  metaDescription="Djupgående guider om svenska skatter, kommunalskatt, jobbskatteavdrag och löneberäkning. Uppdaterade för 2025 med Skatteverkets aktuella data och exempel."
+  h1="Skatteguider 2025"
+  intro="Djupgående guider som hjälper dig förstå din lön och skatt i Sverige."
+  faqs={faqs}
+>
+  <div class="space-y-4">
+    {guides.map((guide) => (
+      <a href={guide.href} class="block group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface p-6 hover:border-brand-500 dark:hover:border-brand-400 hover:shadow-md transition-all">
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">{guide.title}</h2>
+        <p class="mt-2 text-gray-500 dark:text-gray-400">{guide.description}</p>
+        <p class="mt-2 text-xs text-gray-400 dark:text-gray-500">Publicerad {guide.date}</p>
+      </a>
+    ))}
+  </div>
+</CalculatorLayout>

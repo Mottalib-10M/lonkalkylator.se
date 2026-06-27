@@ -1,0 +1,36 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const calculators = [
+  { title: 'Lönekalkylator', href: '/', description: 'Beräkna din nettolön efter kommunal- och statlig skatt med jobbskatteavdrag och grundavdrag.' },
+  { title: 'Statlig skatt-kalkylator', href: '/statlig-skatt-kalkylator/', description: 'Se om du betalar statlig inkomstskatt (20% på inkomst över skiktgränsen 615 300 kr).' },
+  { title: 'Pensionskalkylator', href: '/pensionskalkylator/', description: 'Beräkna din allmänna pensionsavgift och tjänstepension.' },
+  { title: 'Netto till brutto', href: '/netto-till-brutto/', description: 'Räkna ut vilken bruttolön du behöver för att nå din önskade nettolön.' },
+  { title: 'Timlönkalkylator', href: '/timlon-kalkylator/', description: 'Omvandla timlön till månadslön och se nettolön per timme.' },
+];
+
+const faqs = [
+  { question: 'Vilken kalkylator ska jag använda?', answer: 'Börja med Lönekalkylator om du vet din bruttolön per månad. Använd Netto till brutto om du vill veta vilken bruttolön du behöver för att nå ett visst nettobelopp.' },
+  { question: 'Är kalkylatorerna uppdaterade för 2025?', answer: 'Ja. Alla kalkylatorer använder Skatteverkets aktuella skattesatser, jobbskatteavdrag, grundavdrag och pensionsavgifter för beskattningsåret 2025.' },
+];
+---
+
+<CalculatorLayout
+  slug="/kalkylatorer"
+  title="Alla kalkylatorer"
+  metaTitle="Skattekalkylatorer Sverige 2025 | Lön, Skatt & Pension"
+  metaDescription="Gratis svenska skattekalkylatorer för 2025. Beräkna nettolön, statlig skatt, pension, netto till brutto och timlön. Baserade på Skatteverkets officiella data."
+  h1="Svenska skattekalkylatorer 2025"
+  intro="Gratis, precisa skattekalkylatorer för svenska löntagare. Uppdaterade med Skatteverkets 2025-data."
+  faqs={faqs}
+>
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {calculators.map((calc) => (
+      <a href={calc.href} class="group rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface p-6 hover:border-brand-300 dark:hover:border-brand-700 hover:shadow-md transition-all">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">{calc.title}</h2>
+        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">{calc.description}</p>
+        <span class="mt-3 inline-block text-sm font-medium text-brand-600 dark:text-brand-400">Använd kalkylator &rarr;</span>
+      </a>
+    ))}
+  </div>
+</CalculatorLayout>

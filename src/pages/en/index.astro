@@ -1,0 +1,56 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import LonKalkylator from '../../components/calculators/LonKalkylator';
+
+const faqs = [
+  { question: 'How is salary after tax calculated in Sweden?', answer: 'Your net salary is calculated by deducting municipal tax, any state income tax, pension contributions, and burial fee from your gross salary. Tax reductions like jobbskatteavdrag (earned income tax credit) and grundavdrag (basic allowance) are then applied. Municipal tax rates vary by municipality, from about 29% to over 35%.' },
+  { question: 'What is the state income tax threshold in 2025?', answer: 'If your taxable earned income exceeds 615,300 SEK per year, you pay an additional 20% state income tax on the excess. This corresponds to a monthly gross salary of approximately 53,000–56,000 SEK.' },
+  { question: 'What is kommunalskatt (municipal tax)?', answer: 'Municipal tax is the combined tax rate of your municipality and region. It is the main component of Swedish income tax and ranges from about 29.68% (Täby) to over 35% depending on where you live. The national average in 2025 is 32.37%.' },
+  { question: 'Do I need to file a tax return in Sweden?', answer: 'Yes, all Swedish residents must file a tax return (deklaration). Skatteverket sends a pre-filled declaration each spring. If your only income is employment income with correct withholding, you can often approve it digitally without changes.' },
+];
+---
+
+<CalculatorLayout
+  slug="/en"
+  title="Salary Calculator"
+  metaTitle="Sweden Salary Calculator 2025 | Net Salary After Tax"
+  metaDescription="Calculate your net salary in Sweden for 2025. Free calculator with municipal tax, state tax, jobbskatteavdrag, and basic allowance. Choose your municipality."
+  h1="Sweden Salary After Tax Calculator 2025"
+  intro="Enter your gross monthly salary, choose your municipality, and see your net pay after Swedish taxes. Updated with Skatteverket 2025 rates."
+  faqs={faqs}
+  lang="en"
+>
+  <LonKalkylator client:idle />
+
+  <div slot="content" class="prose prose-lg dark:prose-invert max-w-none mt-12">
+    <h2>How Swedish Income Tax Works</h2>
+    <p>Sweden uses a combination of municipal tax and state income tax. Municipal tax rates vary by municipality and include both the local municipality tax and the regional (county) tax.</p>
+
+    <h3>Key Tax Parameters 2025</h3>
+    <table>
+      <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Price base amount (prisbasbelopp)</td><td>58,800 SEK</td></tr>
+        <tr><td>State tax threshold</td><td>615,300 SEK/year</td></tr>
+        <tr><td>State tax rate</td><td>20%</td></tr>
+        <tr><td>Average municipal tax rate</td><td>32.37%</td></tr>
+        <tr><td>General pension contribution</td><td>7% (cap: 614,000 SEK)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Net Salary Examples (Average Municipal Tax)</h3>
+    <table>
+      <thead><tr><th>Gross Monthly</th><th>Net Monthly (approx)</th><th>Effective Tax Rate</th></tr></thead>
+      <tbody>
+        <tr><td>25,000 SEK</td><td>~20,200 SEK</td><td>~19%</td></tr>
+        <tr><td>30,000 SEK</td><td>~23,500 SEK</td><td>~22%</td></tr>
+        <tr><td>35,000 SEK</td><td>~26,700 SEK</td><td>~24%</td></tr>
+        <tr><td>40,000 SEK</td><td>~29,700 SEK</td><td>~26%</td></tr>
+        <tr><td>50,000 SEK</td><td>~35,500 SEK</td><td>~29%</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Employer Costs</h3>
+    <p>Your employer pays social security contributions (arbetsgivaravgifter) of 31.42% on top of your gross salary. These are not visible on your payslip but represent a significant additional cost.</p>
+  </div>
+</CalculatorLayout>

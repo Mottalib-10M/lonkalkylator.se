@@ -1,0 +1,17 @@
+{
+  "name": "Lön Efter Skatt",
+  "short_name": "LönEfterSkatt",
+  "description": "Beräkna din lön efter skatt i Sverige 2025",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#005293",
+  "lang": "sv",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ]
+}

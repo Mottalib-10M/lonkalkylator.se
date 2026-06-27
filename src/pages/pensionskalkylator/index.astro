@@ -1,0 +1,49 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import PensionsKalkylator from '../../components/calculators/PensionsKalkylator';
+
+const faqs = [
+  { question: 'Vad är allmän pensionsavgift?', answer: 'Allmän pensionsavgift är 7% av din bruttolön, upp till ett tak på 614 000 kr per år (2025). Du får full skattereduktion för avgiften, så den påverkar inte din nettolön direkt men bidrar till din allmänna pension.' },
+  { question: 'Vad är skillnaden mellan allmän pension och tjänstepension?', answer: 'Allmän pension (inkomstpension + premiepension) betalas via skattesystemet. Tjänstepension betalas av din arbetsgivare utöver lönen, vanligtvis 4,5% (ITP1) eller enligt kollektivavtal.' },
+  { question: 'Hur mycket tjänstepension får jag?', answer: 'De flesta anställda med kollektivavtal har ITP1 (4,5% på lönedelar upp till 7,5 prisbasbelopp + 30% på delen över). Utan kollektivavtal varierar det. Kontrollera med din arbetsgivare.' },
+];
+---
+
+<CalculatorLayout
+  slug="/pensionskalkylator"
+  title="Pensionskalkylator"
+  metaTitle="Pensionskalkylator 2025 | Allmän pension & tjänstepension"
+  metaDescription="Beräkna din allmänna pensionsavgift och tjänstepension 2025. Se hur pensionsavgiften påverkar din nettolön, totala avsättning och taket på 614 000 kr per år."
+  h1="Pensionskalkylator 2025"
+  intro="Beräkna din allmänna pensionsavgift och se hur den påverkar din nettolön."
+  faqs={faqs}
+>
+  <PensionsKalkylator client:idle />
+
+  <div slot="content" class="prose prose-lg dark:prose-invert max-w-none mt-12">
+    <h2>Pensionssystemet i Sverige</h2>
+    <p>Det svenska pensionssystemet består av tre delar: allmän pension (inkomstpension och premiepension), tjänstepension och eget sparande. Tillsammans avgör de din framtida pension.</p>
+
+    <h3>Allmän pensionsavgift 2025</h3>
+    <table>
+      <thead><tr><th>Parameter</th><th>Värde 2025</th></tr></thead>
+      <tbody>
+        <tr><td>Avgiftssats</td><td>7%</td></tr>
+        <tr><td>Tak (inkomstbasbelopp × 8,07)</td><td>614 000 kr/år</td></tr>
+        <tr><td>Max avgift per år</td><td>42 980 kr</td></tr>
+        <tr><td>Skattereduktion</td><td>100% (full avräkning)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Pensionsavgift per lönenivå</h3>
+    <table>
+      <thead><tr><th>Bruttolön/mån</th><th>Avgift/mån</th><th>Avgift/år</th></tr></thead>
+      <tbody>
+        <tr><td>25 000 kr</td><td>1 750 kr</td><td>21 000 kr</td></tr>
+        <tr><td>35 000 kr</td><td>2 450 kr</td><td>29 400 kr</td></tr>
+        <tr><td>45 000 kr</td><td>3 150 kr</td><td>37 800 kr</td></tr>
+        <tr><td>55 000 kr+</td><td>3 582 kr</td><td>42 980 kr (tak)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</CalculatorLayout>

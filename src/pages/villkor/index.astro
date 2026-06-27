@@ -1,0 +1,57 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const faqs = [
+  { question: 'Är beräkningarna juridiskt bindande?', answer: 'Nej. Alla beräkningar är uppskattningar och ersätter inte professionell skatterådgivning. Kontakta Skatteverket eller en auktoriserad skatterådgivare för bindande information.' },
+  { question: 'Får jag använda kalkylatorn för mitt företag?', answer: 'Ja, du får använda kalkylatorn fritt. Du kan även bädda in vår widget på din webbplats. Kontakta oss för anpassade lösningar.' },
+];
+---
+
+<CalculatorLayout
+  slug="/villkor"
+  title="Villkor"
+  metaTitle="Användarvillkor | Lön Efter Skatt – Kalkylatorvillkor"
+  metaDescription="Användarvillkor för Lön Efter Skatt. Våra kalkylatorer ger uppskattningar och ersätter inte professionell skatterådgivning. Läs villkor och ansvar här."
+  h1="Användarvillkor"
+  intro="Villkor för att använda Lön Efter Skatts kalkylatorer och webbplats."
+  faqs={faqs}
+>
+  <div class="prose prose-lg dark:prose-invert max-w-none">
+    <p><em>Senast uppdaterad: 15 januari 2025</em></p>
+
+    <h2>1. Tjänstens syfte</h2>
+    <p>Lön Efter Skatt (lonefterskatt.se) tillhandahåller gratis skattekalkylatorer och informationsmaterial om det svenska skattesystemet. Tjänsten är kostnadsfri att använda och kräver ingen registrering.</p>
+
+    <h2>2. Uppskattningar – inte skatterådgivning</h2>
+    <p>Alla beräkningar som görs av våra kalkylatorer är <strong>uppskattningar</strong> och ges enbart i informationssyfte. Resultaten utgör inte skatterådgivning, ekonomisk rådgivning eller juridisk rådgivning. Din faktiska skatt kan avvika på grund av:</p>
+    <ul>
+      <li>Individuella avdrag (ränteavdrag, resor, ROT/RUT)</li>
+      <li>Kapitalinkomster eller kapitalförluster</li>
+      <li>Kyrkoskatt och begravningsavgift</li>
+      <li>Ändringar i skatteregler under året</li>
+      <li>Pensionsinbetalningar och andra förmåner</li>
+    </ul>
+    <p>Kontakta alltid Skatteverket eller en auktoriserad skatterådgivare för personlig och bindande skatteinformation.</p>
+
+    <h2>3. Dataunderlag</h2>
+    <p>Skattesatser, jobbskatteavdrag, grundavdrag och kommunalskattesatser hämtas från <a href="https://skatteverket.se" target="_blank" rel="noopener noreferrer">Skatteverket</a>. Vi strävar efter att hålla all data aktuell och korrekt men garanterar inte felfrihet.</p>
+
+    <h2>4. Ansvarsbegränsning</h2>
+    <p>Lön Efter Skatt kan inte hållas ansvarigt för ekonomiska beslut, skattedeklarationer eller andra åtgärder som baseras på kalkylatorernas resultat. Användning av tjänsten sker på egen risk.</p>
+
+    <h2>5. Immateriella rättigheter</h2>
+    <p>Allt innehåll på webbplatsen – inklusive text, design, kalkylatorer och grafik – är upphovsrättsligt skyddat. Du får inte kopiera, reproducera eller distribuera innehållet utan skriftligt tillstånd, förutom för personligt bruk.</p>
+
+    <h2>6. Tillgänglighet</h2>
+    <p>Vi strävar efter att hålla tjänsten tillgänglig dygnet runt men garanterar inte oavbruten drift. Vi kan tillfälligt stänga ner tjänsten för underhåll eller uppdateringar utan förvarning.</p>
+
+    <h2>7. Ändringar av villkoren</h2>
+    <p>Vi förbehåller oss rätten att ändra dessa villkor. Väsentliga ändringar meddelas genom att uppdatera datumet överst på denna sida. Fortsatt användning av tjänsten efter ändringar innebär att du godkänner de uppdaterade villkoren.</p>
+
+    <h2>8. Tillämplig lag</h2>
+    <p>Dessa villkor lyder under och tolkas i enlighet med svensk lag.</p>
+
+    <h2>9. Kontakt</h2>
+    <p>Frågor om villkoren? Kontakta oss på <a href="mailto:contact@lonefterskatt.se">contact@lonefterskatt.se</a> eller besök vår <a href="/kontakt/">kontaktsida</a>.</p>
+  </div>
+</CalculatorLayout>

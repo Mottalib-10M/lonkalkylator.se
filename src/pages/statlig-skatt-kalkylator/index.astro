@@ -1,0 +1,48 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import LonKalkylator from '../../components/calculators/LonKalkylator';
+
+const faqs = [
+  { question: 'Vad är statlig inkomstskatt?', answer: 'Statlig inkomstskatt är en extra skatt på 20% som betalas på den del av din beskattningsbara förvärvsinkomst som överstiger skiktgränsen 615 300 kr per år (2025). Det innebär en bruttolön på ungefär 53 000–56 000 kr per månad beroende på grundavdrag.' },
+  { question: 'Hur mycket är marginalskatten med statlig skatt?', answer: 'Med statlig skatt blir marginalskatten kommunalskatt + 20% + begravningsavgift. I Stockholm (30,48%) blir det cirka 50,8%, i Göteborg (33,11%) cirka 53,4%.' },
+  { question: 'Kan jag sänka min statliga skatt?', answer: 'Ja, genom att göra pensionsavsättningar, använda ROT/RUT-avdrag eller göra avdrag för resor och övriga kostnader kan du minska din beskattningsbara inkomst under skiktgränsen.' },
+];
+---
+
+<CalculatorLayout
+  slug="/statlig-skatt-kalkylator"
+  title="Statlig skatt-kalkylator"
+  metaTitle="Statlig Inkomstskatt 2025 | Beräkna skatten i Sverige"
+  metaDescription="Beräkna din statliga inkomstskatt 2025. Se om du betalar 20% statlig skatt över skiktgränsen 615 300 kr. Kalkylator med marginalskatt och effektiv skattesats."
+  h1="Statlig inkomstskatt-kalkylator 2025"
+  intro="Se om du betalar statlig inkomstskatt (20%) och hur den påverkar din nettolön. Skiktgränsen 2025 är 615 300 kr."
+  faqs={faqs}
+>
+  <LonKalkylator client:idle />
+
+  <div slot="content" class="prose prose-lg dark:prose-invert max-w-none mt-12">
+    <h2>Så fungerar statlig inkomstskatt</h2>
+    <p>I Sverige betalar du kommunalskatt på all beskattningsbar förvärvsinkomst. Om din beskattningsbara inkomst överstiger skiktgränsen tillkommer dessutom 20% statlig inkomstskatt på den överskjutande delen.</p>
+
+    <h3>Skiktgräns 2025</h3>
+    <table>
+      <thead><tr><th>Beskattningsår</th><th>Skiktgräns</th></tr></thead>
+      <tbody>
+        <tr><td>2025</td><td>615 300 kr</td></tr>
+        <tr><td>2024</td><td>598 500 kr</td></tr>
+        <tr><td>2023</td><td>554 900 kr</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Marginalskatt med och utan statlig skatt</h3>
+    <table>
+      <thead><tr><th>Kommun</th><th>Utan statlig skatt</th><th>Med statlig skatt</th></tr></thead>
+      <tbody>
+        <tr><td>Stockholm (30,48%)</td><td>~30,8%</td><td>~50,8%</td></tr>
+        <tr><td>Göteborg (33,11%)</td><td>~33,4%</td><td>~53,4%</td></tr>
+        <tr><td>Malmö (33,73%)</td><td>~34,0%</td><td>~54,0%</td></tr>
+      </tbody>
+    </table>
+    <p><em>Inkluderar begravningsavgift (0,28%). Jobbskatteavdraget sänker den faktiska skatten ytterligare.</em></p>
+  </div>
+</CalculatorLayout>

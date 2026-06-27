@@ -1,0 +1,37 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import NettoTillBruttoKalkylator from '../../components/calculators/NettoTillBruttoKalkylator';
+
+const faqs = [
+  { question: 'Hur räknar jag ut brutto från netto?', answer: 'Vår kalkylator gör en omvänd beräkning. Ange din önskade nettolön och se vilken bruttolön du behöver. Beräkningen tar hänsyn till kommunalskatt, eventuell statlig skatt, jobbskatteavdrag och grundavdrag.' },
+  { question: 'Varför kan jag inte bara dela netto med (1 - skattesats)?', answer: 'Sveriges progressiva skattesystem med grundavdrag, jobbskatteavdrag och statlig skatt gör det omöjligt att använda en enkel formel. Kalkylatorn använder binär sökning för att hitta rätt bruttolön.' },
+];
+---
+
+<CalculatorLayout
+  slug="/netto-till-brutto"
+  title="Netto till brutto"
+  metaTitle="Netto till Brutto-kalkylator 2025 | Omvänd löneberäkning"
+  metaDescription="Räkna ut vilken bruttolön du behöver för att nå en önskad nettolön i Sverige 2025. Omvänd kalkylator med Skatteverkets data, kommunalskatt och jobbskatteavdrag."
+  h1="Netto till brutto-kalkylator 2025"
+  intro="Ange din önskade nettolön och se vilken bruttolön du behöver. Tar hänsyn till kommunalskatt, statlig skatt och jobbskatteavdrag."
+  faqs={faqs}
+>
+  <NettoTillBruttoKalkylator client:idle />
+
+  <div slot="content" class="prose prose-lg dark:prose-invert max-w-none mt-12">
+    <h2>Netto till brutto: exempeltabell</h2>
+    <p>Baserat på genomsnittlig kommunalskatt (32,37%), ingen kyrkoavgift:</p>
+    <table>
+      <thead><tr><th>Önskad nettolön</th><th>Bruttolön krävs</th><th>Total skatt</th></tr></thead>
+      <tbody>
+        <tr><td>20 000 kr/mån</td><td>~25 500 kr/mån</td><td>~5 500 kr</td></tr>
+        <tr><td>25 000 kr/mån</td><td>~33 000 kr/mån</td><td>~8 000 kr</td></tr>
+        <tr><td>30 000 kr/mån</td><td>~41 000 kr/mån</td><td>~11 000 kr</td></tr>
+        <tr><td>35 000 kr/mån</td><td>~49 000 kr/mån</td><td>~14 000 kr</td></tr>
+        <tr><td>40 000 kr/mån</td><td>~59 000 kr/mån</td><td>~19 000 kr</td></tr>
+      </tbody>
+    </table>
+    <p><em>Ungefärliga belopp. Välj din kommun i kalkylatorn ovan för exakt resultat.</em></p>
+  </div>
+</CalculatorLayout>

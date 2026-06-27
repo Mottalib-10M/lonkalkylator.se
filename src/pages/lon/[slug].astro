@@ -1,0 +1,86 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import LonKalkylator from '../../components/calculators/LonKalkylator';
+import { SALARY_AMOUNTS, KOMMUNER } from '../../data/tax-2025';
+import { calculateTakeHome } from '../../lib/tax-engine-se';
+import { formatKr } from '../../lib/format';
+
+export function getStaticPaths() {
+  return SALARY_AMOUNTS.map(amount => ({
+    params: { slug: String(amount) },
+    props: { amount },
+  }));
+}
+
+const { amount } = Astro.props;
+const result = calculateTakeHome({ monthlyGross: amount });
+const formattedAmount = new Intl.NumberFormat('sv-SE').format(amount);
+
+const faqs = [
+  {
+    question: `Vad blir nettolönen på ${formattedAmount} kr i bruttolön?`,
+    answer: `Med en bruttolön på ${formattedAmount} kr per månad och genomsnittlig kommunalskatt (32,37%) blir din nettolön ungefär ${formatKr(result.netMonthly)} per månad, eller ${formatKr(result.netAnnual)} per år. Den exakta summan beror på vilken kommun du bor i.`
+  },
+  {
+    question: `Hur mycket skatt betalar man på ${formattedAmount} kr?`,
+    answer: `På en bruttolön på ${formattedAmount} kr per månad betalar du ungefär ${formatKr(Math.round(result.totalSkatt / 12))} per månad i total skatt (${formatKr(result.totalSkatt)} per år). Den effektiva skattesatsen blir cirka ${(result.effectiveTaxRate).toFixed(1)}%.`
+  },
+  {
+    question: `Betalar man statlig skatt på ${formattedAmount} kr?`,
+    answer: result.statligSkatt > 0
+      ? `Ja, med en bruttolön på ${formattedAmount} kr per månad överstiger din beskattningsbara inkomst skiktgränsen (615 300 kr/år). Du betalar ${formatKr(result.statligSkatt)} per år i statlig inkomstskatt.`
+      : `Nej, med en bruttolön på ${formattedAmount} kr per månad understiger din beskattningsbara inkomst skiktgränsen (615 300 kr/år). Du betalar ingen statlig inkomstskatt.`
+  },
+  {
+    question: `Hur varierar nettolönen mellan kommuner vid ${formattedAmount} kr brutto?`,
+    answer: `Kommunalskattesatsen varierar kraftigt. I Täby (29,68%) får du ut mer än i Malmö (33,73%). Skillnaden i nettolön kan vara över 1 000 kr per månad vid en bruttolön på ${formattedAmount} kr.`
+  },
+  {
+    question: `Vad är jobbskatteavdraget vid ${formattedAmount} kr i bruttolön?`,
+    answer: `Vid en bruttolön på ${formattedAmount} kr per månad uppgår jobbskatteavdraget till ungefär ${formatKr(result.jobbskatteavdrag)} per år. Jobbskatteavdraget minskar din skatt och ökar din nettolön.`
+  },
+];
+---
+
+<CalculatorLayout
+  slug={`/lon/${amount}`}
+  title={`${formattedAmount} kr i lön`}
+  metaTitle={`${formattedAmount} kr i lön efter skatt 2025 | Nettolön ${formatKr(result.netMonthly)}`}
+  metaDescription={`Se nettolön vid ${formattedAmount} kr bruttolön per månad 2025. Nettolönen blir ca ${formatKr(result.netMonthly)}/mån med genomsnittlig kommunalskatt. Skatteuppdelning och jämförelse.`}
+  h1={`${formattedAmount} kr i lön efter skatt 2025`}
+  intro={`Med en bruttolön på ${formattedAmount} kr per månad blir din nettolön ungefär ${formatKr(result.netMonthly)} per månad med genomsnittlig kommunalskatt. Se den fullständiga skatteberäkningen nedan.`}
+  faqs={faqs}
+>
+  <LonKalkylator client:idle initialGross={amount} />
+
+  <section class="mt-12 prose prose-gray dark:prose-invert max-w-none" slot="content">
+    <h2>Vad innebär en bruttolön på {formattedAmount} kr per månad?</h2>
+    <p>
+      En bruttolön på {formattedAmount} kr per månad motsvarar {formatKr(amount * 12)} per år före skatt.
+      Efter kommunalskatt, eventuell statlig skatt och med skattereduktioner som jobbskatteavdrag och
+      grundavdrag blir din nettolön ungefär {formatKr(result.netMonthly)} per månad. Det innebär att
+      du betalar en effektiv skattesats på cirka {result.effectiveTaxRate.toFixed(1)}%.
+    </p>
+
+    <h3>Skatteuppdelning vid {formattedAmount} kr bruttolön</h3>
+    <p>
+      Din kommunalskatt utgör den största delen av skatten och uppgår till {formatKr(result.kommunalskatt)} per år
+      med genomsnittlig skattesats. Grundavdraget på {formatKr(result.grundavdrag)} minskar din beskattningsbara inkomst
+      till {formatKr(result.taxableIncome)}.
+      {result.statligSkatt > 0
+        ? ` Utöver kommunalskatten betalar du ${formatKr(result.statligSkatt)} per år i statlig inkomstskatt eftersom din beskattningsbara inkomst överstiger skiktgränsen.`
+        : ' Du betalar ingen statlig inkomstskatt vid denna inkomstnivå.'}
+    </p>
+
+    <h3>Jämförelse mellan kommuner</h3>
+    <p>
+      Din nettolön varierar beroende på var du bor. Här är några exempel vid {formattedAmount} kr bruttolön:
+    </p>
+    <ul>
+      {KOMMUNER.slice(0, 8).map(k => {
+        const r = calculateTakeHome({ monthlyGross: amount, kommunalskattRate: k.rate });
+        return <li><strong>{k.name}</strong> ({k.rate}%): nettolön {formatKr(r.netMonthly)}/mån</li>;
+      })}
+    </ul>
+  </section>
+</CalculatorLayout>

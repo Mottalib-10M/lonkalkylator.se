@@ -1,0 +1,91 @@
+---
+import GuideLayout from '../../../layouts/GuideLayout.astro';
+import { KOMMUNER } from '../../../data/tax-2025';
+
+const lowest = [...KOMMUNER].sort((a, b) => a.rate - b.rate).slice(0, 5);
+const highest = [...KOMMUNER].sort((a, b) => b.rate - a.rate).slice(0, 5);
+---
+
+<GuideLayout
+  title="Kommunalskatt i Sverige 2025 – Guide"
+  description="Hur kommunalskatten fungerar i Sverige 2025, varför den varierar mellan kommuner och vilka som har högst och lägst skattesats. Komplett guide med exempel."
+  publishDate="2025-01-01"
+  breadcrumbs={[
+    { label: 'Hem', href: '/' },
+    { label: 'Guider', href: '/guides/' },
+    { label: 'Kommunalskatt förklarat' },
+  ]}
+>
+  <h2>Vad är kommunalskatt?</h2>
+  <p>Kommunalskatten är den skatt du betalar till din kommun och region och utgör den absolut största delen av den inkomstskatt som de allra flesta svenska löntagare betalar. Den består av två separata delar: den egentliga kommunalskatten, som går till den kommun där du är folkbokförd, och regionalskatten (som fram till 2020 kallades landstingsskatten), som går till din region. Tillsammans utgör dessa två delar din totala kommunalskattesats, som vanligtvis ligger mellan 29 och 35 procent beroende på var i Sverige du bor.</p>
+  <p>Den kommunala delen av skatten finansierar verksamheter som skola, förskola, äldreomsorg, socialtjänst, kultur, fritid, vatten och avlopp samt gator och parker. Regionalskatten finansierar i första hand hälso- och sjukvård, tandvård för barn och unga samt kollektivtrafik. Dessa verksamheter utgör grunden i den svenska välfärden och kommunalskatten är därför den enskilt viktigaste inkomstkällan för kommuner och regioner i Sverige.</p>
+  <p>Till skillnad från den statliga inkomstskatten, som är progressiv och bara drabbar inkomster över en viss nivå, är kommunalskatten proportionell. Det innebär att alla betalar samma procentuella skattesats oavsett inkomstnivå, från den som tjänar 15 000 kronor till den som tjänar 150 000 kronor i månaden. Det är dock värt att komma ihåg att grundavdraget och jobbskatteavdraget i praktiken gör att den effektiva skatten ändå blir progressiv, det vill säga att låginkomsttagare betalar en lägre andel av sin inkomst i skatt.</p>
+
+  <h2>Varför varierar kommunalskatten?</h2>
+  <p>Varje kommun och region bestämmer sin egen skattesats baserat på sina kostnader för skola, vård, omsorg och infrastruktur. Kommuner med stora utgifter och ett lågt skatteunderlag tenderar att ha högre skattesatser, medan kommuner med ett starkt skatteunderlag och effektiv förvaltning ofta kan hålla en lägre skattesats.</p>
+  <p>Det finns flera faktorer som förklarar varför kommunalskatten skiljer sig så mycket mellan olika kommuner. En av de viktigaste är befolkningsstrukturen. Kommuner med en åldrande befolkning har ofta höga kostnader för äldreomsorg och sjukvård, samtidigt som andelen förvärvsarbetande som betalar skatt minskar. Glesbygdskommuner drabbas särskilt hårt av detta eftersom de dessutom har höga infrastrukturkostnader per invånare, till exempel för att upprätthålla vägar, skolor och vårdcentraler i ett stort geografiskt område med få invånare.</p>
+  <p>Storstadskommuner som Stockholm, Göteborg och Malmö har å andra sidan ett starkt skatteunderlag med många höginkomsttagare, vilket gör att de kan hålla en relativt lägre skattesats. Stockholm har exempelvis en av de lägre totala kommunalskattesatserna i landet, bland annat tack vare att regionen har en stor andel invånare med höga inkomster. Dessutom är Region Stockholm en av de regioner som har lägst regionskatt, vilket ytterligare bidrar till en låg total kommunalskattesats för stockholmare.</p>
+  <p>Det kommunala utjämningssystemet spelar också en viktig roll. Sverige har ett system för ekonomisk utjämning mellan kommuner, där kommuner med höga skattekrafter (det vill säga höga genomsnittliga inkomster per invånare) betalar en utjämningsavgift som sedan fördelas till kommuner med lägre skattekraft. Detta system är tänkt att ge alla kommuner likvärdiga ekonomiska förutsättningar, men det innebär inte att alla kommuner behöver ha samma skattesats. Strukturella skillnader i kostnader, demografi och geografiska förhållanden gör att variationen består.</p>
+
+  <h2>Kommunens och regionens respektive andelar</h2>
+  <p>Den totala kommunalskattesatsen delas upp mellan kommun och region. Riksgenomsnittet för 2025 ligger på cirka 32,37 procent, varav kommunens andel i snitt utgör ungefär 21,5 procent och regionens andel ungefär 11,5 procent. Det finns dock betydande variation även inom dessa delar. Vissa kommuner har en kommunal skattesats under 20 procent, medan andra ligger över 23 procent. På regionnivå varierar skatten från under 10,5 procent till över 12,5 procent.</p>
+  <p>Det är kommunfullmäktige respektive regionfullmäktige som varje år beslutar om skattesatsen i samband med budgetarbetet. Beslutet fattas normalt i november och gäller från den 1 januari nästkommande år. Om en kommun behöver höja skatten för att finansiera ökade kostnader, till exempel på grund av en växande äldre befolkning eller omfattande investeringar i ny infrastruktur, kan detta alltså ske relativt snabbt. Omvänt kan kommuner som effektiviserar sin verksamhet eller som får ökade statsbidrag ibland sänka skatten.</p>
+
+  <h2>Kommuner med lägst skatt 2025</h2>
+  <table>
+    <thead><tr><th>Kommun</th><th>Län</th><th>Skattesats</th></tr></thead>
+    <tbody>
+      {lowest.map((k) => (
+        <tr>
+          <td><a href={`/kommun/${k.slug}/`}>{k.name}</a></td>
+          <td>{k.lan}</td>
+          <td>{k.rate}%</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p>Kommunerna med de lägsta skattesatserna i Sverige tenderar att vara storstadskommuner eller förorter med ett starkt skatteunderlag. Det beror på att en stor del av invånarna har relativt höga inkomster, vilket ger kommunen goda skatteintäkter även vid en lägre procentuell skattesats. Dessa kommuner har ofta också en gynnsam demografisk profil med en hög andel förvärvsarbetande i relation till antalet barn och äldre.</p>
+
+  <h2>Kommuner med högst skatt 2025</h2>
+  <table>
+    <thead><tr><th>Kommun</th><th>Län</th><th>Skattesats</th></tr></thead>
+    <tbody>
+      {highest.map((k) => (
+        <tr>
+          <td><a href={`/kommun/${k.slug}/`}>{k.name}</a></td>
+          <td>{k.lan}</td>
+          <td>{k.rate}%</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p>De kommuner som har de högsta skattesatserna är ofta mindre kommuner i glesbygd, framför allt i norra Sverige. Dessa kommuner har typiskt sett ett lågt skatteunderlag, höga kostnader för service och infrastruktur per invånare, och ofta en åldrande befolkning som kräver omfattande omsorgsinsatser. Trots det kommunala utjämningssystemet räcker inte resurserna alltid till och kommunen tvingas kompensera med en högre skattesats.</p>
+
+  <h2>Hur påverkar det din nettolön?</h2>
+  <p>Skillnaden mellan lägsta och högsta kommunalskatt i Sverige är ungefär 5 till 6 procentenheter. På en bruttolön på 40 000 kronor per månad kan det innebära en skillnad på cirka 1 500 till 2 000 kronor netto per månad. Över ett helt år handlar det alltså om 18 000 till 24 000 kronor, en summa som kan ha stor betydelse för hushållsekonomin.</p>
+  <p>Låt oss ta ett konkret exempel. Om du tjänar 40 000 kronor i månaden och bor i en kommun med 30 procents total kommunalskattesats betalar du i grunden 12 000 kronor i kommunalskatt per månad (före grundavdrag och jobbskatteavdrag). Om du istället bor i en kommun med 35 procents skattesats betalar du 14 000 kronor, alltså 2 000 kronor mer per månad. Med jobbskatteavdrag och grundavdrag inräknat minskar skillnaden något eftersom jobbskatteavdraget delvis kompenserar för högre kommunalskatt, men nettoskillnaden är fortfarande påtaglig, vanligtvis mellan 1 200 och 1 800 kronor per månad.</p>
+  <p>För höginkomsttagare kan skillnaden vara ännu större i kronor räknat. En person med en bruttolön på 70 000 kronor i månaden kan spara uppemot 3 000 kronor netto per månad genom att bo i en lågskattkommun istället för en högskattekommun. Det är en av anledningarna till att vissa väljer att bosätta sig i förorter med låg skattesats snarare än i centralorten.</p>
+
+  <h2>Historisk utveckling av kommunalskatten</h2>
+  <p>Kommunalskatten i Sverige har en lång historia som sträcker sig tillbaka till 1862 års kommunalförordningar. Under 1900-talet var den kommunala skattesatsen relativt låg, men den har stigit kraftigt sedan 1960-talet i takt med att den offentliga sektorn har expanderat. Under 1970- och 1980-talen ökade kommunalskatten markant, delvis på grund av utbyggnaden av barnomsorg, äldreomsorg och hälso- och sjukvård.</p>
+  <p>Under 1990-talet infördes tillfälliga skattestopp för kommuner och landsting som ett led i saneringen av statsfinanserna. Sedan dess har den genomsnittliga kommunalskattesatsen legat förhållandevis stabil runt 31 till 33 procent, med en svag uppåtgående trend. Under de senaste åren har den genomsnittliga kommunalskattesatsen ökat till 32,37 procent 2025, bland annat som en konsekvens av ökade kostnader inom äldreomsorgen och nya krav på kommunernas verksamhet.</p>
+
+  <h2>Kan jag påverka min kommunalskatt?</h2>
+  <p>Det enda sättet att ändra din kommunalskattesats är att flytta till en annan kommun. Din kommunalskatt baseras på var du var folkbokförd den 1 november året före beskattningsåret. Om du exempelvis flyttar från en högskattekommun till en lågskattkommun den 15 oktober 2025, kommer du att beskattas enligt den nya kommunens skattesats för hela inkomståret 2026. Flyttar du däremot den 5 november 2025 beskattas du enligt den gamla kommunens skattesats under hela 2026.</p>
+  <p>Det är alltså inte möjligt att välja vilken kommun du vill betala skatt till utan att faktiskt flytta dit och folkbokföra dig. Det är heller inte möjligt att vara folkbokförd på en adress där du inte bor; att vara folkbokförd på fel adress är ett brott som kan leda till böter. Skatteverket genomför regelbundet kontroller av folkbokföringen och kan ändra din folkbokföring om det framkommer att du inte bor på den adress du är registrerad på.</p>
+  <p>Indirekt kan du som kommuninvånare påverka kommunalskatten genom att rösta i kommunal- och regionvalet. De politiska partierna har olika syn på hur kommunens och regionens ekonomi ska hanteras, och skattesatsen är en av de frågor som avgörs genom den demokratiska processen i kommunfullmäktige och regionfullmäktige.</p>
+
+  <h2>Vanliga frågor om kommunalskatt</h2>
+  <h3>Betalar alla samma kommunalskatt i en kommun?</h3>
+  <p>Ja, alla som är folkbokförda i samma kommun betalar samma procentuella kommunalskattesats, oavsett inkomst. Kommunalskatten är proportionell, inte progressiv. Däremot gör grundavdraget och jobbskatteavdraget att den effektiva skattesatsen ändå varierar beroende på inkomst.</p>
+
+  <h3>Ingår kyrkoavgiften i kommunalskatten?</h3>
+  <p>Nej, kyrkoavgiften (som betalas av medlemmar i Svenska kyrkan) och begravningsavgiften (som betalas av alla oavsett religionstillhörighet) är separata avgifter som inte ingår i den kommunala skattesatsen. Kyrkoavgiften ligger vanligtvis på omkring 1 procent och begravningsavgiften på cirka 0,25 till 0,30 procent. Dessa avgifter läggs ovanpå kommunalskatten och ökar den totala skattebelastningen.</p>
+
+  <h3>Hur skiljer sig kommunalskatten i Sverige jämfört med andra nordiska länder?</h3>
+  <p>Kommunalskatt finns i alla nordiska länder, men nivåerna och strukturerna varierar. I Danmark ligger den genomsnittliga kommunalskatten på cirka 25 procent, men danskarna betalar dessutom en separat nationell inkomstskatt (bundskat) som i praktiken gör den totala skattebelastningen jämförbar med den svenska. Norge har en platt kommunalskatt på 22 procent som 2019 slogs ihop med den statliga skatten till en gemensam inkomstskatt. Finland har kommunalskatter som varierar mellan cirka 17 och 23,5 procent, vilket i likhet med Sverige ger betydande skillnader beroende på bostadsort.</p>
+  <p>Gemensamt för de nordiska länderna är att den kommunala beskattningen utgör en viktig del av finansieringen av välfärdstjänster, och att det finns utjämningssystem för att kompensera kommuner med svagare skatteunderlag. Sverige sticker ut genom att ha en relativt hög genomsnittlig kommunalskattesats men samtidigt ett generöst jobbskatteavdrag som sänker den effektiva skatten betydligt.</p>
+
+  <h2>Sammanfattning</h2>
+  <p>Kommunalskatten är den viktigaste skatten för de flesta svenska löntagare och finansierar grundläggande välfärdstjänster som skola, vård och omsorg. Skattesatsen varierar mellan kommuner, från de lägsta nivåerna i storstadsregionerna till de högsta i glesbygdskommuner. Skillnaden kan innebära tusentals kronor i nettolön per månad. Det enda sättet att ändra sin kommunalskatt är att flytta, och din folkbokföring den 1 november avgör vilken skattesats som gäller för nästkommande år. Genom att förstå hur kommunalskatten fungerar kan du bättre planera din ekonomi och fatta mer informerade beslut om var du vill bo.</p>
+</GuideLayout>

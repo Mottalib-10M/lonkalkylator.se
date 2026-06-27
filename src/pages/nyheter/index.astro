@@ -1,0 +1,36 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const articles = [
+  {
+    title: 'Skattesatserna 2025: Vad som ändrats',
+    description: 'Skatteverket har uppdaterat skattesatser, grundavdrag och jobbskatteavdrag för 2025. Här är en komplett genomgång av alla förändringar som påverkar din nettolön.',
+    href: '/nyheter/skattesatser-2025-uppdatering/',
+    date: '2025-01-01',
+  },
+];
+
+const faqs = [
+  { question: 'Hur ofta publiceras nya skattenyheter?', answer: 'Vi publicerar uppdateringar löpande när Skatteverket eller riksdagen fattar beslut som påverkar löneberäkningar, skattesatser eller socialavgifter.' },
+];
+---
+
+<CalculatorLayout
+  slug="/nyheter"
+  title="Nyheter"
+  metaTitle="Skattenyheter Sverige 2025 | Senaste uppdateringar"
+  metaDescription="Senaste nyheterna om skatter i Sverige: ändrade skattesatser, grundavdrag, jobbskatteavdrag och arbetsgivaravgifter. Uppdateras löpande."
+  h1="Skattenyheter"
+  intro="De senaste uppdateringarna om svenska skatter och hur de påverkar din nettolön."
+  faqs={faqs}
+>
+  <div class="space-y-4">
+    {articles.map((article) => (
+      <a href={article.href} class="block group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface p-6 hover:border-brand-500 dark:hover:border-brand-400 hover:shadow-md transition-all">
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">{article.title}</h2>
+        <p class="mt-2 text-gray-500 dark:text-gray-400">{article.description}</p>
+        <p class="mt-2 text-xs text-gray-400 dark:text-gray-500">Publicerad {article.date}</p>
+      </a>
+    ))}
+  </div>
+</CalculatorLayout>

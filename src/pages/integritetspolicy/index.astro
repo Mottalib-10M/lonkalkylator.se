@@ -1,0 +1,57 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const faqs = [
+  { question: 'Lagrar Lön Efter Skatt mina löneuppgifter?', answer: 'Nej. Alla beräkningar sker helt i din webbläsare. Ingen lönedata, kommun eller personuppgifter skickas till eller lagras på våra servrar.' },
+  { question: 'Använder ni cookies?', answer: 'Vi använder Microsoft Clarity för anonym användningsanalys. Inga personidentifierande uppgifter samlas in. Du kan blockera cookies i din webbläsare utan att påverka kalkylatorns funktion.' },
+];
+---
+
+<CalculatorLayout
+  slug="/integritetspolicy"
+  title="Integritetspolicy"
+  metaTitle="Integritetspolicy | Lön Efter Skatt – Så skyddas din data"
+  metaDescription="Integritetspolicy för Lön Efter Skatt. Alla beräkningar sker i din webbläsare – ingen personlig data lagras på servrar. Läs om cookies och analysverktyg."
+  h1="Integritetspolicy"
+  intro="Din integritet är viktig. Läs hur vi hanterar data på Lön Efter Skatt."
+  faqs={faqs}
+>
+  <div class="prose prose-lg dark:prose-invert max-w-none">
+    <p><em>Senast uppdaterad: 15 januari 2025</em></p>
+
+    <h2>1. Introduktion</h2>
+    <p>Denna integritetspolicy beskriver hur Lön Efter Skatt (lonefterskatt.se) hanterar information när du använder våra skattekalkylatorer och besöker vår webbplats. Vi är engagerade i att skydda din integritet.</p>
+
+    <h2>2. Ingen personlig data lagras</h2>
+    <p>Alla skatteberäkningar sker <strong>helt i din webbläsare</strong> (klientsidan). Det innebär att:</p>
+    <ul>
+      <li>Ingen lönedata skickas till våra servrar</li>
+      <li>Ingen kommun- eller skatteinformation lagras</li>
+      <li>Vi har ingen databas med användarnas beräkningar</li>
+      <li>Inga personuppgifter samlas in via kalkylatorerna</li>
+    </ul>
+    <p>Du kan verifiera detta genom att använda kalkylatorerna offline eller genom att inspektera nätverkstrafiken i din webbläsare.</p>
+
+    <h2>3. Cookies och analysverktyg</h2>
+    <p>Vi kan använda följande tredjepartstjänster:</p>
+    <ul>
+      <li><strong>Microsoft Clarity:</strong> Vi använder Microsoft Clarity för att förstå hur besökare interagerar med webbplatsen. Clarity samlar in anonym användardata som sidvisningar, klickmönster och scrollbeteende. Inga personidentifierande uppgifter delas.</li>
+    </ul>
+    <p>Du kan blockera cookies genom din webbläsares inställningar utan att kalkylatorernas funktion påverkas.</p>
+
+    <h2>4. Tredjepartslänkar</h2>
+    <p>Vår webbplats kan innehålla länkar till externa webbplatser som Skatteverket (skatteverket.se). Vi ansvarar inte för dessa webbplatsers integritetspolicyer. Vi rekommenderar att du läser deras policyer innan du delar personlig information.</p>
+
+    <h2>5. Dataskydd enligt GDPR</h2>
+    <p>Eftersom vi inte samlar in, lagrar eller behandlar personuppgifter via kalkylatorerna, minimeras integritetsriskerna. Om du kontaktar oss via e-post behandlar vi din e-postadress och ditt meddelande enbart för att besvara din förfrågan.</p>
+
+    <h2>6. Barns integritet</h2>
+    <p>Vår tjänst riktar sig inte till barn under 16 år. Vi samlar inte medvetet in information från barn.</p>
+
+    <h2>7. Ändringar i denna policy</h2>
+    <p>Vi kan uppdatera denna integritetspolicy. Väsentliga ändringar meddelas genom att uppdatera datumet överst på denna sida. Fortsatt användning av tjänsten efter ändringar innebär att du godkänner den uppdaterade policyn.</p>
+
+    <h2>8. Kontakt</h2>
+    <p>Frågor om vår integritetspolicy? Kontakta oss på <a href="mailto:contact@lonefterskatt.se">contact@lonefterskatt.se</a> eller besök vår <a href="/kontakt/">kontaktsida</a>.</p>
+  </div>
+</CalculatorLayout>

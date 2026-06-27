@@ -1,0 +1,78 @@
+---
+import { footerCalcLinks, footerSalaryLinks, footerGuideLinks, footerInfoLinks } from '../../data/nav';
+
+const currentYear = new Date().getFullYear();
+
+const calcLinks = footerCalcLinks.sv;
+const salaryLinks = footerSalaryLinks.sv;
+const guideLinks = footerGuideLinks.sv;
+const infoLinks = footerInfoLinks.sv;
+---
+
+<footer class="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950">
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+    <nav aria-label="Sidfotsnavigering">
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <!-- Kalkylatorer -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-900 dark:text-white">Kalkylatorer</h3>
+        <ul class="mt-3 space-y-2">
+          {calcLinks.map((link) => (
+            <li><a href={link.href} class="text-sm text-gray-600 dark:text-gray-400 hover:text-brand-600 dark:hover:text-brand-400">{link.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Populära lönebelopp -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-900 dark:text-white">Lönebelopp</h3>
+        <ul class="mt-3 space-y-2">
+          {salaryLinks.map((link) => (
+            <li><a href={link.href} class="text-sm text-gray-600 dark:text-gray-400 hover:text-brand-600 dark:hover:text-brand-400">{link.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Guider -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-900 dark:text-white">Guider</h3>
+        <ul class="mt-3 space-y-2">
+          {guideLinks.map((link) => (
+            <li><a href={link.href} class="text-sm text-gray-600 dark:text-gray-400 hover:text-brand-600 dark:hover:text-brand-400">{link.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Om oss -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-900 dark:text-white">Information</h3>
+        <ul class="mt-3 space-y-2">
+          {infoLinks.map((link) => (
+            <li><a href={link.href} class="text-sm text-gray-600 dark:text-gray-400 hover:text-brand-600 dark:hover:text-brand-400">{link.label}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+    </nav>
+
+    <!-- Förtroendefält -->
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+      <span>Skatteverkets data 2025</span>
+      <span>&middot;</span>
+      <span>100% beräknas i din webbläsare</span>
+      <span>&middot;</span>
+      <span>Gratis &amp; privat</span>
+    </div>
+
+    <!-- Ansvarsfriskrivning -->
+    <p class="mt-4 text-center text-xs text-gray-400 dark:text-gray-500">
+      Denna kalkylator ger uppskattningar enbart i informationssyfte. Det utgör inte skatterådgivning.
+      Kontakta en kvalificerad skatterådgivare för personlig vägledning. Resultaten kan skilja sig från din faktiska skattskyldighet.
+    </p>
+
+    <!-- Upphovsrätt -->
+    <p class="mt-6 text-center text-xs text-gray-400 dark:text-gray-500">
+      &copy; {currentYear} Lön Efter Skatt. Alla rättigheter förbehållna.
+    </p>
+  </div>
+</footer>
