@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import InputField from '../ui/InputField';
 import { calculatePensionsavgift, calculateTakeHome } from '../../lib/tax-engine-se';
-import { PENSIONSAVGIFT_SATS, PENSIONSAVGIFT_TAK } from '../../data/tax-2025';
+import { PENSIONSAVGIFT_SATS, PENSIONSAVGIFT_TAK } from '../../data/tax-2026';
 import { formatKr, formatPercent } from '../../lib/format';
 
 export default function PensionsKalkylator() {

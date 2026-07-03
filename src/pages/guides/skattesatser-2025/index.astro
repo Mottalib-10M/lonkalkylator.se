@@ -1,27 +1,27 @@
 ---
 import GuideLayout from '../../../layouts/GuideLayout.astro';
-import { KOMMUNER } from '../../../data/tax-2025';
+import { KOMMUNER } from '../../../data/tax-2026';
 import { calculateTakeHome } from '../../../lib/tax-engine-se';
 
 const sortedKommuner = [...KOMMUNER].sort((a, b) => a.rate - b.rate);
 ---
 
 <GuideLayout
-  title="Skattesatser i Sverige 2025 – Komplett"
-  description="Komplett guide till Sveriges skattesatser 2025: kommunalskatt, statlig skatt, jobbskatteavdrag och grundavdrag. Beräkningsexempel och kommuners skattesats."
-  publishDate="2025-01-01"
+  title="Skattesatser i Sverige 2026 – Komplett"
+  description="Komplett guide till Sveriges skattesatser 2026: kommunalskatt, statlig skatt, jobbskatteavdrag och grundavdrag. Beräkningsexempel och kommuners skattesats."
+  publishDate="2026-01-01"
   breadcrumbs={[
     { label: 'Hem', href: '/' },
     { label: 'Guider', href: '/guides/' },
-    { label: 'Skattesatser 2025' },
+    { label: 'Skattesatser 2026' },
   ]}
 >
-  <h2>Översikt: Skattesystemet 2025</h2>
+  <h2>Översikt: Skattesystemet 2026</h2>
   <p>Sverige har ett progressivt skattesystem som består av flera samverkande komponenter. Den mest grundläggande skatten är kommunalskatten, som betalas av alla med förvärvsinkomst och utgör en proportionell andel av inkomsten. Utöver kommunalskatten tillkommer den statliga inkomstskatten för dem som tjänar över skiktgränsen. Dessa skatter balanseras av grundavdraget och jobbskatteavdraget, två mekanismer som avsevärt sänker den faktiska skatten och gör att det svenska skattesystemet i praktiken är mer progressivt än vad de nominella skattesatserna antyder.</p>
-  <p>Att förstå hur de olika skattesatserna och avdragen samverkar är avgörande för att kunna beräkna sin nettolön korrekt. Många löntagare vet ungefär vad de får ut efter skatt, men få har en detaljerad bild av exakt vilka skatter och avgifter som dras. Denna guide ger dig en komplett översikt av samtliga relevanta skattesatser och parametrar för inkomståret 2025.</p>
+  <p>Att förstå hur de olika skattesatserna och avdragen samverkar är avgörande för att kunna beräkna sin nettolön korrekt. Många löntagare vet ungefär vad de får ut efter skatt, men få har en detaljerad bild av exakt vilka skatter och avgifter som dras. Denna guide ger dig en komplett översikt av samtliga relevanta skattesatser och parametrar för inkomståret 2026.</p>
 
   <table>
-    <thead><tr><th>Parameter</th><th>Värde 2025</th></tr></thead>
+    <thead><tr><th>Parameter</th><th>Värde 2026</th></tr></thead>
     <tbody>
       <tr><td>Prisbasbelopp</td><td>58 800 kr</td></tr>
       <tr><td>Skiktgräns (statlig skatt)</td><td>615 300 kr</td></tr>
@@ -33,25 +33,25 @@ const sortedKommuner = [...KOMMUNER].sort((a, b) => a.rate - b.rate);
   </table>
 
   <h2>Prisbasbeloppet och dess betydelse</h2>
-  <p>Prisbasbeloppet är ett centralt begrepp i det svenska skattesystemet och fastställs årligen av regeringen baserat på konsumentprisindex. För 2025 uppgår prisbasbeloppet till 58 800 kronor, en ökning från 57 300 kronor 2024. Prisbasbeloppet används som beräkningsgrund för en rad olika skatte- och socialförsäkringsparametrar, bland annat grundavdrag, jobbskatteavdrag, skiktgränser och olika ersättningssystem.</p>
-  <p>Höjningen av prisbasbeloppet från 2024 till 2025 innebär att flera av dessa parametrar automatiskt justeras uppåt. Grundavdraget ökar, jobbskatteavdraget förstärks och skiktgränsen för statlig inkomstskatt höjs. I praktiken innebär detta att de flesta löntagare får en viss skattelättnad från år till år, allt annat lika, i takt med att prisbasbeloppet justeras i linje med inflationen.</p>
+  <p>Prisbasbeloppet är ett centralt begrepp i det svenska skattesystemet och fastställs årligen av regeringen baserat på konsumentprisindex. För 2026 uppgår prisbasbeloppet till 58 800 kronor, en ökning från 57 300 kronor 2024. Prisbasbeloppet används som beräkningsgrund för en rad olika skatte- och socialförsäkringsparametrar, bland annat grundavdrag, jobbskatteavdrag, skiktgränser och olika ersättningssystem.</p>
+  <p>Höjningen av prisbasbeloppet från 2024 till 2026 innebär att flera av dessa parametrar automatiskt justeras uppåt. Grundavdraget ökar, jobbskatteavdraget förstärks och skiktgränsen för statlig inkomstskatt höjs. I praktiken innebär detta att de flesta löntagare får en viss skattelättnad från år till år, allt annat lika, i takt med att prisbasbeloppet justeras i linje med inflationen.</p>
 
-  <h2>Grundavdraget 2025</h2>
+  <h2>Grundavdraget 2026</h2>
   <p>Grundavdraget är ett avdrag som minskar din beskattningsbara inkomst och som alla med förvärvsinkomst har rätt till. Till skillnad från jobbskatteavdraget, som är en skattereduktion, minskar grundavdraget den inkomst som skatten beräknas på. Grundavdragets storlek varierar beroende på din inkomst och beräknas utifrån prisbasbeloppet.</p>
-  <p>För inkomståret 2025 ligger grundavdraget på som lägst 0,293 prisbasbelopp (17 228 kronor) och som högst 0,573 prisbasbelopp (33 692 kronor). Det högsta grundavdraget tillfaller de med de lägsta inkomsterna, och avdraget minskar successivt i takt med att inkomsten stiger. Vid inkomster över ungefär 430 000 kronor per år stabiliseras grundavdraget på den lägsta nivån. Detta innebär att grundavdraget har en utjämnande effekt, där låginkomsttagare drar störst nytta i förhållande till sin inkomst.</p>
+  <p>För inkomståret 2026 ligger grundavdraget på som lägst 0,293 prisbasbelopp (17 228 kronor) och som högst 0,573 prisbasbelopp (33 692 kronor). Det högsta grundavdraget tillfaller de med de lägsta inkomsterna, och avdraget minskar successivt i takt med att inkomsten stiger. Vid inkomster över ungefär 430 000 kronor per år stabiliseras grundavdraget på den lägsta nivån. Detta innebär att grundavdraget har en utjämnande effekt, där låginkomsttagare drar störst nytta i förhållande till sin inkomst.</p>
   <p>I praktiken innebär grundavdraget att du inte betalar någon kommunalskatt alls på de första 17 000 till 34 000 kronorna av din årsinkomst, beroende på din inkomstnivå. Om du tjänar 25 000 kronor i månaden (300 000 kronor per år) ligger ditt grundavdrag på omkring 40 000 kronor, vilket innebär att du enbart betalar kommunalskatt på 260 000 kronor. Det sparar dig ungefär 13 000 kronor per år i skatt, eller drygt 1 000 kronor i månaden.</p>
 
-  <h2>Statlig inkomstskatt 2025</h2>
-  <p>Den statliga inkomstskatten är en tilläggssskatt som enbart betalas av dem med inkomster över skiktgränsen, som för 2025 uppgår till 615 300 kronor per år. Det motsvarar en månadslön på ungefär 51 275 kronor. Skattesatsen för den statliga inkomstskatten är 20 procent och den beräknas på den del av den beskattningsbara inkomsten (det vill säga efter grundavdrag) som överstiger skiktgränsen.</p>
+  <h2>Statlig inkomstskatt 2026</h2>
+  <p>Den statliga inkomstskatten är en tilläggssskatt som enbart betalas av dem med inkomster över skiktgränsen, som för 2026 uppgår till 615 300 kronor per år. Det motsvarar en månadslön på ungefär 51 275 kronor. Skattesatsen för den statliga inkomstskatten är 20 procent och den beräknas på den del av den beskattningsbara inkomsten (det vill säga efter grundavdrag) som överstiger skiktgränsen.</p>
   <p>Det är värt att poängtera att den statliga inkomstskatten enbart gäller den del av inkomsten som överstiger skiktgränsen, inte hela inkomsten. Om du tjänar 700 000 kronor per år och har ett grundavdrag på 17 228 kronor, är din beskattningsbara inkomst 682 772 kronor. Av denna inkomst ligger 67 472 kronor över skiktgränsen (682 772 minus 615 300), och det är bara på dessa 67 472 kronor som du betalar den statliga skatten på 20 procent. Den statliga skatten uppgår alltså till 13 494 kronor per år, eller cirka 1 125 kronor per månad. Resten av inkomsten beskattas enbart med kommunalskatt.</p>
   <p>Historiskt sett hade Sverige två skikt för statlig inkomstskatt, där det högre skiktet hade en skattesats på 25 procent och ibland kallades för värnskatten. Värnskatten avskaffades den 1 januari 2020, vilket innebär att det numera bara finns ett skikt med 20 procent. Detta var en av de mer uppmärksammade skatteförändringarna under de senaste åren och innebar en skattelättnad på upp till 25 000 kronor per år för höginkomsttagare.</p>
 
   <h2>Allmän pensionsavgift</h2>
-  <p>Utöver kommunalskatt och eventuell statlig inkomstskatt betalar alla löntagare en allmän pensionsavgift på 7 procent av sin förvärvsinkomst. Avgiften har dock ett tak som för 2025 ligger på inkomster upp till cirka 614 000 kronor per år (8,07 inkomstbasbelopp). På inkomster över detta tak betalas ingen ytterligare pensionsavgift. Den allmänna pensionsavgiften reduceras fullt ut genom en skattereduktion, vilket innebär att den i praktiken inte påverkar din nettolön. Avgiften syns dock på din lönespecifikation och i din deklaration.</p>
+  <p>Utöver kommunalskatt och eventuell statlig inkomstskatt betalar alla löntagare en allmän pensionsavgift på 7 procent av sin förvärvsinkomst. Avgiften har dock ett tak som för 2026 ligger på inkomster upp till cirka 614 000 kronor per år (8,07 inkomstbasbelopp). På inkomster över detta tak betalas ingen ytterligare pensionsavgift. Den allmänna pensionsavgiften reduceras fullt ut genom en skattereduktion, vilket innebär att den i praktiken inte påverkar din nettolön. Avgiften syns dock på din lönespecifikation och i din deklaration.</p>
   <p>Det kan verka förvirrande att du betalar en avgift som sedan reduceras helt, men systemet har en logisk förklaring. Den allmänna pensionsavgiften öronmärks för det allmänna pensionssystemet och bidrar till din framtida pension. Genom att ta ut avgiften och sedan ge tillbaka den som skattereduktion säkerställs att alla förvärvsarbetande bidrar till pensionssystemet utan att det påverkar den disponibla inkomsten negativt.</p>
 
-  <h2>Kommunalskattesatser 2025</h2>
-  <p>Nedan visas kommunalskattesatserna för samtliga kommuner i vår databas för 2025, sorterade från lägst till högst. Kommunalskattesatsen inkluderar både den kommunala delen och regionaldelen av skatten. Klicka på en kommun för att se en detaljerad beräkning av nettolön specifikt för den kommunen.</p>
+  <h2>Kommunalskattesatser 2026</h2>
+  <p>Nedan visas kommunalskattesatserna för samtliga kommuner i vår databas för 2026, sorterade från lägst till högst. Kommunalskattesatsen inkluderar både den kommunala delen och regionaldelen av skatten. Klicka på en kommun för att se en detaljerad beräkning av nettolön specifikt för den kommunen.</p>
   <table>
     <thead><tr><th>Kommun</th><th>Län</th><th>Skattesats</th></tr></thead>
     <tbody>
@@ -86,7 +86,7 @@ const sortedKommuner = [...KOMMUNER].sort((a, b) => a.rate - b.rate);
   <p>Tabellen illustrerar tydligt hur det svenska skattesystemets progressivitet fungerar i praktiken. En person som tjänar 25 000 kronor i månaden betalar en betydligt lägre andel av sin inkomst i skatt jämfört med en person som tjänar 80 000 kronor. Det beror inte bara på den statliga inkomstskatten, som slår in vid högre inkomster, utan också på att grundavdraget och jobbskatteavdraget har en relativt sett större effekt vid lägre inkomster.</p>
   <p>Det är också värt att notera att den effektiva skattesatsen varierar beroende på vilken kommun du bor i. Om du bor i en kommun med en skattesats som ligger tre procentenheter under genomsnittet kan din effektiva skatt vara ytterligare ett par procentenheter lägre. Omvänt gäller att en hög kommunalskatt ökar den effektiva skattesatsen. Använd vår kalkylator för att beräkna din exakta nettolön baserat på din kommun och lön.</p>
 
-  <h2>Marginalskatt 2025</h2>
+  <h2>Marginalskatt 2026</h2>
   <p>Marginalskatten avser den skatt du betalar på den sista intjänade kronan. Den är särskilt relevant om du överväger att arbeta övertid, ta ett extraarbete eller förhandla om löneförhöjning, eftersom den avgör hur mycket av varje extra intjänad krona du faktiskt får behålla.</p>
   <ul>
     <li><strong>Under skiktgränsen:</strong> Kommunalskatt + begravningsavgift ≈ 30–35%</li>
@@ -96,8 +96,8 @@ const sortedKommuner = [...KOMMUNER].sort((a, b) => a.rate - b.rate);
   <p>Det bör dock påpekas att marginalskatten inte berättar hela sanningen om skattebelastningen. Arbetsgivaravgifterna, som betalas av arbetsgivaren och inte syns på din lönespecifikation, uppgår till 31,42 procent av bruttolönen. Om man inkluderar arbetsgivaravgifterna i beräkningen blir den totala marginella skattebelastningen väsentligt högre. För en person med inkomst under skiktgränsen uppgår den totala marginella skattebelastningen (inklusive arbetsgivaravgifter) till ungefär 53 procent, och för inkomster över skiktgränsen till ungefär 67 procent.</p>
 
   <h2>Förändringar jämfört med 2024</h2>
-  <p>Inför inkomståret 2025 gjordes flera förändringar som påverkar skattesatserna. Prisbasbeloppet höjdes från 57 300 till 58 800 kronor, vilket automatiskt medför högre grundavdrag och jobbskatteavdrag. Skiktgränsen för statlig inkomstskatt justerades uppåt i linje med prisbasbeloppshöjningen, vilket innebär att fler löntagare slipper betala statlig skatt. Den genomsnittliga kommunalskattesatsen ökade marginellt till 32,37 procent, drivet av att ett antal kommuner och regioner höjde sina skattesatser för att hantera ökade kostnader.</p>
-  <p>Sammantaget innebär förändringarna att de flesta löntagare får en marginellt lägre effektiv skattesats 2025 jämfört med 2024, tack vare de höjda avdragen. Den ökade kommunalskatten äter dock upp en del av denna skattelättnad för invånare i kommuner som har höjt sin skattesats. Nettoeffekten varierar därför beroende på vilken kommun du bor i och vilken inkomstnivå du har.</p>
+  <p>Inför inkomståret 2026 gjordes flera förändringar som påverkar skattesatserna. Prisbasbeloppet höjdes från 57 300 till 58 800 kronor, vilket automatiskt medför högre grundavdrag och jobbskatteavdrag. Skiktgränsen för statlig inkomstskatt justerades uppåt i linje med prisbasbeloppshöjningen, vilket innebär att fler löntagare slipper betala statlig skatt. Den genomsnittliga kommunalskattesatsen ökade marginellt till 32,37 procent, drivet av att ett antal kommuner och regioner höjde sina skattesatser för att hantera ökade kostnader.</p>
+  <p>Sammantaget innebär förändringarna att de flesta löntagare får en marginellt lägre effektiv skattesats 2026 jämfört med 2024, tack vare de höjda avdragen. Den ökade kommunalskatten äter dock upp en del av denna skattelättnad för invånare i kommuner som har höjt sin skattesats. Nettoeffekten varierar därför beroende på vilken kommun du bor i och vilken inkomstnivå du har.</p>
 
   <h2>Jämförelse med andra nordiska länder</h2>
   <p>Sverige har tillsammans med Danmark den högsta skattekvoten bland de nordiska länderna och bland de högsta i världen. Den totala skattebelastningen på arbete, inklusive arbetsgivaravgifter, är dock inte entydig att jämföra rakt av eftersom länderna har olika upplägg för socialförsäkringar, pensioner och avdragssystem.</p>
@@ -108,5 +108,5 @@ const sortedKommuner = [...KOMMUNER].sort((a, b) => a.rate - b.rate);
   <p>Kontrollera alltid att din arbetsgivare drar rätt preliminärskatt. Om du har sidoinkomster, kapitalinkomster eller avdrag som inte din arbetsgivare känner till kan det vara aktuellt att ansöka om jämkning hos Skatteverket. På så sätt undviker du att betala för mycket eller för lite skatt under året och slipper obehagliga överraskningar vid deklarationen.</p>
 
   <h2>Sammanfattning</h2>
-  <p>Det svenska skattesystemet 2025 bygger på en kombination av kommunalskatt (genomsnitt 32,37 procent), statlig inkomstskatt (20 procent på inkomster över 615 300 kronor per år), grundavdrag och jobbskatteavdrag. Dessa komponenter samverkar för att skapa ett progressivt system där den effektiva skattesatsen ökar med inkomsten. Prisbasbeloppet på 58 800 kronor styr flera av beräkningarna och höjdes inför 2025 i takt med inflationen. Genom att förstå hur dessa delar hänger ihop kan du bättre planera din ekonomi, förstå din lönespecifikation och fatta informerade beslut om boende, arbete och sparande.</p>
+  <p>Det svenska skattesystemet 2026 bygger på en kombination av kommunalskatt (genomsnitt 32,37 procent), statlig inkomstskatt (20 procent på inkomster över 615 300 kronor per år), grundavdrag och jobbskatteavdrag. Dessa komponenter samverkar för att skapa ett progressivt system där den effektiva skattesatsen ökar med inkomsten. Prisbasbeloppet på 58 800 kronor styr flera av beräkningarna och höjdes inför 2026 i takt med inflationen. Genom att förstå hur dessa delar hänger ihop kan du bättre planera din ekonomi, förstå din lönespecifikation och fatta informerade beslut om boende, arbete och sparande.</p>
 </GuideLayout>

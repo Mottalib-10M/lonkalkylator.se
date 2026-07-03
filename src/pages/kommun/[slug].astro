@@ -1,7 +1,7 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import LonKalkylator from '../../components/calculators/LonKalkylator';
-import { KOMMUNER, SALARY_AMOUNTS } from '../../data/tax-2025';
+import { KOMMUNER, SALARY_AMOUNTS } from '../../data/tax-2026';
 import { calculateTakeHome } from '../../lib/tax-engine-se';
 
 export function getStaticPaths() {
@@ -19,7 +19,7 @@ const salaryTable = SALARY_AMOUNTS.map((gross) => {
 });
 
 const faqs = [
-  { question: `Vad är kommunalskatten i ${kommun.name} 2025?`, answer: `Kommunalskatten i ${kommun.name} är ${kommun.rate}% (2025). Det inkluderar både kommunens och ${kommun.lan}s regionskatt.` },
+  { question: `Vad är kommunalskatten i ${kommun.name} 2026?`, answer: `Kommunalskatten i ${kommun.name} är ${kommun.rate}% (2026). Det inkluderar både kommunens och ${kommun.lan}s regionskatt.` },
   { question: `Hur mycket nettolön får jag i ${kommun.name}?`, answer: `Med en bruttolön på 35 000 kr per månad och ${kommun.name}s kommunalskatt på ${kommun.rate}% får du ungefär ${salaryTable.find(s => s.gross === 35000)?.net.toLocaleString('sv-SE')} kr netto per månad efter skatt.` },
   { question: 'Betalar jag statlig skatt i denna kommun?', answer: `Statlig inkomstskatt (20%) är densamma oavsett kommun och betalas på beskattningsbar inkomst över 615 300 kr per år. Det som skiljer mellan kommuner är kommunalskattesatsen.` },
 ];
@@ -28,16 +28,16 @@ const faqs = [
 <CalculatorLayout
   slug={`/kommun/${kommun.slug}`}
   title={`Lönekalkylator ${kommun.name}`}
-  metaTitle={`Lön efter skatt i ${kommun.name} 2025 | ${kommun.rate}% kommunalskatt`}
-  metaDescription={`Beräkna din nettolön i ${kommun.name} med ${kommun.rate}% kommunalskatt. Se lön efter skatt för alla lönenivåer i kommunen 2025. Gratis kalkylator med Skatteverkets data.`}
-  h1={`Lön efter skatt i ${kommun.name} 2025`}
-  intro={`Beräkna din nettolön i ${kommun.name} med ${kommun.rate}% kommunalskatt (${kommun.lan}). Uppdaterad med Skatteverkets 2025-data.`}
+  metaTitle={`Lön efter skatt i ${kommun.name} 2026 | ${kommun.rate}% kommunalskatt`}
+  metaDescription={`Beräkna din nettolön i ${kommun.name} med ${kommun.rate}% kommunalskatt. Se lön efter skatt för alla lönenivåer i kommunen 2026. Gratis kalkylator med Skatteverkets data.`}
+  h1={`Lön efter skatt i ${kommun.name} 2026`}
+  intro={`Beräkna din nettolön i ${kommun.name} med ${kommun.rate}% kommunalskatt (${kommun.lan}). Uppdaterad med Skatteverkets 2026-data.`}
   faqs={faqs}
 >
   <LonKalkylator client:idle initialGross={35000} />
 
   <div slot="content" class="prose prose-lg dark:prose-invert max-w-none mt-12">
-    <h2>Lönetabell {kommun.name} 2025</h2>
+    <h2>Lönetabell {kommun.name} 2026</h2>
     <p>Nettolön i {kommun.name} med {kommun.rate}% kommunalskatt, ingen kyrkoavgift:</p>
     <table>
       <thead><tr><th>Bruttolön/mån</th><th>Nettolön/mån</th><th>Skatt/mån</th><th>Effektiv skatt</th></tr></thead>

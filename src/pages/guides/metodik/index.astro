@@ -5,7 +5,7 @@ import GuideLayout from '../../../layouts/GuideLayout.astro';
 <GuideLayout
   title="Var metodik - Sa beraknar vi lon efter skatt"
   description="Detaljerad forklaring av var berakningsmetodik for lon efter skatt i Sverige. Datakallor, berakningssteg, noggrannhet och uppdateringsrutiner."
-  publishDate="2025-01-01"
+  publishDate="2026-01-01"
   breadcrumbs={[
     { label: 'Hem', href: '/' },
     { label: 'Guider', href: '/guides/' },
@@ -21,14 +21,14 @@ import GuideLayout from '../../../layouts/GuideLayout.astro';
   <p>Kvaliteten pa en lonekalkylator star och faller med kvaliteten pa de underliggande datakallorna. Vi hamtar vara data uteslutande fran officiella svenska myndigheter och offentliga register. Nedan beskriver vi de tre huvudsakliga datakallorna som ligger till grund for vara berakningar.</p>
 
   <h3>Skatteverket</h3>
-  <p>Skatteverket ar den svenska myndighet som ansvarar for beskattning och folkbokforing. Fran Skatteverket hamtar vi de centrala skatteparametrarna som styr berakningen av inkomstskatt. Det inkluderar prisbasbeloppet, som for 2025 ar satt till 58 800 kronor, skiktgransen for statlig inkomstskatt, grundavdragstabeller och formler for berakning av jobbskatteavdraget. Skatteverket publicerar dessa uppgifter arligen, vanligtvis under hosten foregaende ar, och vi uppdaterar var kalkylator sa snart de nya vardena offentliggors.</p>
+  <p>Skatteverket ar den svenska myndighet som ansvarar for beskattning och folkbokforing. Fran Skatteverket hamtar vi de centrala skatteparametrarna som styr berakningen av inkomstskatt. Det inkluderar prisbasbeloppet, som for 2026 ar satt till 58 800 kronor, skiktgransen for statlig inkomstskatt, grundavdragstabeller och formler for berakning av jobbskatteavdraget. Skatteverket publicerar dessa uppgifter arligen, vanligtvis under hosten foregaende ar, och vi uppdaterar var kalkylator sa snart de nya vardena offentliggors.</p>
   <p>Vi anvander aven Skatteverkets skattetabeller som referens for att validera vara berakningar. Genom att jamfora vara resultat med Skatteverkets officiella tabeller kan vi sakerst alla att var berakningsmodell ger korrekta resultat over hela inkomstspannet.</p>
 
   <h3>Statistiska centralbyran (SCB)</h3>
   <p>SCB ar Sveriges statistikmyndighet och tillhandahaller data om loner, sysselsattning och ekonomiska forhallanden. Vi anvander SCB:s lonestatistik for att kunna visa jamforelser med medianloner och genomsnittsloner i olika branscher och regioner. Dessa data hjalper anvandarna att satta sin lon i ett bredare perspektiv och forsta var de befinner sig i lonefordelningen. SCB publicerar lonestatistik arligen med viss efterslapning, och vi uppdaterar jamforelsedata nar ny statistik blir tillganglig.</p>
 
   <h3>Kommunala skattesatser</h3>
-  <p>Kommunalskatten ar den storsta enskilda skattekomponenten for de flesta svenska lontagare och varierar mellan cirka 29 och 35 procent beroende pa vilken kommun du bor i. Vi hamtar de kommunala skattesatserna fran Skatteverkets och SCB:s publicerade foreteckningar, som omfattar samtliga 290 kommuner i Sverige. Varje kommun har en egen skattesats som bestar av tva delar: den kommunala skattesatsen och landstingsskatten (regionalskatten). Tillsammans utgor de den totala kommunala skattesatsen. For 2025 ar den genomsnittliga kommunala skattesatsen 32,37 procent.</p>
+  <p>Kommunalskatten ar den storsta enskilda skattekomponenten for de flesta svenska lontagare och varierar mellan cirka 29 och 35 procent beroende pa vilken kommun du bor i. Vi hamtar de kommunala skattesatserna fran Skatteverkets och SCB:s publicerade foreteckningar, som omfattar samtliga 290 kommuner i Sverige. Varje kommun har en egen skattesats som bestar av tva delar: den kommunala skattesatsen och landstingsskatten (regionalskatten). Tillsammans utgor de den totala kommunala skattesatsen. For 2026 ar den genomsnittliga kommunala skattesatsen 32,37 procent.</p>
   <p>Utover de kommunala skattesatserna inkluderar vi aven kyrkoskatten (begravningsavgift och i forekommande fall kyrkoavgift) som varierar beroende pa forsamling och om anvandaren ar medlem i Svenska kyrkan eller inte.</p>
 
   <h2>Berakningssteg</h2>
@@ -44,7 +44,7 @@ import GuideLayout from '../../../layouts/GuideLayout.astro';
   <p>Den kommunala inkomstskatten beraknas pa den beskattningsbara forvarsinkomsten, det vill saga bruttolonen minus grundavdraget. Skatten beraknas genom att multiplicera den beskattningsbara inkomsten med den totala kommunala skattesatsen for den valda kommunen. Om bruttolonen ar 40 000 kronor per manad (480 000 kronor per ar) och grundavdraget ar 42 000 kronor, blir den beskattningsbara inkomsten 438 000 kronor. Med en kommunal skattesats pa 32,37 procent blir den kommunala inkomstskatten cirka 141 800 kronor per ar, eller cirka 11 800 kronor per manad.</p>
 
   <h3>Steg 4: Berakna statlig inkomstskatt</h3>
-  <p>Den statliga inkomstskatten ar 20 procent och betalas pa den del av den beskattningsbara forvarsinkomsten som overstiger skiktgransen. For 2025 ar skiktgransen satt till 615 300 kronor. Det innebar att om din beskattningsbara forvarsinkomst (bruttolon minus grundavdrag) overstiger 615 300 kronor, betalar du 20 procent statlig skatt pa det overstigande beloppet. Exempelvis, om din beskattningsbara inkomst ar 700 000 kronor, betalar du statlig skatt pa 84 700 kronor (700 000 minus 615 300), vilket ger en statlig skatt pa 16 940 kronor per ar.</p>
+  <p>Den statliga inkomstskatten ar 20 procent och betalas pa den del av den beskattningsbara forvarsinkomsten som overstiger skiktgransen. For 2026 ar skiktgransen satt till 615 300 kronor. Det innebar att om din beskattningsbara forvarsinkomst (bruttolon minus grundavdrag) overstiger 615 300 kronor, betalar du 20 procent statlig skatt pa det overstigande beloppet. Exempelvis, om din beskattningsbara inkomst ar 700 000 kronor, betalar du statlig skatt pa 84 700 kronor (700 000 minus 615 300), vilket ger en statlig skatt pa 16 940 kronor per ar.</p>
 
   <h3>Steg 5: Berakna jobbskatteavdraget</h3>
   <p>Jobbskatteavdraget ar en skattereduktion som minskar den slutliga skatten for alla forvarvsarbetande. Det beraknas baserat pa forvarsinkomsten, den kommunala skattesatsen och prisbasbeloppet. Berakningsmodellen ar uppdelad i flera inkomstintervall uttryckta som multiplar av prisbasbeloppet. For inkomster upp till 0,91 prisbasbelopp beraknas jobbskatteavdraget pa ett satt, for inkomster upp till 3,24 prisbasbelopp pa ett annat, och for hogre inkomster pa ytterligare ett satt. Jobbskatteavdraget trappas av for inkomster over cirka 796 000 kronor per ar. Var kalkylator tillampare exakt den formel som finns specificerad i inkomstskattelagen (67 kap. IL).</p>

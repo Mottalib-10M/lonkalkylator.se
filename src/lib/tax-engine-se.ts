@@ -1,7 +1,7 @@
 /**
- * Svensk skatteberäkningsmotor 2025
+ * Svensk skatteberäkningsmotor 2026
  *
- * Beräknar nettolön baserat på Skatteverkets regler för beskattningsåret 2025.
+ * Beräknar nettolön baserat på Skatteverkets regler för beskattningsåret 2026.
  * Omfattar: kommunalskatt, statlig inkomstskatt, grundavdrag, jobbskatteavdrag,
  * allmän pensionsavgift och begravningsavgift.
  *
@@ -16,7 +16,7 @@ import {
   PENSIONSAVGIFT_TAK,
   DEFAULT_KOMMUNALSKATT,
   BEGRAVNINGSAVGIFT,
-} from '../data/tax-2025';
+} from '../data/tax-2026';
 
 export interface TaxInput {
   /** Bruttolön per månad i kr */
@@ -130,13 +130,13 @@ export function calculatePensionsavgift(grossAnnual: number): number {
 }
 
 /**
- * Beräkna jobbskatteavdrag (JSA) 2025
+ * Beräkna jobbskatteavdrag (JSA) 2026
  *
  * Kalibrerad modell baserad på 67 kap. inkomstskattelagen och Skatteverkets
  * skattetabeller. JSA beror på arbetsinkomst, grundavdrag och kommunalskattesats.
  *
  * Inkomstintervallen uttrycks i prisbasbelopp (PBB = 58 800 kr).
- * Koefficienterna är kalibrerade mot Skatteverkets skattetabeller för 2025.
+ * Koefficienterna är kalibrerade mot Skatteverkets skattetabeller för 2026.
  */
 export function calculateJobbskatteavdrag(grossAnnual: number, kommunalskattRate: number): number {
   if (grossAnnual <= 0) return 0;

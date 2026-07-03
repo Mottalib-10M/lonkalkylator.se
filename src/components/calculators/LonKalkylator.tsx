@@ -3,7 +3,7 @@ import InputField from '../ui/InputField';
 import ResultPanel from '../ui/ResultPanel';
 import BreakdownBar from '../ui/BreakdownBar';
 import { calculateTakeHome } from '../../lib/tax-engine-se';
-import { KOMMUNER, DEFAULT_KOMMUNALSKATT } from '../../data/tax-2025';
+import { KOMMUNER, DEFAULT_KOMMUNALSKATT } from '../../data/tax-2026';
 
 interface Props {
   initialGross?: number;

@@ -9,7 +9,7 @@ import {
   calculateTakeHome,
   calculateRequiredGross,
 } from './tax-engine-se';
-import { SKIKTGRANS_STATLIG, PENSIONSAVGIFT_TAK } from '../data/tax-2025';
+import { SKIKTGRANS_STATLIG, PENSIONSAVGIFT_TAK } from '../data/tax-2026';
 
 describe('calculateGrundavdrag', () => {
   it('returnerar 0 för 0 kr inkomst', () => {

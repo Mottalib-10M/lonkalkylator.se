@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import InputField from '../ui/InputField';
 import { calculateTakeHome, calculateStatligSkatt, calculateGrundavdrag } from '../../lib/tax-engine-se';
-import { SKIKTGRANS_STATLIG } from '../../data/tax-2025';
+import { SKIKTGRANS_STATLIG } from '../../data/tax-2026';
 import { formatKr, formatPercent } from '../../lib/format';
 
 export default function StatligSkattKalkylator() {

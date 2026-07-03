@@ -2,7 +2,7 @@ import { useState } from 'react';
 import InputField from '../ui/InputField';
 import ResultPanel from '../ui/ResultPanel';
 import { calculateTakeHome } from '../../lib/tax-engine-se';
-import { KOMMUNER, DEFAULT_KOMMUNALSKATT } from '../../data/tax-2025';
+import { KOMMUNER, DEFAULT_KOMMUNALSKATT } from '../../data/tax-2026';
 import { formatKr } from '../../lib/format';
 
 export default function TimlonKalkylator() {

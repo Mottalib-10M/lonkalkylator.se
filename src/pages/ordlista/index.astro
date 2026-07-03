@@ -3,32 +3,32 @@ import GuideLayout from '../../layouts/GuideLayout.astro';
 
 const defined_terms = [
   { term: 'A-skatt', definition: 'A-skatt (preliminär skatt) är den skatt som arbetsgivaren drar från din lön varje månad och betalar in till Skatteverket. Beloppet baseras på din skattetabell och din beräknade årsinkomst. Den slutliga skatten fastställs i din deklaration året efter.' },
-  { term: 'Allmän pensionsavgift', definition: 'Allmän pensionsavgift är en avgift på 7% av din pensionsgrundande inkomst, dock högst 572 970 kr per år (2025). Avgiften dras från din lön men du får tillbaka hela beloppet som en skattereduktion, så den påverkar inte din nettolön.' },
-  { term: 'Arbetsgivaravgift', definition: 'Arbetsgivaravgift är en socialavgift som din arbetsgivare betalar utöver din bruttolön. Avgiften är 31,42% av bruttolönen (2025) och finansierar pension, sjukförsäkring och andra sociala trygghetssystem. Arbetsgivaravgiften syns inte på din lönespecifikation.' },
+  { term: 'Allmän pensionsavgift', definition: 'Allmän pensionsavgift är en avgift på 7% av din pensionsgrundande inkomst, dock högst 572 970 kr per år (2026). Avgiften dras från din lön men du får tillbaka hela beloppet som en skattereduktion, så den påverkar inte din nettolön.' },
+  { term: 'Arbetsgivaravgift', definition: 'Arbetsgivaravgift är en socialavgift som din arbetsgivare betalar utöver din bruttolön. Avgiften är 31,42% av bruttolönen (2026) och finansierar pension, sjukförsäkring och andra sociala trygghetssystem. Arbetsgivaravgiften syns inte på din lönespecifikation.' },
   { term: 'Beskattningsbar förvärvsinkomst', definition: 'Beskattningsbar förvärvsinkomst är din taxerade förvärvsinkomst minus grundavdraget. Det är denna summa som kommunalskatt och eventuell statlig inkomstskatt beräknas på. Ju högre grundavdrag, desto lägre beskattningsbar inkomst.' },
   { term: 'Bruttolön', definition: 'Bruttolön är din totala lön före skatt och andra avdrag. Det är det belopp som står i ditt anställningsavtal. Från bruttolönen dras preliminärskatt, och kvar blir din nettolön. Beräkna din nettolön med vår <a href="/">lönekalkylator</a>.' },
   { term: 'Deklaration', definition: 'Deklaration (inkomstdeklaration) är den årliga redovisningen av dina inkomster och avdrag till Skatteverket. Deklarationen skickas ut i mars-april och ska lämnas senast den 2 maj. I deklarationen stäms preliminärskatten av mot den slutliga skatten.' },
   { term: 'F-skatt', definition: 'F-skatt (F-skattsedel) innebär att du som företagare själv ansvarar för att betala in din preliminärskatt. Till skillnad från A-skatt dras ingen skatt av en arbetsgivare. F-skatt betalas via månatliga inbetalningar till Skatteverkets skattekonto.' },
-  { term: 'Grundavdrag', definition: 'Grundavdraget är ett skattefritt belopp som alla skattebetalare får. Det varierar beroende på din inkomst och ligger mellan 24 300 kr och 44 200 kr per år (2025). Grundavdraget minskar din beskattningsbara inkomst och sänker därmed skatten.' },
+  { term: 'Grundavdrag', definition: 'Grundavdraget är ett skattefritt belopp som alla skattebetalare får. Det varierar beroende på din inkomst och ligger mellan 24 300 kr och 44 200 kr per år (2026). Grundavdraget minskar din beskattningsbara inkomst och sänker därmed skatten.' },
   { term: 'Husavdrag', definition: 'Husavdrag är ett samlingsbegrepp för ROT-avdrag och RUT-avdrag. Dessa skattereduktioner ger dig rätt att dra av en del av arbetskostnaden för renovering (ROT) eller hushållstjänster (RUT). Avdraget görs direkt på fakturan.' },
   { term: 'Inkomstskatt', definition: 'Inkomstskatt är den samlade skatten du betalar på din förvärvsinkomst. Den består av kommunalskatt (inklusive landstingsskatt) och eventuell statlig inkomstskatt. Den effektiva skattesatsen beror på din inkomstnivå, kommun och tillämpliga skattereduktioner.' },
   { term: 'Jobbskatteavdrag', definition: 'Jobbskatteavdraget (JSA) är en skattereduktion som sänker skatten på arbetsinkomster. Det beräknas automatiskt baserat på din inkomst, kommunalskattesats och prisbasbeloppet. Avdraget gör att den effektiva skatten på arbete blir lägre. Läs mer i vår <a href="/guides/jobbskatteavdrag-forklarat/">JSA-guide</a>.' },
-  { term: 'Kommunalskatt', definition: 'Kommunalskatt är den skatt som betalas till din kommun och region. Den är den största delen av inkomstskatten och varierar mellan cirka 29% och 35% beroende på var du bor. Riksgenomsnittet 2025 är 32,37%. Se skattesatsen i din kommun med vår <a href="/">kalkylator</a>.' },
+  { term: 'Kommunalskatt', definition: 'Kommunalskatt är den skatt som betalas till din kommun och region. Den är den största delen av inkomstskatten och varierar mellan cirka 29% och 35% beroende på var du bor. Riksgenomsnittet 2026 är 32,37%. Se skattesatsen i din kommun med vår <a href="/">kalkylator</a>.' },
   { term: 'Kyrkoskatt', definition: 'Kyrkoskatt (kyrkoavgift) betalas av medlemmar i Svenska kyrkan. Avgiften varierar mellan 0,75% och 2,32% beroende på församling. Om du inte är medlem i Svenska kyrkan betalar du en begravningsavgift på cirka 0,25% istället.' },
   { term: 'Marginalskatt', definition: 'Marginalskatt är den skatt du betalar på den sist intjänade kronan. Den visar hur mycket extra skatt du betalar om din lön ökar med 1 krona. Marginalskatten inkluderar kommunalskatt, eventuell statlig inkomstskatt och avtrappning av jobbskatteavdraget.' },
   { term: 'Nettolön', definition: 'Nettolön är det belopp du faktiskt får utbetalt efter att skatt och andra avdrag har dragits från bruttolönen. Det är nettolönen som sätts in på ditt bankkonto varje månad. Beräkna din nettolön med vår <a href="/">lönekalkylator</a>.' },
   { term: 'Pensionsavgift', definition: 'Pensionsavgift avser den allmänna pensionsavgiften på 7% som dras från din lön. Den finansierar den allmänna pensionen (inkomstpension och premiepension). Du får hela avgiften som skattereduktion, så den påverkar inte din nettolön direkt.' },
-  { term: 'Prisbasbelopp', definition: 'Prisbasbeloppet (PBB) är ett belopp som fastställs av regeringen varje år och följer prisutvecklingen. År 2025 är PBB 58 800 kr. Det används för att beräkna grundavdrag, jobbskatteavdrag, skiktgräns för statlig skatt och andra skattemässiga belopp.' },
+  { term: 'Prisbasbelopp', definition: 'Prisbasbeloppet (PBB) är ett belopp som fastställs av regeringen varje år och följer prisutvecklingen. År 2026 är PBB 58 800 kr. Det används för att beräkna grundavdrag, jobbskatteavdrag, skiktgräns för statlig skatt och andra skattemässiga belopp.' },
   { term: 'ROT-avdrag', definition: 'ROT-avdrag (Renovering, Ombyggnad, Tillbyggnad) är en skattereduktion som ger dig 30% avdrag på arbetskostnaden för renoverings- och byggnadsarbeten i din bostad. Maximalt avdrag är 50 000 kr per person och år.' },
-  { term: 'RUT-avdrag', definition: 'RUT-avdrag är en skattereduktion för hushållstjänster som städning, barnpassning och trädgårdsarbete. Du får 50% avdrag på arbetskostnaden. Maximalt avdrag är 75 000 kr per person och år (2025). Avdraget görs direkt på fakturan.' },
+  { term: 'RUT-avdrag', definition: 'RUT-avdrag är en skattereduktion för hushållstjänster som städning, barnpassning och trädgårdsarbete. Du får 50% avdrag på arbetskostnaden. Maximalt avdrag är 75 000 kr per person och år (2026). Avdraget görs direkt på fakturan.' },
   { term: 'Sjukpenning', definition: 'Sjukpenning är en ersättning från Försäkringskassan som du får när du är sjuk och inte kan arbeta. Den baseras på din sjukpenninggrundande inkomst (SGI) och motsvarar cirka 80% av din inkomst. Sjukpenning är skattepliktig inkomst.' },
   { term: 'Skattekonto', definition: 'Skattekontot är ett konto hos Skatteverket där alla skatteinbetalningar och skatteåterbäringar bokförs. Här samlas din preliminärskatt, slutlig skatt, moms och arbetsgivaravgifter. Du kan följa ditt skattekonto via Skatteverkets e-tjänster.' },
   { term: 'Skattereduktion', definition: 'Skattereduktion är ett belopp som dras direkt från din beräknade skatt. Till skillnad från avdrag minskar en reduktion skatten krona för krona. Exempel på skattereduktioner är jobbskatteavdrag, ROT/RUT-avdrag och reduktion for allmän pensionsavgift.' },
   { term: 'Skattesats', definition: 'Skattesats är den procentuella andelen av inkomsten som betalas i skatt. I Sverige finns kommunala skattesatser (29-35%) och statlig inkomstskatt (20% över skiktgränsen). Den totala skattesatsen beror på din kommun och inkomstnivå.' },
   { term: 'Skatteverket', definition: 'Skatteverket är den svenska myndighet som ansvarar för beskattning, folkbokföring och fastighetstaxering. Det är Skatteverket som fastställer skattetabeller, handlägger deklarationer och administrerar skattekontot. Officiell webbplats: skatteverket.se.' },
-  { term: 'Skiktgräns', definition: 'Skiktgränsen är den inkomstnivå över vilken statlig inkomstskatt betalas. År 2025 är skiktgränsen 615 300 kr per år i taxerad förvärvsinkomst. Inkomst över denna gräns beskattas med ytterligare 20% statlig skatt utöver kommunalskatten.' },
+  { term: 'Skiktgräns', definition: 'Skiktgränsen är den inkomstnivå över vilken statlig inkomstskatt betalas. År 2026 är skiktgränsen 615 300 kr per år i taxerad förvärvsinkomst. Inkomst över denna gräns beskattas med ytterligare 20% statlig skatt utöver kommunalskatten.' },
   { term: 'Slutlig skatt', definition: 'Slutlig skatt är den totala skatten som fastställs i din deklaration. Om du har betalat för mycket i preliminärskatt får du tillbaka pengar (skatteåterbäring). Om du betalat för lite får du ett kvarskattebeslut med krav på ytterligare betalning.' },
-  { term: 'Statlig inkomstskatt', definition: 'Statlig inkomstskatt betalas av personer med taxerad förvärvsinkomst som överstiger skiktgränsen 615 300 kr/år (2025). Skattesatsen är 20% på den del av inkomsten som överstiger gränsen. Beräkna om du betalar statlig skatt med vår <a href="/statlig-skatt-kalkylator/">kalkylator</a>.' },
+  { term: 'Statlig inkomstskatt', definition: 'Statlig inkomstskatt betalas av personer med taxerad förvärvsinkomst som överstiger skiktgränsen 615 300 kr/år (2026). Skattesatsen är 20% på den del av inkomsten som överstiger gränsen. Beräkna om du betalar statlig skatt med vår <a href="/statlig-skatt-kalkylator/">kalkylator</a>.' },
   { term: 'Taxerad förvärvsinkomst', definition: 'Taxerad förvärvsinkomst är summan av dina förvärvsinkomster (lön, pension, näringsverksamhet) minus allmänna avdrag. Det är på denna summa som grundavdraget beräknas. Dras grundavdraget av fås den beskattningsbara förvärvsinkomsten.' },
   { term: 'Timlön', definition: 'Timlön är den ersättning du får per arbetad timme. Timlönen kan variera beroende på bransch, erfarenhet och avtal. Räkna ut din timlön före och efter skatt med vår <a href="/timlon-kalkylator/">timlönekalkylator</a>.' },
   { term: 'Tjänstepension', definition: 'Tjänstepension är den pension som din arbetsgivare betalar in utöver den allmänna pensionen. Den regleras genom kollektivavtal eller individuella avtal och ligger vanligtvis på 4,5-30% av lönen beroende på avtal och inkomstnivå.' },
@@ -38,7 +38,7 @@ const defined_terms = [
 const defined_terms_schema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'DefinedTermSet',
-  name: 'Svensk skatteordlista 2025',
+  name: 'Svensk skatteordlista 2026',
   description: 'Ordlista med svenska skattebegrepp och termer som används vid löneberäkning och deklaration i Sverige.',
   url: 'https://lonefterskatt.se/ordlista/',
   inLanguage: 'sv',
@@ -54,9 +54,9 @@ const letters = ['A', 'B', 'D', 'F', 'G', 'H', 'I', 'J', 'K', 'M', 'N', 'P', 'R'
 ---
 
 <GuideLayout
-  title="Skatteordlista 2025 - Alla skattebegrepp i Sverige"
-  description="Ordlista med 35+ svenska skattebegrepp for 2025. Tydliga förklaringar av A-skatt, bruttolön, nettolön, jobbskatteavdrag, kommunalskatt och statlig skatt."
-  publishDate="2025-06-01"
+  title="Skatteordlista 2026 - Alla skattebegrepp i Sverige"
+  description="Ordlista med 35+ svenska skattebegrepp for 2026. Tydliga förklaringar av A-skatt, bruttolön, nettolön, jobbskatteavdrag, kommunalskatt och statlig skatt."
+  publishDate="2026-06-01"
   breadcrumbs={[
     { label: 'Hem', href: '/' },
     { label: 'Guider', href: '/guides/' },
@@ -66,7 +66,7 @@ const letters = ['A', 'B', 'D', 'F', 'G', 'H', 'I', 'J', 'K', 'M', 'N', 'P', 'R'
   <script type="application/ld+json" set:html={defined_terms_schema} />
 
   <h2>Skatteordlista A-Ö</h2>
-  <p>Här hittar du förklaringar av de vanligaste svenska skattebegreppen. Ordlistan hjälper dig att förstå din lönespecifikation, deklaration och hur din nettolön beräknas. Alla termer är baserade på Skatteverkets officiella definitioner for beskattningsåret 2025.</p>
+  <p>Här hittar du förklaringar av de vanligaste svenska skattebegreppen. Ordlistan hjälper dig att förstå din lönespecifikation, deklaration och hur din nettolön beräknas. Alla termer är baserade på Skatteverkets officiella definitioner for beskattningsåret 2026.</p>
 
   <nav class="not-prose flex flex-wrap gap-2 my-6" aria-label="Snabbnavigering A-Ö">
     {letters.map(letter => (

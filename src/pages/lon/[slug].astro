@@ -1,7 +1,7 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import LonKalkylator from '../../components/calculators/LonKalkylator';
-import { SALARY_AMOUNTS, KOMMUNER } from '../../data/tax-2025';
+import { SALARY_AMOUNTS, KOMMUNER } from '../../data/tax-2026';
 import { calculateTakeHome } from '../../lib/tax-engine-se';
 import { formatKr } from '../../lib/format';
 
@@ -45,9 +45,9 @@ const faqs = [
 <CalculatorLayout
   slug={`/lon/${amount}`}
   title={`${formattedAmount} kr i lön`}
-  metaTitle={`${formattedAmount} kr i lön efter skatt 2025 | Nettolön ${formatKr(result.netMonthly)}`}
-  metaDescription={`Se nettolön vid ${formattedAmount} kr bruttolön per månad 2025. Nettolönen blir ca ${formatKr(result.netMonthly)}/mån med genomsnittlig kommunalskatt. Skatteuppdelning och jämförelse.`}
-  h1={`${formattedAmount} kr i lön efter skatt 2025`}
+  metaTitle={`${formattedAmount} kr i lön efter skatt 2026 | Nettolön ${formatKr(result.netMonthly)}`}
+  metaDescription={`Se nettolön vid ${formattedAmount} kr bruttolön per månad 2026. Nettolönen blir ca ${formatKr(result.netMonthly)}/mån med genomsnittlig kommunalskatt. Skatteuppdelning och jämförelse.`}
+  h1={`${formattedAmount} kr i lön efter skatt 2026`}
   intro={`Med en bruttolön på ${formattedAmount} kr per månad blir din nettolön ungefär ${formatKr(result.netMonthly)} per månad med genomsnittlig kommunalskatt. Se den fullständiga skatteberäkningen nedan.`}
   faqs={faqs}
 >
