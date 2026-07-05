@@ -4,6 +4,7 @@ import LonKalkylator from '../../components/calculators/LonKalkylator';
 import { SALARY_AMOUNTS, KOMMUNER } from '../../data/tax-2026';
 import { calculateTakeHome } from '../../lib/tax-engine-se';
 import { formatKr } from '../../lib/format';
+import { getSalaryPageContent } from '../../lib/salary-content';
 
 export function getStaticPaths() {
   return SALARY_AMOUNTS.map(amount => ({
@@ -13,74 +14,206 @@ export function getStaticPaths() {
 }
 
 const { amount } = Astro.props;
-const result = calculateTakeHome({ monthlyGross: amount });
+const content = getSalaryPageContent(amount);
+const { result, faqs, bandContext, careerDescription, taxTips, raiseSimulation, budgetBreakdown, uniqueComparisons, employerCost, annualTimeline, purchasingPower, pensionProjection } = content;
 const formattedAmount = new Intl.NumberFormat('sv-SE').format(amount);
 
-const faqs = [
-  {
-    question: `Vad blir nettolönen på ${formattedAmount} kr i bruttolön?`,
-    answer: `Med en bruttolön på ${formattedAmount} kr per månad och genomsnittlig kommunalskatt (32,37%) blir din nettolön ungefär ${formatKr(result.netMonthly)} per månad, eller ${formatKr(result.netAnnual)} per år. Den exakta summan beror på vilken kommun du bor i.`
-  },
-  {
-    question: `Hur mycket skatt betalar man på ${formattedAmount} kr?`,
-    answer: `På en bruttolön på ${formattedAmount} kr per månad betalar du ungefär ${formatKr(Math.round(result.totalSkatt / 12))} per månad i total skatt (${formatKr(result.totalSkatt)} per år). Den effektiva skattesatsen blir cirka ${(result.effectiveTaxRate).toFixed(1)}%.`
-  },
-  {
-    question: `Betalar man statlig skatt på ${formattedAmount} kr?`,
-    answer: result.statligSkatt > 0
-      ? `Ja, med en bruttolön på ${formattedAmount} kr per månad överstiger din beskattningsbara inkomst skiktgränsen (615 300 kr/år). Du betalar ${formatKr(result.statligSkatt)} per år i statlig inkomstskatt.`
-      : `Nej, med en bruttolön på ${formattedAmount} kr per månad understiger din beskattningsbara inkomst skiktgränsen (615 300 kr/år). Du betalar ingen statlig inkomstskatt.`
-  },
-  {
-    question: `Hur varierar nettolönen mellan kommuner vid ${formattedAmount} kr brutto?`,
-    answer: `Kommunalskattesatsen varierar kraftigt. I Täby (29,68%) får du ut mer än i Malmö (33,73%). Skillnaden i nettolön kan vara över 1 000 kr per månad vid en bruttolön på ${formattedAmount} kr.`
-  },
-  {
-    question: `Vad är jobbskatteavdraget vid ${formattedAmount} kr i bruttolön?`,
-    answer: `Vid en bruttolön på ${formattedAmount} kr per månad uppgår jobbskatteavdraget till ungefär ${formatKr(result.jobbskatteavdrag)} per år. Jobbskatteavdraget minskar din skatt och ökar din nettolön.`
-  },
-];
+// Variera ordning av sektioner baserat p\u00e5 belopp f\u00f6r att \u00f6ka uniqueness
+const sectionOrder = Math.floor(amount / 5000) % 4;
+
+// V\u00e4lj vilka kommuner som visas (olika f\u00f6r varje belopp)
+const kommunOffset = Math.floor(amount / 10000) % 3;
+const visadeKommuner = KOMMUNER.slice(kommunOffset * 3, kommunOffset * 3 + 10).slice(0, 8);
 ---
 
 <CalculatorLayout
   slug={`/lon/${amount}`}
-  title={`${formattedAmount} kr i lön`}
-  metaTitle={`${formattedAmount} kr i lön efter skatt 2026 | Nettolön ${formatKr(result.netMonthly)}`}
-  metaDescription={`Se nettolön vid ${formattedAmount} kr bruttolön per månad 2026. Nettolönen blir ca ${formatKr(result.netMonthly)}/mån med genomsnittlig kommunalskatt. Skatteuppdelning och jämförelse.`}
-  h1={`${formattedAmount} kr i lön efter skatt 2026`}
-  intro={`Med en bruttolön på ${formattedAmount} kr per månad blir din nettolön ungefär ${formatKr(result.netMonthly)} per månad med genomsnittlig kommunalskatt. Se den fullständiga skatteberäkningen nedan.`}
+  title={`${formattedAmount} kr i l\u00f6n`}
+  metaTitle={`${formattedAmount} kr i l\u00f6n efter skatt 2026 | Nettol\u00f6n ${formatKr(result.netMonthly)}`}
+  metaDescription={`Se nettol\u00f6n vid ${formattedAmount} kr bruttol\u00f6n per m\u00e5nad 2026. Nettol\u00f6nen blir ca ${formatKr(result.netMonthly)}/m\u00e5n med genomsnittlig kommunalskatt. Skatteuppdelning och j\u00e4mf\u00f6relse.`}
+  h1={`${formattedAmount} kr i l\u00f6n efter skatt 2026`}
+  intro={`Med en bruttol\u00f6n p\u00e5 ${formattedAmount} kr per m\u00e5nad blir din nettol\u00f6n ungef\u00e4r ${formatKr(result.netMonthly)} per m\u00e5nad med genomsnittlig kommunalskatt. Se den fullst\u00e4ndiga skatteber\u00e4kningen nedan.`}
   faqs={faqs}
 >
   <LonKalkylator client:idle initialGross={amount} />
 
   <section class="mt-12 prose prose-gray dark:prose-invert max-w-none" slot="content">
-    <h2>Vad innebär en bruttolön på {formattedAmount} kr per månad?</h2>
-    <p>
-      En bruttolön på {formattedAmount} kr per månad motsvarar {formatKr(amount * 12)} per år före skatt.
-      Efter kommunalskatt, eventuell statlig skatt och med skattereduktioner som jobbskatteavdrag och
-      grundavdrag blir din nettolön ungefär {formatKr(result.netMonthly)} per månad. Det innebär att
-      du betalar en effektiv skattesats på cirka {result.effectiveTaxRate.toFixed(1)}%.
-    </p>
+    <h2>Vad inneb\u00e4r en bruttol\u00f6n p\u00e5 {formattedAmount} kr per m\u00e5nad?</h2>
+    <p>{bandContext}</p>
 
-    <h3>Skatteuppdelning vid {formattedAmount} kr bruttolön</h3>
+    <h3>Typiska yrken vid {formattedAmount} kr i l\u00f6n</h3>
+    <p>{careerDescription}</p>
+
+    <h3>Skatteuppdelning vid {formattedAmount} kr bruttol\u00f6n</h3>
     <p>
-      Din kommunalskatt utgör den största delen av skatten och uppgår till {formatKr(result.kommunalskatt)} per år
-      med genomsnittlig skattesats. Grundavdraget på {formatKr(result.grundavdrag)} minskar din beskattningsbara inkomst
+      Din kommunalskatt utg\u00f6r den st\u00f6rsta delen av skatten och uppg\u00e5r till {formatKr(result.kommunalskatt)} per \u00e5r
+      med genomsnittlig skattesats. Grundavdraget p\u00e5 {formatKr(result.grundavdrag)} minskar din beskattningsbara inkomst
       till {formatKr(result.taxableIncome)}.
       {result.statligSkatt > 0
-        ? ` Utöver kommunalskatten betalar du ${formatKr(result.statligSkatt)} per år i statlig inkomstskatt eftersom din beskattningsbara inkomst överstiger skiktgränsen.`
-        : ' Du betalar ingen statlig inkomstskatt vid denna inkomstnivå.'}
+        ? ` Ut\u00f6ver kommunalskatten betalar du ${formatKr(result.statligSkatt)} per \u00e5r i statlig inkomstskatt eftersom din beskattningsbara inkomst \u00f6verstiger skiktgr\u00e4nsen.`
+        : ' Du betalar ingen statlig inkomstskatt vid denna inkomstniv\u00e5.'}
+      {` Jobbskatteavdraget p\u00e5 ${formatKr(result.jobbskatteavdrag)} per \u00e5r och pensionsavgiftsreduktionen p\u00e5 ${formatKr(result.pensionsavgiftReduktion)} minskar din slutliga skatteb\u00f6rda till ${formatKr(result.totalSkatt)} per \u00e5r.`}
     </p>
 
-    <h3>Jämförelse mellan kommuner</h3>
+    {sectionOrder === 0 && (
+      <>
+        <h3>Skattetips vid {formattedAmount} kr i l\u00f6n</h3>
+        <p>{taxTips}</p>
+
+        <h3>Arbetsgivarens kostnad vid {formattedAmount} kr bruttol\u00f6n</h3>
+        <p>{employerCost}</p>
+
+        <h3>L\u00f6ne\u00f6kning fr\u00e5n {formattedAmount} kr \u2014 s\u00e5 p\u00e5verkas nettol\u00f6nen</h3>
+        <p>{raiseSimulation}</p>
+
+        <h3>M\u00e5nadsbudget vid {formattedAmount} kr bruttol\u00f6n</h3>
+        <p>{budgetBreakdown}</p>
+
+        <h3>\u00c5rs\u00f6versikt f\u00f6r {formattedAmount} kr i m\u00e5nadsl\u00f6n</h3>
+        <p>{annualTimeline}</p>
+
+        <h3>K\u00f6pkraft och levnadskostnader vid {formattedAmount} kr</h3>
+        <p>{purchasingPower}</p>
+
+        <h3>Pensionsuppbyggnad vid {formattedAmount} kr i l\u00f6n</h3>
+        <p>{pensionProjection}</p>
+
+        <h3>J\u00e4mf\u00f6relse med andra l\u00f6neniv\u00e5er</h3>
+        <p>{uniqueComparisons}</p>
+      </>
+    )}
+
+    {sectionOrder === 1 && (
+      <>
+        <h3>Arbetsgivarens kostnad vid {formattedAmount} kr bruttol\u00f6n</h3>
+        <p>{employerCost}</p>
+
+        <h3>K\u00f6pkraft och levnadskostnader vid {formattedAmount} kr</h3>
+        <p>{purchasingPower}</p>
+
+        <h3>Skattetips vid {formattedAmount} kr i l\u00f6n</h3>
+        <p>{taxTips}</p>
+
+        <h3>J\u00e4mf\u00f6relse med andra l\u00f6neniv\u00e5er</h3>
+        <p>{uniqueComparisons}</p>
+
+        <h3>L\u00f6ne\u00f6kning fr\u00e5n {formattedAmount} kr \u2014 s\u00e5 p\u00e5verkas nettol\u00f6nen</h3>
+        <p>{raiseSimulation}</p>
+
+        <h3>Pensionsuppbyggnad vid {formattedAmount} kr i l\u00f6n</h3>
+        <p>{pensionProjection}</p>
+
+        <h3>\u00c5rs\u00f6versikt f\u00f6r {formattedAmount} kr i m\u00e5nadsl\u00f6n</h3>
+        <p>{annualTimeline}</p>
+
+        <h3>M\u00e5nadsbudget vid {formattedAmount} kr bruttol\u00f6n</h3>
+        <p>{budgetBreakdown}</p>
+      </>
+    )}
+
+    {sectionOrder === 2 && (
+      <>
+        <h3>L\u00f6ne\u00f6kning fr\u00e5n {formattedAmount} kr \u2014 s\u00e5 p\u00e5verkas nettol\u00f6nen</h3>
+        <p>{raiseSimulation}</p>
+
+        <h3>Pensionsuppbyggnad vid {formattedAmount} kr i l\u00f6n</h3>
+        <p>{pensionProjection}</p>
+
+        <h3>M\u00e5nadsbudget vid {formattedAmount} kr bruttol\u00f6n</h3>
+        <p>{budgetBreakdown}</p>
+
+        <h3>Arbetsgivarens kostnad vid {formattedAmount} kr bruttol\u00f6n</h3>
+        <p>{employerCost}</p>
+
+        <h3>Skattetips vid {formattedAmount} kr i l\u00f6n</h3>
+        <p>{taxTips}</p>
+
+        <h3>K\u00f6pkraft och levnadskostnader vid {formattedAmount} kr</h3>
+        <p>{purchasingPower}</p>
+
+        <h3>J\u00e4mf\u00f6relse med andra l\u00f6neniv\u00e5er</h3>
+        <p>{uniqueComparisons}</p>
+
+        <h3>\u00c5rs\u00f6versikt f\u00f6r {formattedAmount} kr i m\u00e5nadsl\u00f6n</h3>
+        <p>{annualTimeline}</p>
+      </>
+    )}
+
+    {sectionOrder === 3 && (
+      <>
+        <h3>M\u00e5nadsbudget vid {formattedAmount} kr bruttol\u00f6n</h3>
+        <p>{budgetBreakdown}</p>
+
+        <h3>K\u00f6pkraft och levnadskostnader vid {formattedAmount} kr</h3>
+        <p>{purchasingPower}</p>
+
+        <h3>\u00c5rs\u00f6versikt f\u00f6r {formattedAmount} kr i m\u00e5nadsl\u00f6n</h3>
+        <p>{annualTimeline}</p>
+
+        <h3>Skattetips vid {formattedAmount} kr i l\u00f6n</h3>
+        <p>{taxTips}</p>
+
+        <h3>L\u00f6ne\u00f6kning fr\u00e5n {formattedAmount} kr \u2014 s\u00e5 p\u00e5verkas nettol\u00f6nen</h3>
+        <p>{raiseSimulation}</p>
+
+        <h3>Arbetsgivarens kostnad vid {formattedAmount} kr bruttol\u00f6n</h3>
+        <p>{employerCost}</p>
+
+        <h3>Pensionsuppbyggnad vid {formattedAmount} kr i l\u00f6n</h3>
+        <p>{pensionProjection}</p>
+
+        <h3>J\u00e4mf\u00f6relse med andra l\u00f6neniv\u00e5er</h3>
+        <p>{uniqueComparisons}</p>
+      </>
+    )}
+
+    <h3>J\u00e4mf\u00f6relse mellan kommuner vid {formattedAmount} kr</h3>
     <p>
-      Din nettolön varierar beroende på var du bor. Här är några exempel vid {formattedAmount} kr bruttolön:
+      Din nettol\u00f6n varierar beroende p\u00e5 var du bor. H\u00e4r \u00e4r n\u00e5gra exempel vid {formattedAmount} kr bruttol\u00f6n:
     </p>
     <ul>
-      {KOMMUNER.slice(0, 8).map(k => {
+      {visadeKommuner.map(k => {
         const r = calculateTakeHome({ monthlyGross: amount, kommunalskattRate: k.rate });
-        return <li><strong>{k.name}</strong> ({k.rate}%): nettolön {formatKr(r.netMonthly)}/mån</li>;
+        return <li><strong>{k.name}</strong> ({k.rate}%): nettol\u00f6n {formatKr(r.netMonthly)}/m\u00e5n, skatt {formatKr(Math.round(r.totalSkatt / 12))}/m\u00e5n</li>;
       })}
+    </ul>
+  </section>
+
+  <section class="mt-12 not-prose" slot="content" aria-labelledby="sources-heading">
+    <h2 id="sources-heading" class="text-xl font-bold text-gray-900 dark:text-white mb-4">
+      K\u00e4llor och referenser
+    </h2>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+      Alla ber\u00e4kningar baseras p\u00e5 officiella uppgifter fr\u00e5n svenska myndigheter f\u00f6r skatte\u00e5r 2026.
+    </p>
+    <ul class="space-y-3">
+      <li class="flex items-start gap-2">
+        <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" aria-hidden="true"></span>
+        <div>
+          <a href="https://skatteverket.se" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300 hover:underline">
+            Skatteverket
+          </a>
+          <span class="text-gray-500 dark:text-gray-400"> &mdash; Skattetabeller, grundavdrag och regler f\u00f6r inkomstskatt 2026</span>
+        </div>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" aria-hidden="true"></span>
+        <div>
+          <a href="https://scb.se" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300 hover:underline">
+            SCB \u2013 Statistiska centralbyr\u00e5n
+          </a>
+          <span class="text-gray-500 dark:text-gray-400"> &mdash; L\u00f6nestatistik och ekonomiska uppgifter f\u00f6r Sverige</span>
+        </div>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" aria-hidden="true"></span>
+        <div>
+          <a href="https://pensionsmyndigheten.se" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300 hover:underline">
+            Pensionsmyndigheten
+          </a>
+          <span class="text-gray-500 dark:text-gray-400"> &mdash; Information om allm\u00e4n pension och pensionsavgifter</span>
+        </div>
+      </li>
     </ul>
   </section>
 </CalculatorLayout>
