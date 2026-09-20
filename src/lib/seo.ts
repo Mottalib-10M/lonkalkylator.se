@@ -71,15 +71,10 @@ export function organizationSchema() {
 export function personSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Mottalib Radif',
+    '@type': 'Organization',
+    name: 'Radif Partners',
     jobTitle: 'Finansexpert & utvecklare',
-    description: 'MBA INSEAD, passionerad för svensk privatekonomi. Specialiserad på skatteuträkning, kommunalskatt och jobbskatteavdrag.',
-    alumniOf: {
-      '@type': 'EducationalOrganization',
-      name: 'INSEAD',
-    },
-    image: `${SITE_URL}/team/mottalib-radif.jpg`,
+    description: 'Éditeur de calculateurs et de guides pratiques',
     worksFor: {
       '@type': 'Organization',
       name: SITE_NAME,
