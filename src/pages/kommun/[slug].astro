@@ -1,4 +1,5 @@
 ---
+import { formatDec } from '../../lib/format';
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import LonKalkylator from '../../components/calculators/LonKalkylator';
 import { KOMMUNER, SALARY_AMOUNTS } from '../../data/tax-2026';
@@ -47,7 +48,7 @@ const faqs = [
             <td>{row.gross.toLocaleString('sv-SE')} kr</td>
             <td>{row.net.toLocaleString('sv-SE')} kr</td>
             <td>{row.tax.toLocaleString('sv-SE')} kr</td>
-            <td>{row.rate.toFixed(1)}%</td>
+            <td>{formatDec(row.rate, 1)}%</td>
           </tr>
         ))}
       </tbody>

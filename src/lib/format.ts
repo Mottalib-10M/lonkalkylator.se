@@ -48,3 +48,11 @@ export function parseNumber(input: string): number {
   const value = parseFloat(cleaned);
   return isNaN(value) ? 0 : value;
 }
+
+/** Nombre décimal dans la langue du site : `toFixed` affiche un point, pas une virgule. */
+export function formatDec(value: number, digits = 1): string {
+  return new Intl.NumberFormat('sv-SE', {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  }).format(value);
+}

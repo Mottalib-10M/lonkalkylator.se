@@ -1,3 +1,4 @@
+import { formatDec } from '@/lib/format';
 import { useState } from 'react';
 import InputField from '../ui/InputField';
 import { calculatePensionsavgift, calculateTakeHome } from '../../lib/tax-engine-se';
@@ -42,7 +43,7 @@ export default function PensionsKalkylator() {
 
             <h4 className="text-sm font-semibold text-gray-900 dark:text-white">Allmän pensionsavgift</h4>
             <div className="flex justify-between text-sm">
-              <span className="text-gray-600 dark:text-gray-400">Avgift ({(PENSIONSAVGIFT_SATS * 100).toFixed(0)}%)</span>
+              <span className="text-gray-600 dark:text-gray-400">Avgift ({formatDec(PENSIONSAVGIFT_SATS * 100, 0)}%)</span>
               <span className="font-medium text-gray-900 dark:text-white tabular-nums">{formatKr(pensionsavgift)}</span>
             </div>
             <div className="flex justify-between text-sm">
@@ -59,7 +60,7 @@ export default function PensionsKalkylator() {
 
             <h4 className="text-sm font-semibold text-gray-900 dark:text-white">Tjänstepension (uppskattning)</h4>
             <div className="flex justify-between text-sm">
-              <span className="text-gray-600 dark:text-gray-400">ITP1 ({(tjanstepensionRate * 100).toFixed(1)}%)</span>
+              <span className="text-gray-600 dark:text-gray-400">ITP1 ({formatDec(tjanstepensionRate * 100, 1)}%)</span>
               <span className="font-medium text-gray-900 dark:text-white tabular-nums">{formatKr(tjanstepension)}</span>
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400">

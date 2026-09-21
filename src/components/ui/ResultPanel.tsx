@@ -1,3 +1,4 @@
+import { formatDec } from '@/lib/format';
 import { formatCurrency, formatPercent, formatKr } from '../../lib/format';
 import type { TaxResult } from '../../lib/tax-engine-se';
 
@@ -26,7 +27,7 @@ export default function ResultPanel({ result }: Props) {
         <Row label="Grundavdrag" value={result.grundavdrag} note="Avdrag" positive />
         <Row label="Beskattningsbar inkomst" value={result.taxableIncome} />
         <Divider />
-        <Row label={`Kommunalskatt (${result.kommunalskattRateUsed.toFixed(2)}%)`} value={-result.kommunalskatt} negative />
+        <Row label={`Kommunalskatt (${formatDec(result.kommunalskattRateUsed, 2)}%)`} value={-result.kommunalskatt} negative />
         {result.statligSkatt > 0 && (
           <Row label="Statlig inkomstskatt (20%)" value={-result.statligSkatt} negative />
         )}

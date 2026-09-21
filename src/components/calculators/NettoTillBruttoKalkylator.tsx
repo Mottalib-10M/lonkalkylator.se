@@ -1,3 +1,4 @@
+import { formatDec } from '@/lib/format';
 import { useState } from 'react';
 import InputField from '../ui/InputField';
 import ResultPanel from '../ui/ResultPanel';
@@ -38,10 +39,10 @@ export default function NettoTillBruttoKalkylator() {
             onChange={(e) => setSelectedKommun(e.target.value)}
             className="w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-surface py-3 px-4 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-colors"
           >
-            <option value="">Rikssnitt ({DEFAULT_KOMMUNALSKATT}%)</option>
+            <option value="">Rikssnitt ({formatDec(DEFAULT_KOMMUNALSKATT, 2)}%)</option>
             {KOMMUNER.map(k => (
               <option key={k.slug} value={k.slug}>
-                {k.name} ({k.rate}%)
+                {k.name} ({formatDec(k.rate, 2)}%)
               </option>
             ))}
           </select>

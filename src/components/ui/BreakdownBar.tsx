@@ -1,3 +1,4 @@
+import { formatDec } from '@/lib/format';
 import { formatPercent } from '../../lib/format';
 
 interface Segment {
@@ -30,7 +31,7 @@ export default function BreakdownBar({ segments, total }: Props) {
               aria-label={`${seg.label}: ${formatPercent(pct)}`}
             >
               <div className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                {pct > 8 ? `${pct.toFixed(1)}%` : ''}
+                {pct > 8 ? `${formatDec(pct, 1)}%` : ''}
               </div>
             </div>
           );
