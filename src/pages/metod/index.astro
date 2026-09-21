@@ -1,0 +1,53 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const faqs = [
+  { q: 'Varför skiljer sig nettolönen mellan två kommuner?',
+    a: 'Den största delen av skatten är kommunal och sätts av kommunen och regionen var för sig. Skillnaden mellan den lägsta och den högsta kommunalskatten är flera procentenheter, vilket på en normal lön ger tusentals kronor per år. Statlig skatt tillkommer först över skiktgränsen och är densamma i hela landet.' },
+  { q: 'Vad är skillnaden mellan grundavdrag och jobbskatteavdrag?',
+    a: 'Grundavdraget dras från inkomsten innan skatten beräknas och varierar med inkomstens storlek. Jobbskatteavdraget är i stället en reduktion av den framräknade skatten. Ordningen spelar roll: ett avdrag på inkomsten och en reduktion av skatten ger olika resultat även vid samma belopp.' },
+  { q: 'Betalar alla begravningsavgift?',
+    a: 'Ja. Begravningsavgiften betalas av alla som är folkbokförda i Sverige, oavsett trossamfund. Kyrkoavgiften betalas däremot bara av den som är medlem i Svenska kyrkan eller ett annat samfund som tar ut avgift via skattsedeln. Kalkylatorn håller isär de två posterna.' },
+];
+---
+<CalculatorLayout
+  slug="/metod"
+  title="Metod"
+  metaTitle="Metod: kommunalskatt, statlig skatt och jobbskatteavdrag | Lön Efter Skatt"
+  metaDescription="Beräkningens exakta ordning: kommunal och regional skattesats, grundavdrag, jobbskatteavdrag, statlig inkomstskatt över skiktgränsen och begravningsavgift."
+  h1="Så räknar vi ut din lön efter skatt"
+  intro="Hela kedjan, steg för steg, med Skatteverkets publicerade tabeller som enda källa."
+  faqs={faqs}
+>
+  <div class="max-w-3xl mx-auto">
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3">Kommunen avgör det mesta</h2>
+      <p class="text-gray-700 leading-relaxed mb-3">Den st&ouml;rsta delen av skatten &auml;r <strong>kommunal</strong>, inte statlig. Kommunalskatten best&aring;r av kommunens och regionens skattesatser, som skiljer sig med flera procentenheter mellan kommuner. Tv&aring; identiska l&ouml;ner p&aring; olika orter ger d&auml;rf&ouml;r olika nettol&ouml;n, och skillnaden &auml;r ofta st&ouml;rre &auml;n vad ett l&ouml;nep&aring;slag ger.</p>
+      <p class="text-gray-700 leading-relaxed mb-3">P&aring; den beskattningsbara inkomsten dras f&ouml;rst <strong>grundavdraget</strong>, som varierar med inkomsten och inte &auml;r ett fast belopp. D&auml;refter ber&auml;knas skatten, och fr&aring;n den dras <strong>jobbskatteavdraget</strong> &mdash; en skattereduktion, inte ett avdrag p&aring; inkomsten. Ordningen spelar roll: avdrag p&aring; inkomsten och reduktion av skatten ger inte samma resultat.</p>
+    </section>
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3">Statlig skatt börjar först vid skiktgränsen</h2>
+      <p class="text-gray-700 leading-relaxed mb-3">&Ouml;ver skiktgr&auml;nsen tillkommer <strong>statlig inkomstskatt</strong> p&aring; den del av inkomsten som &ouml;verstiger gr&auml;nsen &mdash; inte p&aring; hela l&ouml;nen. Det &auml;r d&auml;rf&ouml;r marginalskatten stiger kraftigt just vid gr&auml;nsen medan den genomsnittliga skatten stiger l&aring;ngsamt.</p>
+      <p class="text-gray-700 leading-relaxed mb-3"><strong>Begravningsavgiften</strong> betalas av alla folkbokf&ouml;rda, medan <strong>kyrkoavgiften</strong> bara betalas av medlemmar i ett trossamfund. Kalkylatorn skiljer p&aring; de tv&aring; i st&auml;llet f&ouml;r att sl&aring; ihop dem.</p>
+    </section>
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3">Vad kalkylatorn inte gör</h2>
+      <p class="text-gray-700 leading-relaxed mb-3">Den tar inte h&auml;nsyn till f&ouml;rm&aring;nsbeskattning, tj&auml;nstepension, ROT- och RUT-avdrag, r&auml;nteavdrag, reseavdrag eller flera arbetsgivare. Den utg&aring;r fr&aring;n en anst&auml;llning med skattetabell.</p>
+      <p class="text-gray-700 leading-relaxed mb-3">Resultatet &auml;r en dokumenterad uppskattning, inte ett besked. Det slutliga beloppet fastst&auml;lls av Skatteverket.</p>
+    </section>
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3">När vi uppdaterar</h2>
+      <p class="text-gray-700 leading-relaxed mb-3">Skattesatser, grundavdrag och skiktgr&auml;ns &auml;ndras vid &aring;rsskiftet. Vi h&auml;mtar v&auml;rdena fr&aring;n Skatteverkets publicerade tabeller, inte fr&aring;n nyhetsrapportering. Varje sida visar datum f&ouml;r senaste &auml;ndring, h&auml;mtat ur webbplatsens versionshistorik.</p>
+    </section>
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3">Varifrån siffrorna kommer</h2>
+      <p class="text-gray-700 leading-relaxed mb-3">Alla skattesatser och gr&auml;nser kommer fr&aring;n f&ouml;ljande officiella k&auml;llor:</p>
+      <ul class="list-disc pl-6 text-gray-700 space-y-2">
+        <li><a class="underline" href="https://www.skatteverket.se/privat/skatter/beloppochprocent.4.html" rel="nofollow noopener" target="_blank">Skatteverket &mdash; Skattetabeller och skatteuträkning</a></li>
+        <li><a class="underline" href="https://www.skatteverket.se/privat/skatter/beloppochprocent/kommunalskatter.4.html" rel="nofollow noopener" target="_blank">Skatteverket &mdash; Kommunala skattesatser</a></li>
+        <li><a class="underline" href="https://www.skatteverket.se/privat/skatter/arbeteochinkomst/jobbskatteavdrag.4.html" rel="nofollow noopener" target="_blank">Skatteverket &mdash; Jobbskatteavdrag</a></li>
+        <li><a class="underline" href="https://www.skatteverket.se/privat/skatter/arbeteochinkomst/statliginkomstskatt.4.html" rel="nofollow noopener" target="_blank">Skatteverket &mdash; Statlig inkomstskatt och skiktgräns</a></li>
+      </ul>
+    </section>
+  </div>
+</CalculatorLayout>
