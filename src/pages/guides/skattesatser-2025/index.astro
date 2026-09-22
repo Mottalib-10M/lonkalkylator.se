@@ -4,17 +4,40 @@ import GuideLayout from '../../../layouts/GuideLayout.astro';
 import { KOMMUNER } from '../../../data/tax-2026';
 import { calculateTakeHome } from '../../../lib/tax-engine-se';
 
+/** Le taux s'ecrit a la suedoise, virgule decimale, dans le texte ET dans le JSON-LD. */
+const taux = (v: number) => v.toLocaleString('sv-SE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+
 const sortedKommuner = [...KOMMUNER].sort((a, b) => a.rate - b.rate);
+import OfficiellaKallor from '../../../components/OfficiellaKallor.astro';
 ---
 
 <GuideLayout
-  title="Skattesatser i Sverige 2026 – Komplett"
+  title="Skattesatser 2026: kommun för kommun i hela Sverige"
   description="Komplett guide till Sveriges skattesatser 2026: kommunalskatt, statlig skatt, jobbskatteavdrag och grundavdrag. Beräkningsexempel och kommuners skattesats."
   publishDate="2026-01-01"
   breadcrumbs={[
     { label: 'Hem', href: '/' },
     { label: 'Guider', href: '/guides/' },
     { label: 'Skattesatser 2026' },
+  ]}
+  faqs={[
+      {
+          "question": "När fastställs nästa års skattesatser?",
+          "answer": "Kommunfullmäktige beslutar om sin sats under hösten inför det kommande budgetåret, och ändringen träder i kraft den första januari. Skatteverket publicerar den samlade listan i slutet av året. Regionernas satser beslutas på samma sätt och läggs till kommunens, vilket är varför den totala satsen kan ändras även om kommunen inte rört sin egen."
+      },
+      {
+          "question": "Hur mycket brukar satserna ändras?",
+          "answer": "De flesta kommuner ligger stilla flera år i rad. När en ändring sker rör den sig oftast om några tiondelar av en procentenhet, uppåt eller nedåt, vilket på en medianlön motsvarar några tior i månaden. Större hopp förekommer men är sällsynta och hänger då ihop med en kommunsammanslagning eller en akut budgetsituation."
+      },
+      {
+          "question": "Var hittar jag min egen kommuns sats?",
+          "answer": "På Skatteverkets webbplats, som publicerar samtliga kommuners och regioners satser i en enda tabell, och på ditt eget lönebesked, där den ligger inbakad i den dragna skatten. Skatteverkets uppgift är den som gäller om de två skulle skilja sig åt, vilket i praktiken bara händer vid ett arbetsgivarbyte."
+      },
+      {
+          "question": "Vad händer med skatten om jag flyttar?",
+          "answer": "Skatten följer den kommun där du var folkbokförd den första november året före inkomståret. En flytt i mars påverkar alltså inte årets skatt utan nästa års. Det överraskar den som flyttar till en kommun med lägre sats och väntar sig se effekten direkt på nästa lönebesked."
+      }
   ]}
 >
   <h2>Översikt: Skattesystemet 2026</h2>
@@ -60,7 +83,7 @@ const sortedKommuner = [...KOMMUNER].sort((a, b) => a.rate - b.rate);
         <tr>
           <td><a href={`/kommun/${k.slug}/`}>{k.name}</a></td>
           <td>{k.lan}</td>
-          <td>{k.rate}%</td>
+          <td>{taux(k.rate)} %</td>
         </tr>
       ))}
     </tbody>
@@ -110,4 +133,5 @@ const sortedKommuner = [...KOMMUNER].sort((a, b) => a.rate - b.rate);
 
   <h2>Sammanfattning</h2>
   <p>Det svenska skattesystemet 2026 bygger på en kombination av kommunalskatt (genomsnitt 32,37 procent), statlig inkomstskatt (20 procent på inkomster över 615 300 kronor per år), grundavdrag och jobbskatteavdrag. Dessa komponenter samverkar för att skapa ett progressivt system där den effektiva skattesatsen ökar med inkomsten. Prisbasbeloppet på 58 800 kronor styr flera av beräkningarna och höjdes inför 2026 i takt med inflationen. Genom att förstå hur dessa delar hänger ihop kan du bättre planera din ekonomi, förstå din lönespecifikation och fatta informerade beslut om boende, arbete och sparande.</p>
+  <OfficiellaKallor />
 </GuideLayout>

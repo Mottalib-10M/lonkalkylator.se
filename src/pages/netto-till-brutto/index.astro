@@ -3,9 +3,32 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import NettoTillBruttoKalkylator from '../../components/calculators/NettoTillBruttoKalkylator';
 
 const faqs = [
-  { question: 'Hur räknar jag ut brutto från netto?', answer: 'Vår kalkylator gör en omvänd beräkning. Ange din önskade nettolön och se vilken bruttolön du behöver. Beräkningen tar hänsyn till kommunalskatt, eventuell statlig skatt, jobbskatteavdrag och grundavdrag.' },
-  { question: 'Varför kan jag inte bara dela netto med (1 - skattesats)?', answer: 'Sveriges progressiva skattesystem med grundavdrag, jobbskatteavdrag och statlig skatt gör det omöjligt att använda en enkel formel. Kalkylatorn använder binär sökning för att hitta rätt bruttolön.' },
+  {
+    question: "När är en netto-till-brutto-beräkning användbar?",
+    answer:
+      "När kravet är formulerat i nettotermer: en hyra som ska täckas, ett lånelöfte, eller en löneförhandling där du vet vad du behöver på kontot varje månad. Att räkna framlänges från brutto svarar på en annan fråga, och att växla mellan de två i huvudet blir sällan rätt.",
+  },
+  {
+    question: "Hur exakt är resultatet?",
+    answer:
+      "På kronan för en vanlig anställning med standardavdrag. Eftersom sambandet mellan brutto och netto inte är linjärt söker beräkningen sig fram i stället för att använda en formel. Jämkning, skattepliktiga förmåner eller ett kommunbyte mitt under året förskjuter resultatet, och inget av det kan förutses av ett verktyg som bara känner till bruttolönen.",
+  },
+  {
+    question: "Påverkar kommunen vilket brutto jag behöver?",
+    answer:
+      "Ja, tydligt. Statlig skatt och allmän pensionsavgift är desamma i hela landet, så hela skillnaden kommer från kommunalskatten. På en medianlön kan skillnaden mellan den lägsta och den högsta kommunen motsvara flera tusen kronor i brutto för samma nettolön, vilket är värt att räkna på inför en flytt.",
+  },
+  {
+    question: "Kan jag använda den för ett konsultarvode?",
+    answer:
+      "Delvis. Den ger motsvarande anställningslön, men en egenföretagare betalar egenavgifter, saknar semesterlön och har ingen tjänstepension från någon annan. Ett vanligt påslag för att komma i nivå med en anställning ligger på trettio till femtio procent utöver det belopp verktyget visar.",
+  },
+
+  { question: 'Hur räknar jag ut brutto från netto?', answer: 'Vår kalkylator gör en omvänd beräkning. Ange din önskade nettolön och se vilken bruttolön du behöver. Beräkningen tar hänsyn till kommunalskatt, eventuell statlig skatt, jobbskatteavdrag och grundavdrag. Beräkningen görs bakvänt eftersom sambandet inte är linjärt: grundavdrag, jobbskatteavdrag och skiktgräns skapar trappsteg som ingen enkel formel kan vända. Verktyget söker sig fram till det bruttobelopp som ger exakt det netto du angett.' },
+  { question: 'Varför kan jag inte bara dela netto med (1 - skattesats)?', answer: 'Sveriges progressiva skattesystem med grundavdrag, jobbskatteavdrag och statlig skatt gör det omöjligt att använda en enkel formel. Kalkylatorn använder binär sökning för att hitta rätt bruttolön. Skattesatsen är inte densamma på hela lönen. Grundavdrag och jobbskatteavdrag gör att den effektiva skatten stiger med inkomsten, och över skiktgränsen tillkommer statlig skatt. En division med en genomsnittssats ger därför alltid fel svar.' },
 ];
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
+import SkattKontext from '../../components/SkattKontext.astro';
 ---
 
 <CalculatorLayout
@@ -34,4 +57,6 @@ const faqs = [
     </table>
     <p><em>Ungefärliga belopp. Välj din kommun i kalkylatorn ovan för exakt resultat.</em></p>
   </div>
+  <OfficiellaKallor />
+  <SkattKontext />
 </CalculatorLayout>

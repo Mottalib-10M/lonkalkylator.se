@@ -10,9 +10,37 @@ const calculators = [
 ];
 
 const faqs = [
-  { question: 'Vilken kalkylator ska jag använda?', answer: 'Börja med Lönekalkylator om du vet din bruttolön per månad. Använd Netto till brutto om du vill veta vilken bruttolön du behöver för att nå ett visst nettobelopp.' },
-  { question: 'Är kalkylatorerna uppdaterade för 2026?', answer: 'Ja. Alla kalkylatorer använder Skatteverkets aktuella skattesatser, jobbskatteavdrag, grundavdrag och pensionsavgifter för beskattningsåret 2026.' },
+  {
+    question: "Räknar kalkylatorerna med kyrkoavgift?",
+    answer:
+      "Bara om du anger den. Kyrkoavgiften betalas enbart av medlemmar i Svenska kyrkan eller ett annat trossamfund som tar ut avgift via Skatteverket, och den ligger typiskt kring en procent av den beskattningsbara inkomsten. Begravningsavgiften däremot betalar alla, oavsett medlemskap, och den ingår redan i beräkningen eftersom ingen kan välja bort den.",
+  },
+  {
+    question: "Varför stämmer inte kalkylatorn med mitt lönebesked?",
+    answer:
+      "Oftast på grund av en jämkning, en skattepliktig förmån eller ett avdrag som arbetsgivaren känner till men som ingen kalkylator kan gissa. Skattetabellerna utgår dessutom från jämn inkomst över året, så en ojämn lön ger avvikelser månad för månad som jämnas ut först i deklarationen. Skillnader på några tior är helt normala.",
+  },
+  {
+    question: "Skickas mina uppgifter någonstans?",
+    answer:
+      "Nej. Varje beräkning sker i din egen webbläsare, och ingen lönesiffra lämnar datorn eller lagras någonstans. Den enda mätningen är en anonym sidräkning, som noterar att ett besök skett och ingenting alls om vad du skrivit in. Det betyder också att sidan inte kräver något samtycke för den här funktionen.",
+  },
+  {
+    question: "Vilken kalkylator passar för en löneförhandling?",
+    answer:
+      "Lönekalkylatorn om du utgår från ett bruttobelopp, och netto-till-brutto-kalkylatorn om du vet vilket belopp du behöver på kontot varje månad. Den senare svarar på den fråga som faktiskt ställs i en förhandling, medan den förra kräver att du räknar baklänges i huvudet, vilket sällan blir rätt.",
+  },
+  {
+    question: "Hur ofta uppdateras siffrorna bakom verktygen?",
+    answer:
+      "Skattesatserna ändras den första januari och uppdateras när Skatteverket publicerat de fastställda värdena i slutet av december. Skiktgränsen räknas upp varje år enligt inkomstbasbeloppet. Alla kalkylatorer delar samma beräkningsmotor, så en ändring slår igenom på samtliga sidor samtidigt och två verktyg kan aldrig visa olika siffror.",
+  },
+
+  { question: 'Vilken kalkylator ska jag använda?', answer: 'Börja med Lönekalkylator om du vet din bruttolön per månad. Använd Netto till brutto om du vill veta vilken bruttolön du behöver för att nå ett visst nettobelopp. Utgår du från ett bruttobelopp passar lönekalkylatorn, vet du i stället vilket belopp du behöver på kontot är netto-till-brutto-kalkylatorn rätt verktyg. Den senare svarar på den fråga som faktiskt ställs i en löneförhandling.' },
+  { question: 'Är kalkylatorerna uppdaterade för 2026?', answer: 'Ja. Alla kalkylatorer använder Skatteverkets aktuella skattesatser, jobbskatteavdrag, grundavdrag och pensionsavgifter för beskattningsåret 2026. Samtliga verktyg delar samma beräkningsmotor, så när Skatteverket publicerar nya satser i slutet av december slår ändringen igenom på alla sidor samtidigt. Två kalkylatorer kan därför aldrig visa olika resultat för samma lön.' },
 ];
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
+import SkattKontext from '../../components/SkattKontext.astro';
 ---
 
 <CalculatorLayout
@@ -33,4 +61,6 @@ const faqs = [
       </a>
     ))}
   </div>
+  <OfficiellaKallor />
+  <SkattKontext />
 </CalculatorLayout>

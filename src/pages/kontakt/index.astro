@@ -2,10 +2,28 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 
 const faqs = [
-  { question: 'Hur snabbt svarar ni?', answer: 'Vi strävar efter att svara på alla meddelanden inom 48 timmar under vardagar.' },
-  { question: 'Kan ni hjälpa med skattefrågor?', answer: 'Vi kan svara på frågor om hur kalkylatorn fungerar, men vi ger inte individuell skatterådgivning. Kontakta Skatteverket eller en auktoriserad skatterådgivare för personlig vägledning.' },
-  { question: 'Jag hittade ett fel i kalkylatorn – vad gör jag?', answer: 'Skicka gärna ett mejl till contact@lonefterskatt.se med detaljer om felet. Beskriv vilken kalkylator du använde, vilka värden du matade in och vad resultatet blev. Vi uppskattar alla felrapporter.' },
+  {
+    question: "Vilka frågor kan ni faktiskt svara på?",
+    answer:
+      "Frågor om hur kalkylatorerna räknar, vilka källor siffrorna kommer från och hur en enskild post i beräkningen fungerar. Vi kan också rätta fel och ta emot förslag på nya funktioner. Det vi inte gör är individuell skatterådgivning, eftersom det kräver kännedom om hela din situation och därtill auktorisation som vi inte har.",
+  },
+  {
+    question: "Vart vänder jag mig med en skattefråga?",
+    answer:
+      "Skatteverket svarar på frågor om din egen deklaration, jämkning och skatteavdrag, kostnadsfritt och med bindande besked i vissa fall. För mer sammansatta frågor, som eget företag eller inkomst från utlandet, är en auktoriserad skatterådgivare rätt väg. Båda ger besked som går att luta sig mot, vilket ingen kalkylator gör.",
+  },
+  {
+    question: "Hur rapporterar jag ett fel i en beräkning?",
+    answer:
+      "Skriv vilken kalkylator du använde, vilka värden du matade in och vilket resultat du fick, gärna med vad du väntade dig i stället. Med de uppgifterna går felet att återskapa direkt. Rapporter utan indata tar betydligt längre tid att utreda, och ibland går de inte att bekräfta alls.",
+  },
+
+  { question: 'Hur snabbt svarar ni?', answer: 'Vi strävar efter att svara på alla meddelanden inom 48 timmar under vardagar. Beskriv gärna vilken sida frågan gäller och vilka värden du använde, så går svaret att ge direkt i stället för att kräva ett par vändor fram och tillbaka. Frågor som rör din egen deklaration hänvisas till Skatteverket, som svarar bindande och kostnadsfritt.' },
+  { question: 'Kan ni hjälpa med skattefrågor?', answer: 'Vi kan svara på frågor om hur kalkylatorn fungerar, men vi ger inte individuell skatterådgivning. Kontakta Skatteverket eller en auktoriserad skatterådgivare för personlig vägledning. Gränsen går vid din egen situation: hur ett avdrag beräknas i allmänhet kan vi förklara, men om just du har rätt till det kräver kännedom om hela din ekonomi och därtill auktorisation som vi inte har.' },
+  { question: 'Jag hittade ett fel i kalkylatorn – vad gör jag?', answer: 'Skicka gärna ett mejl till contact@lonefterskatt.se med detaljer om felet. Beskriv vilken kalkylator du använde, vilka värden du matade in och vad resultatet blev. Vi uppskattar alla felrapporter. Rapporter utan indata tar betydligt längre tid att utreda, och ibland går felet inte att bekräfta alls. Med värdena i handen går det däremot oftast att återskapa på några minuter och rätta samma dag.' },
 ];
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
+import SkattKontext from '../../components/SkattKontext.astro';
 ---
 
 <CalculatorLayout
@@ -49,4 +67,6 @@ const faqs = [
     <h2>Om Lön Efter Skatt</h2>
     <p>Lön Efter Skatt drivs av <strong>Radif Partners</strong>, Utgivare av kalkylatorer och praktiska guider. Sajten erbjuder gratis skattekalkylatorer byggda med Skatteverkets officiella data. Läs mer på vår <a href="/om-oss/">om oss-sida</a>.</p>
   </div>
+  <OfficiellaKallor />
+  <SkattKontext />
 </CalculatorLayout>

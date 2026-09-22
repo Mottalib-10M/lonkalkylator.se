@@ -2,16 +2,39 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 
 const faqs = [
-  { question: 'Vem driver Lön Efter Skatt?', answer: 'Lön Efter Skatt drivs av Radif Partners, utgivare av kalkylatorer och praktiska guider med inriktning på privatekonomiska verktyg. Alla kalkylatorer är byggda med Skatteverkets officiella data.' },
-  { question: 'Hur exakta är kalkylatorerna?', answer: 'Våra kalkylatorer använder Skatteverkets aktuella skattesatser, jobbskatteavdrag, grundavdrag och kommunalskattesatser för 2026. Alla beräkningar sker i din webbläsare. Ingen data skickas till någon server.' },
+  {
+    question: "Vilka källor bygger sidan på?",
+    answer:
+      "Skatteverkets publicerade skattesatser och skiktgränser, Statistiska centralbyråns sammanställning av kommunala och regionala satser, och Pensionsmyndighetens uppgifter om allmän pensionsavgift. Varje sida anger sin granskningsdag. Källorna har alltid företräde framför sammanfattningen här, och de är länkade så att varje siffra går att kontrollera vid ursprunget.",
+  },
+  {
+    question: "Tjänar ni pengar på sidan?",
+    answer:
+      "Sidan finansieras av annonsering på vissa sidor, aldrig av att sälja besökarnas uppgifter, eftersom inga samlas in. Ingen annonsör påverkar vad beräkningarna visar eller vilka guider som skrivs. Den som rekommenderas i en text rekommenderas för att den hör hemma där, inte för att någon betalat för placeringen.",
+  },
+  {
+    question: "Hur ofta ses innehållet över?",
+    answer:
+      "Skattesatserna uppdateras när Skatteverket publicerar dem, normalt i slutet av december inför det nya året. Guiderna ses över minst en gång per år och oftare när en regeländring motiverar det. Granskningsdagen står överst och nederst på varje sida, så det går alltid att se hur färskt ett innehåll är.",
+  },
+  {
+    question: "Kan jag lita på beräkningarna?",
+    answer:
+      "De är korrekta på kronan för en vanlig anställning med standardavdrag. Det de inte kan veta är jämkning, skattepliktiga förmåner, avdrag som yrkas i deklarationen eller tjänstepension utöver den allmänna. Betrakta resultatet som en tillförlitlig utgångspunkt snarare än som ett lönebesked, och stäm av mot Skatteverket vid tveksamhet.",
+  },
+
+  { question: 'Vem driver Lön Efter Skatt?', answer: 'Lön Efter Skatt drivs av Radif Partners, utgivare av kalkylatorer och praktiska guider med inriktning på privatekonomiska verktyg. Alla kalkylatorer är byggda med Skatteverkets officiella data. Verktygen är byggda för att svara på en fråga i taget, med siffror som går att spåra till sin källa. Varje sida anger sin granskningsdag och länkar de publikationer den bygger på, så att inget behöver tas på förtroende.' },
+  { question: 'Hur exakta är kalkylatorerna?', answer: 'Våra kalkylatorer använder Skatteverkets aktuella skattesatser, jobbskatteavdrag, grundavdrag och kommunalskattesatser för 2026. Alla beräkningar sker i din webbläsare. Ingen data skickas till någon server. Det de inte kan veta är jämkning, skattepliktiga förmåner eller avdrag som yrkas i deklarationen, eftersom inget av det går att sluta sig till från en bruttolön. Betrakta resultatet som en tillförlitlig utgångspunkt snarare än som ett lönebesked.' },
 ];
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
+import SkattKontext from '../../components/SkattKontext.astro';
 ---
 
 <CalculatorLayout
   slug="/om-oss"
   title="Om oss"
   metaTitle="Om Lön Efter Skatt | Gratis svenska skattekalkylatorer"
-  metaDescription="Lön Efter Skatt erbjuder gratis och exakta skattekalkylatorer byggda med Skatteverkets 2026-data. Skapad av Radif Partners, Utgivare av kalkylatorer och praktiska guider. Beräkna i webbläsaren."
+  metaDescription="Vem som driver Lön Efter Skatt, vilka källor beräkningarna bygger på, hur ofta siffrorna ses över, och vad verktygen inte kan svara på åt dig som besökare."
   h1="Om Lön Efter Skatt"
   intro="Gratis, exakta skattekalkylatorer för svenska löntagare, byggda med Skatteverkets officiella data."
   faqs={faqs}
@@ -33,4 +56,6 @@ const faqs = [
     <h2>Ansvarsfriskrivning</h2>
     <p>Lön Efter Skatt ger uppskattningar enbart i informationssyfte. Våra kalkylatorer ersätter inte professionell skatterådgivning. Kontakta alltid en auktoriserad skatterådgivare för personlig vägledning.</p>
   </div>
+  <OfficiellaKallor />
+  <SkattKontext />
 </CalculatorLayout>

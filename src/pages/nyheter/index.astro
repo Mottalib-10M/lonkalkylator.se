@@ -11,15 +11,44 @@ const articles = [
 ];
 
 const faqs = [
-  { question: 'Hur ofta publiceras nya skattenyheter?', answer: 'Vi publicerar uppdateringar löpande när Skatteverket eller riksdagen fattar beslut som påverkar löneberäkningar, skattesatser eller socialavgifter.' },
+  {
+    question: "Meddelas jag när något ändras?",
+    answer:
+      "Nej, det finns ingen prenumeration. Sidan uppdateras när en ändring beslutats och notisen daterar sig själv, så ett återbesök i januari täcker de flesta ändringar som gäller för året. Skatteverket publicerar dessutom sina egna pressmeddelanden, som är den snabbaste vägen till ett besked i första hand.",
+  },
+
+  {
+    question: "Vad räknas som en nyhet här?",
+    answer:
+      "Varje ändring i de siffror kalkylatorerna använder: kommunala och regionala skattesatser, skiktgränsen, grundavdrag, jobbskatteavdrag och allmän pensionsavgift. Redaktionella ändringar i guiderna listas inte, eftersom de inte påverkar någon beräkning. Varje notis anger den publikation som ligger bakom, så att uppgiften går att kontrollera vid källan.",
+  },
+  {
+    question: "Hur ofta kommer uppdateringarna?",
+    answer:
+      "Tätast i december och januari, när kommunernas satser och den nya skiktgränsen fastställs och träder i kraft. Under resten av året är notiserna få och hänger nästan alltid samman med ett riksdagsbeslut. Ändringar mitt under året anges med det datum de börjar gälla, eftersom skillnaden mot årsskiftet spelar roll för hur de tillämpas i lönesystemet.",
+  },
+  {
+    question: "Sparas äldre siffror någonstans?",
+    answer:
+      "Kalkylatorerna använder enbart innevarande års satser, eftersom det är den fråga de ställs. Notiserna här räcker för att rekonstruera en tidigare position tillsammans med Skatteverkets eget arkiv, där historiska skattetabeller publiceras och förblir tillgängliga år för år utan någon tidsgräns alls.",
+  },
+  {
+    question: "Varför ändrades min skatt trots oförändrad lön?",
+    answer:
+      "Oftast för att skiktgränsen räknats upp, för att kommunen ändrat sin sats, eller för att grundavdraget justerats. Alla tre sker vid årsskiftet och syns först på januarilönen, vilket är skälet till att den ofta skiljer sig från decemberlönen utan att något i anställningen förändrats.",
+  },
+
+  { question: 'Hur ofta publiceras nya skattenyheter?', answer: 'Vi publicerar uppdateringar löpande när Skatteverket eller riksdagen fattar beslut som påverkar löneberäkningar, skattesatser eller socialavgifter. Den tätaste perioden är december och januari, när kommunernas satser och den nya skiktgränsen fastställs. Ändringar mitt under året förekommer men är ovanliga, och de anges då med det datum de träder i kraft.' },
 ];
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
+import SkattKontext from '../../components/SkattKontext.astro';
 ---
 
 <CalculatorLayout
   slug="/nyheter"
   title="Nyheter"
   metaTitle="Skattenyheter Sverige 2026 | Senaste uppdateringar"
-  metaDescription="Senaste nyheterna om skatter i Sverige: ändrade skattesatser, grundavdrag, jobbskatteavdrag och arbetsgivaravgifter. Uppdateras löpande."
+  metaDescription="Varje ändring i skattesatser, skiktgräns och avdrag som påverkar beräkningarna, med datum och den publikation från Skatteverket som ligger bakom var och en."
   h1="Skattenyheter"
   intro="De senaste uppdateringarna om svenska skatter och hur de påverkar din nettolön."
   faqs={faqs}
@@ -29,8 +58,10 @@ const faqs = [
       <a href={article.href} class="block group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface p-6 hover:border-brand-500 dark:hover:border-brand-400 hover:shadow-md transition-all">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">{article.title}</h2>
         <p class="mt-2 text-gray-500 dark:text-gray-400">{article.description}</p>
-        <p class="mt-2 text-xs text-gray-400 dark:text-gray-500">Publicerad {article.date}</p>
+        <p class="mt-2 text-xs text-gray-500 dark:text-gray-500">Publicerad {article.date}</p>
       </a>
     ))}
   </div>
+  <OfficiellaKallor />
+  <SkattKontext />
 </CalculatorLayout>

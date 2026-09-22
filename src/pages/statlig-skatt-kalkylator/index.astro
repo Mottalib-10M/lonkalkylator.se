@@ -3,10 +3,28 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import LonKalkylator from '../../components/calculators/LonKalkylator';
 
 const faqs = [
+  {
+    question: "Hur räknas skiktgränsen upp?",
+    answer:
+      "Den följer inkomstbasbeloppet och räknas om varje år, vilket innebär att den flyttar sig även utan något riksdagsbeslut. Syftet är att inflationen ensam inte ska föra allt fler över gränsen. Riksdagen kan därutöver ändra nivån, och sådana beslut anges alltid med det datum de träder i kraft.",
+  },
+  {
+    question: "Räknas bonus in i underlaget för statlig skatt?",
+    answer:
+      "Ja, bonus är tjänsteinkomst och läggs till årets övriga lön. En bonus kan därför föra en inkomst över skiktgränsen som annars legat under, vilket ger en betydligt högre skatt på just den utbetalningen. Skatteavdraget på engångsbelopp görs dessutom efter en egen tabell, som ofta drar mer än slutlig skatt.",
+  },
+  {
+    question: "Kan jag undvika statlig skatt med pensionsavsättning?",
+    answer:
+      "En avsättning till tjänstepension genom löneväxling minskar den lön som beskattas och kan föra inkomsten under skiktgränsen. Det är den vanligaste metoden och kräver att arbetsgivaren erbjuder den. Privat pensionssparande ger däremot inget avdrag längre för den som har tjänstepension, vilket ofta förväxlas med det förra.",
+  },
+
   { question: 'Vad är statlig inkomstskatt?', answer: 'Statlig inkomstskatt är en extra skatt på 20% som betalas på den del av din beskattningsbara förvärvsinkomst som överstiger skiktgränsen 615 300 kr per år (2026). Det innebär en bruttolön på ungefär 53 000–56 000 kr per månad beroende på grundavdrag.' },
-  { question: 'Hur mycket är marginalskatten med statlig skatt?', answer: 'Med statlig skatt blir marginalskatten kommunalskatt + 20% + begravningsavgift. I Stockholm (30,48%) blir det cirka 50,8%, i Göteborg (33,11%) cirka 53,4%.' },
-  { question: 'Kan jag sänka min statliga skatt?', answer: 'Ja, genom att göra pensionsavsättningar, använda ROT/RUT-avdrag eller göra avdrag för resor och övriga kostnader kan du minska din beskattningsbara inkomst under skiktgränsen.' },
+  { question: 'Hur mycket är marginalskatten med statlig skatt?', answer: 'Med statlig skatt blir marginalskatten kommunalskatt + 20% + begravningsavgift. I Stockholm (30,48%) blir det cirka 50,8%, i Göteborg (33,11%) cirka 53,4%. Det är den siffra som gäller vid en löneförhöjning eller ett extrapass, inte genomsnittsskatten på hela lönen. Skillnaden mellan de två är skälet till att många underskattar vad de faktiskt behåller och överskattar vad en höjning ger.' },
+  { question: 'Kan jag sänka min statliga skatt?', answer: 'Ja, genom att göra pensionsavsättningar, använda ROT/RUT-avdrag eller göra avdrag för resor och övriga kostnader kan du minska din beskattningsbara inkomst under skiktgränsen. Löneväxling till tjänstepension är den vanligaste metoden och kräver att arbetsgivaren erbjuder den. ROT och RUT minskar däremot skatten direkt i stället för inkomsten, och påverkar alltså inte om du hamnar över skiktgränsen.' },
 ];
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
+import SkattKontext from '../../components/SkattKontext.astro';
 ---
 
 <CalculatorLayout
@@ -45,4 +63,6 @@ const faqs = [
     </table>
     <p><em>Inkluderar begravningsavgift (0,28%). Jobbskatteavdraget sänker den faktiska skatten ytterligare.</em></p>
   </div>
+  <OfficiellaKallor />
+  <SkattKontext />
 </CalculatorLayout>

@@ -1,10 +1,35 @@
 ---
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { LEGAL, CONTACT_EMAIL } from '../../data/site-config';
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 
 const faqs = [
-  { question: 'Är beräkningarna juridiskt bindande?', answer: 'Nej. Alla beräkningar är uppskattningar och ersätter inte professionell skatterådgivning. Kontakta Skatteverket eller en auktoriserad skatterådgivare för bindande information.' },
-  { question: 'Får jag använda kalkylatorn för mitt företag?', answer: 'Ja, du får använda kalkylatorn fritt. Du kan även bädda in vår widget på din webbplats. Kontakta oss för anpassade lösningar.' },
+  {
+    question: "Får jag använda siffrorna i eget material?",
+    answer:
+      "Ja, för eget bruk och för redaktionellt innehåll med källhänvisning. Det som inte är tillåtet är att kopiera hela tabeller eller texter och publicera dem som egna. Vill du visa beräkningen på din egen webbplats finns en widget att bädda in, som dessutom håller sig uppdaterad av sig själv.",
+  },
+  {
+    question: "Vad händer om en siffra visar sig vara fel?",
+    answer:
+      "Felet rättas så snart det bekräftats, och en notis läggs upp på nyhetssidan om det påverkat ett resultat. Eftersom beräkningarna är uppskattningar och inte rådgivning kan inget ansvar tas för beslut fattade på grundval av dem, vilket är skälet till att varje sida hänvisar till Skatteverket för bindande besked.",
+  },
+  {
+    question: "Gäller villkoren även widgeten?",
+    answer:
+      "Ja, med ett tillägg: attributionslänken i widgetens fot ska förbli synlig och klickbar. Det är den enda motprestationen, och den ersätter både avgift och registrering. I övrigt får widgeten användas fritt, även på kommersiella webbplatser och utan begränsning i antal besök.",
+  },
+  {
+    question: "Vilken lag gäller för villkoren?",
+    answer:
+      "Svensk lag. Tvister som inte kan lösas i samförstånd prövas av svensk allmän domstol. För konsumenter gäller dessutom de rättigheter som följer av konsumentlagstiftningen och som inte kan avtalas bort, oavsett vad som står här. Det innebär bland annat att en friskrivning som strider mot tvingande regler saknar verkan i den delen.",
+  },
+
+  { question: 'Är beräkningarna juridiskt bindande?', answer: 'Nej. Alla beräkningar är uppskattningar och ersätter inte professionell skatterådgivning. Kontakta Skatteverket eller en auktoriserad skatterådgivare för bindande information. Skillnaden mot ditt faktiska lönebesked ligger normalt på några tior och beror på avrundning eller på att skattetabellen utgår från jämn inkomst över året. Större avvikelser har nästan alltid en förklaring i en förmån, en jämkning eller ett avdrag.' },
+  { question: 'Får jag använda kalkylatorn för mitt företag?', answer: 'Ja, du får använda kalkylatorn fritt. Du kan även bädda in vår widget på din webbplats. Kontakta oss för anpassade lösningar. Det enda villkoret för widgeten är att attributionslänken i foten förblir synlig och klickbar. Den ersätter både avgift och registrering, och widgeten hämtar skattesatserna vid källan så att den aldrig blir inaktuell på din sida.' },
 ];
+import SkattKontext from '../../components/SkattKontext.astro';
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
 ---
 
 <CalculatorLayout
@@ -18,6 +43,12 @@ const faqs = [
 >
   <div class="prose prose-lg dark:prose-invert max-w-none">
     <p><em>Senast uppdaterad: 15 januari 2025</em></p>
+
+    <h2>Utgivare</h2>
+    <LegalIdentity mode="publisher" lang="sv" />
+
+    <h2>Webbvärd</h2>
+    <LegalIdentity mode="hosting" lang="sv" />
 
     <h2>1. Tjänstens syfte</h2>
     <p>Lön Efter Skatt (lonefterskatt.se) tillhandahåller gratis skattekalkylatorer och informationsmaterial om det svenska skattesystemet. Tjänsten är kostnadsfri att använda och kräver ingen registrering.</p>
@@ -52,6 +83,8 @@ const faqs = [
     <p>Dessa villkor lyder under och tolkas i enlighet med svensk lag.</p>
 
     <h2>9. Kontakt</h2>
-    <p>Frågor om villkoren? Kontakta oss på <a href="mailto:contact@lonefterskatt.se">contact@lonefterskatt.se</a> eller besök vår <a href="/kontakt/">kontaktsida</a>.</p>
+    <p>Frågor om villkoren? Kontakta oss på <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> eller besök vår <a href="/kontakt/">kontaktsida</a>. Anser du att dina personuppgifter har behandlats felaktigt kan du lämna klagomål till {LEGAL.supervisoryAuthority}, via <a href={LEGAL.supervisoryAuthorityUrl} rel="nofollow noopener" target="_blank">{LEGAL.supervisoryAuthorityUrl}</a>.</p>
   </div>
+  <SkattKontext />
+  <OfficiellaKallor />
 </CalculatorLayout>

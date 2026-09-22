@@ -1,4 +1,5 @@
 ---
+import '../styles/global.css';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import { SITE_URL, OG_IMAGE, OG_IMAGE_WIDTH, OG_IMAGE_HEIGHT } from '../data/site-config';
@@ -11,9 +12,27 @@ interface Props {
   modifiedDate?: string;
   breadcrumbs: { label: string; href?: string }[];
   lang?: string;
+  /**
+   * Questions de la page. Affichees ET declarees en `FAQPage` depuis cette
+   * seule source, de sorte que le balisage ne puisse pas promettre a Google un
+   * texte absent de la page (RECETTE §7).
+   */
+  faqs?: { question: string; answer: string }[];
 }
 
-const { title, description, publishDate, modifiedDate, breadcrumbs, lang = 'sv' } = Astro.props;
+const { title, description, publishDate, modifiedDate, breadcrumbs, lang = 'sv', faqs = [] } = Astro.props;
+
+const faqPageSchema = faqs.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: { '@type': 'Answer', text: f.answer },
+      })),
+    }
+  : null;
 const canonicalUrl = new URL(Astro.url.pathname, SITE_URL).href;
 
 const currentPath = Astro.url.pathname;
@@ -27,7 +46,7 @@ const enPath = lang === 'en' ? canonicalUrl : altPath ? `${SITE_URL}${altPath}` 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{title} | Lön Efter Skatt</title>
+  <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalUrl} />
 
@@ -78,6 +97,23 @@ const enPath = lang === 'en' ? canonicalUrl : altPath ? `${SITE_URL}${altPath}` 
         </div>
       </header>
       <slot />
+
+      {faqs.length > 0 && (
+        <section class="mt-12 border-t border-gray-200 dark:border-gray-700 pt-8">
+          <h2 id="faq">{lang === 'en' ? 'Frequently asked questions' : 'Vanliga frågor'}</h2>
+          <div class="mt-6 space-y-4 not-prose">
+            {faqs.map((f) => (
+              <details class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                <summary class="cursor-pointer px-6 py-4 font-semibold hover:text-brand-600">
+                  {f.question}
+                </summary>
+                <div class="px-6 pb-4 text-sm leading-relaxed text-gray-600 dark:text-gray-400">{f.answer}</div>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
+      {faqPageSchema && <script type="application/ld+json" set:html={JSON.stringify(faqPageSchema)} />}
     </article>
   </main>
   <Footer />

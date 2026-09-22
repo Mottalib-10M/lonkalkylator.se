@@ -7,7 +7,7 @@
 
 import type { TaxResult } from './tax-engine-se';
 import { calculateTakeHome } from './tax-engine-se';
-import { formatKr } from './format';
+import { formatKr, formatDec } from './format';
 import { SKIKTGRANS_STATLIG, DEFAULT_KOMMUNALSKATT } from '../data/tax-2026';
 
 // --- Hj\u00e4lpfunktioner ---
@@ -161,10 +161,10 @@ export function getTaxTips(amount: number, result: TaxResult): string {
     const extraPerMonth = Math.round(distToStatlig / 12);
     tips += `Vid din l\u00f6neniv\u00e5 p\u00e5 ${fmtKr(amount)} ligger du ${fmtKr(distToStatlig)} under skiktgr\u00e4nsen f\u00f6r statlig skatt. Det inneb\u00e4r att en l\u00f6ne\u00f6kning p\u00e5 mer \u00e4n ${fmtKr(extraPerMonth)} per m\u00e5nad (f\u00f6re grundavdrag) skulle medf\u00f6ra 20 procentenheter h\u00f6gre marginalskatt. \u00d6verv\u00e4g att omvandla del av bruttol\u00f6nen till pensionsavs\u00e4ttning f\u00f6r att undvika statlig skatt \u2014 det kan spara dig ${fmtKr(pensionTaxSaving)} per \u00e5r.`;
   } else if (distToStatlig > 0) {
-    tips += `Med ${fmtKr(amount)} i bruttol\u00f6n betalar du enbart kommunalskatt p\u00e5 ${result.kommunalskattRateUsed}%. Du har ${fmtKr(distToStatlig)} kvar till skiktgr\u00e4nsen, s\u00e5 din marginalskatt \u00e4r l\u00e4gre \u00e4n f\u00f6r h\u00f6ginkomsttagare. Din effektiva skattesats p\u00e5 ${result.effectiveTaxRate.toFixed(1)}% \u00e4r f\u00f6rh\u00e5llandevis l\u00e5g tack vare jobbskatteavdraget p\u00e5 ${fmtKr(result.jobbskatteavdrag)}.`;
+    tips += `Med ${fmtKr(amount)} i bruttol\u00f6n betalar du enbart kommunalskatt p\u00e5 ${result.kommunalskattRateUsed}%. Du har ${fmtKr(distToStatlig)} kvar till skiktgr\u00e4nsen, s\u00e5 din marginalskatt \u00e4r l\u00e4gre \u00e4n f\u00f6r h\u00f6ginkomsttagare. Din effektiva skattesats p\u00e5 ${formatDec(result.effectiveTaxRate, 1)}% \u00e4r f\u00f6rh\u00e5llandevis l\u00e5g tack vare jobbskatteavdraget p\u00e5 ${fmtKr(result.jobbskatteavdrag)}.`;
   } else {
     const statligPerMonth = Math.round(result.statligSkatt / 12);
-    tips += `Din l\u00f6n p\u00e5 ${fmtKr(amount)} g\u00f6r att du betalar ${fmtKr(result.statligSkatt)} per \u00e5r (${fmtKr(statligPerMonth)}/m\u00e5n) i statlig inkomstskatt. Genom bruttol\u00f6nev\u00e4xling till pension kan du spara upp till ${fmtKr(pensionTaxSaving)} per \u00e5r i skatt. Marginalskatten p\u00e5 ${result.marginalTaxRate.toFixed(1)}% g\u00f6r att varje sparad krona \u00e4r extra v\u00e4rdefull.`;
+    tips += `Din l\u00f6n p\u00e5 ${fmtKr(amount)} g\u00f6r att du betalar ${fmtKr(result.statligSkatt)} per \u00e5r (${fmtKr(statligPerMonth)}/m\u00e5n) i statlig inkomstskatt. Genom bruttol\u00f6nev\u00e4xling till pension kan du spara upp till ${fmtKr(pensionTaxSaving)} per \u00e5r i skatt. Marginalskatten p\u00e5 ${formatDec(result.marginalTaxRate, 1)}% g\u00f6r att varje sparad krona \u00e4r extra v\u00e4rdefull.`;
   }
 
   const rutTips = [
@@ -205,7 +205,7 @@ export function buildFaqs(amount: number, result: TaxResult): { question: string
   return [
     {
       question: `Vad blir nettol\u00f6nen p\u00e5 ${formattedAmount} kr i bruttol\u00f6n 2026?`,
-      answer: `Med en bruttol\u00f6n p\u00e5 ${formattedAmount} kr per m\u00e5nad och genomsnittlig kommunalskatt (${DEFAULT_KOMMUNALSKATT}%) blir din nettol\u00f6n ungef\u00e4r ${fmtKr(result.netMonthly)} per m\u00e5nad. Per \u00e5r inneb\u00e4r det ${fmtKr(result.netAnnual)} netto av ${fmtKr(annualGross)} brutto. Din effektiva skattesats blir ${result.effectiveTaxRate.toFixed(1)}%. Arbetsgivarens totalkostnad \u00e4r ${fmtKr(employerCost)} per m\u00e5nad inklusive arbetsgivaravgifter.`,
+      answer: `Med en bruttol\u00f6n p\u00e5 ${formattedAmount} kr per m\u00e5nad och genomsnittlig kommunalskatt (${formatDec(DEFAULT_KOMMUNALSKATT, 2)} %) blir din nettol\u00f6n ungef\u00e4r ${fmtKr(result.netMonthly)} per m\u00e5nad. Per \u00e5r inneb\u00e4r det ${fmtKr(result.netAnnual)} netto av ${fmtKr(annualGross)} brutto. Din effektiva skattesats blir ${formatDec(result.effectiveTaxRate, 1)}%. Arbetsgivarens totalkostnad \u00e4r ${fmtKr(employerCost)} per m\u00e5nad inklusive arbetsgivaravgifter.`,
     },
     {
       question: `Hur mycket skatt betalar man p\u00e5 ${formattedAmount} kr i m\u00e5nadsl\u00f6n?`,
@@ -213,12 +213,12 @@ export function buildFaqs(amount: number, result: TaxResult): { question: string
     },
     {
       question: `Vad \u00e4r marginalskatten vid ${formattedAmount} kr i l\u00f6n?`,
-      answer: `Vid en bruttol\u00f6n p\u00e5 ${formattedAmount} kr \u00e4r din marginalskatt cirka ${result.marginalTaxRate.toFixed(1)}%. Det inneb\u00e4r att om du f\u00e5r 1 000 kr mer i bruttol\u00f6n beh\u00e5ller du ungef\u00e4r ${fmtKr(Math.round(1000 * (1 - result.marginalTaxRate / 100)))} efter skatt. ${result.statligSkatt > 0 ? `Marginalskatten inkluderar 20% statlig skatt d\u00e5 du \u00f6verstiger skiktgr\u00e4nsen p\u00e5 ${fmtKr(SKIKTGRANS_STATLIG)}.` : `Du betalar ingen statlig skatt s\u00e5 marginalskatten best\u00e5r enbart av kommunalskatt (${result.kommunalskattRateUsed}%) och begravningsavgift.`}`,
+      answer: `Vid en bruttol\u00f6n p\u00e5 ${formattedAmount} kr \u00e4r din marginalskatt cirka ${formatDec(result.marginalTaxRate, 1)}%. Det inneb\u00e4r att om du f\u00e5r 1 000 kr mer i bruttol\u00f6n beh\u00e5ller du ungef\u00e4r ${fmtKr(Math.round(1000 * (1 - result.marginalTaxRate / 100)))} efter skatt. ${result.statligSkatt > 0 ? `Marginalskatten inkluderar 20% statlig skatt d\u00e5 du \u00f6verstiger skiktgr\u00e4nsen p\u00e5 ${fmtKr(SKIKTGRANS_STATLIG)}.` : `Du betalar ingen statlig skatt s\u00e5 marginalskatten best\u00e5r enbart av kommunalskatt (${result.kommunalskattRateUsed}%) och begravningsavgift.`}`,
     },
     {
       question: `Hur mycket mer f\u00e5r man ut med ${formattedAmount} kr j\u00e4mf\u00f6rt med ${fmt(prevAmount > 0 ? prevAmount : amount - 1000)} kr?`,
       answer: prevResult
-        ? `Skillnaden i nettol\u00f6n mellan ${fmtKr(prevAmount)} och ${fmtKr(amount)} brutto \u00e4r ${fmtKr(result.netMonthly - prevResult.netMonthly)} per m\u00e5nad. P\u00e5 ett \u00e5r blir det ${fmtKr(result.netAnnual - prevResult.netAnnual)} mer i plånboken. Effektiva skattesatsen g\u00e5r fr\u00e5n ${prevResult.effectiveTaxRate.toFixed(1)}% till ${result.effectiveTaxRate.toFixed(1)}%. Det inneb\u00e4r att av l\u00f6ne\u00f6kningen p\u00e5 ${fmtKr(5000)} beh\u00e5ller du ${fmtKr(result.netMonthly - prevResult.netMonthly)} netto.`
+        ? `Skillnaden i nettol\u00f6n mellan ${fmtKr(prevAmount)} och ${fmtKr(amount)} brutto \u00e4r ${fmtKr(result.netMonthly - prevResult.netMonthly)} per m\u00e5nad. P\u00e5 ett \u00e5r blir det ${fmtKr(result.netAnnual - prevResult.netAnnual)} mer i plånboken. Effektiva skattesatsen g\u00e5r fr\u00e5n ${formatDec(prevResult.effectiveTaxRate, 1)}% till ${formatDec(result.effectiveTaxRate, 1)}%. Det inneb\u00e4r att av l\u00f6ne\u00f6kningen p\u00e5 ${fmtKr(5000)} beh\u00e5ller du ${fmtKr(result.netMonthly - prevResult.netMonthly)} netto.`
         : `Vid ${fmtKr(amount)} brutto f\u00e5r du ${fmtKr(result.netMonthly)} netto. En l\u00f6ne\u00f6kning p\u00e5 1 000 kr ger dig cirka ${fmtKr(Math.round(1000 * (1 - result.marginalTaxRate / 100)))} extra netto per m\u00e5nad.`,
     },
     {
@@ -227,7 +227,7 @@ export function buildFaqs(amount: number, result: TaxResult): { question: string
     },
     {
       question: `L\u00f6nar sig en l\u00f6ne\u00f6kning fr\u00e5n ${formattedAmount} kr till ${fmt(nextAmount)} kr?`,
-      answer: `En h\u00f6jning fr\u00e5n ${fmtKr(amount)} till ${fmtKr(nextAmount)} brutto ger dig ${fmtKr(nextResult.netMonthly - result.netMonthly)} mer netto per m\u00e5nad. P\u00e5 \u00e5rsbasis inneb\u00e4r det ${fmtKr(nextResult.netAnnual - result.netAnnual)} extra. Marginalskatten vid ${fmtKr(nextAmount)} \u00e4r ${nextResult.marginalTaxRate.toFixed(1)}%, s\u00e5 av varje extra krona beh\u00e5ller du ${(100 - nextResult.marginalTaxRate).toFixed(0)} \u00f6re. Effektiva skattesatsen \u00f6kar fr\u00e5n ${result.effectiveTaxRate.toFixed(1)}% till ${nextResult.effectiveTaxRate.toFixed(1)}%.`,
+      answer: `En h\u00f6jning fr\u00e5n ${fmtKr(amount)} till ${fmtKr(nextAmount)} brutto ger dig ${fmtKr(nextResult.netMonthly - result.netMonthly)} mer netto per m\u00e5nad. P\u00e5 \u00e5rsbasis inneb\u00e4r det ${fmtKr(nextResult.netAnnual - result.netAnnual)} extra. Marginalskatten vid ${fmtKr(nextAmount)} \u00e4r ${formatDec(nextResult.marginalTaxRate, 1)}%, s\u00e5 av varje extra krona beh\u00e5ller du ${(100 - nextResult.marginalTaxRate).toFixed(0)} \u00f6re. Effektiva skattesatsen \u00f6kar fr\u00e5n ${formatDec(result.effectiveTaxRate, 1)}% till ${formatDec(nextResult.effectiveTaxRate, 1)}%.`,
     },
   ];
 }
@@ -364,7 +364,7 @@ export function getUniqueComparisons(amount: number, result: TaxResult): string 
   }
 
   text += ` J\u00e4mf\u00f6rt med ${fmtKr(next1)} brutto: den som tj\u00e4nar 1 000 kr mer brutto f\u00e5r ${fmtKr(rNext1.netMonthly - result.netMonthly)} mer netto per m\u00e5nad.`;
-  text += ` J\u00e4mf\u00f6rt med ${fmtKr(next5)} brutto: nettoskillnaden \u00e4r ${fmtKr(rNext5.netMonthly - result.netMonthly)} per m\u00e5nad, och effektiva skattesatsen g\u00e5r fr\u00e5n ${result.effectiveTaxRate.toFixed(1)}% till ${rNext5.effectiveTaxRate.toFixed(1)}%.`;
+  text += ` J\u00e4mf\u00f6rt med ${fmtKr(next5)} brutto: nettoskillnaden \u00e4r ${fmtKr(rNext5.netMonthly - result.netMonthly)} per m\u00e5nad, och effektiva skattesatsen g\u00e5r fr\u00e5n ${formatDec(result.effectiveTaxRate, 1)}% till ${formatDec(rNext5.effectiveTaxRate, 1)}%.`;
   text += ` J\u00e4mf\u00f6rt med ${fmtKr(next10)} brutto: hela ${fmtKr(rNext10.netMonthly - result.netMonthly)} mer netto per m\u00e5nad, ${fmtKr((rNext10.netAnnual - result.netAnnual))} extra \u00e5rligen.`;
 
   // J\u00e4mf\u00f6relse med medianen

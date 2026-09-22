@@ -2,11 +2,17 @@
 import { formatDec } from '../../lib/format';
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import LonKalkylator from '../../components/calculators/LonKalkylator';
-import { KOMMUNER, SALARY_AMOUNTS } from '../../data/tax-2026';
+import { KOMMUNER, KOMMUNER_MED_SIDA, SALARY_AMOUNTS } from '../../data/tax-2026';
 import { calculateTakeHome } from '../../lib/tax-engine-se';
 
+/** Le taux s'ecrit a la suedoise, virgule decimale, dans le texte ET dans le JSON-LD. */
+
+
+const taux = (v: number) => v.toLocaleString('sv-SE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+
 export function getStaticPaths() {
-  return KOMMUNER.map((kommun) => ({
+  return KOMMUNER.filter((k) => KOMMUNER_MED_SIDA.includes(k.slug)).map((kommun) => ({
     params: { slug: kommun.slug },
     props: { kommun },
   }));
@@ -14,25 +20,33 @@ export function getStaticPaths() {
 
 const { kommun } = Astro.props;
 
+/* Rang de la commune et ecart avec la moyenne, pour des reponses qui different. */
+const _tri = [...KOMMUNER].sort((a, b) => a.rate - b.rate);
+const _rang = _tri.findIndex((k) => k.slug === kommun.slug) + 1;
+const _moyenne = KOMMUNER.reduce((s, k) => s + k.rate, 0) / KOMMUNER.length;
+const _ecartPts = kommun.rate - _moyenne;
+
 const salaryTable = SALARY_AMOUNTS.map((gross) => {
   const result = calculateTakeHome({ monthlyGross: gross, kommunalskattRate: kommun.rate });
   return { gross, net: result.netMonthly, tax: Math.round(result.totalSkatt / 12), rate: result.effectiveTaxRate };
 });
 
 const faqs = [
-  { question: `Vad är kommunalskatten i ${kommun.name} 2026?`, answer: `Kommunalskatten i ${kommun.name} är ${kommun.rate}% (2026). Det inkluderar både kommunens och ${kommun.lan}s regionskatt.` },
-  { question: `Hur mycket nettolön får jag i ${kommun.name}?`, answer: `Med en bruttolön på 35 000 kr per månad och ${kommun.name}s kommunalskatt på ${kommun.rate}% får du ungefär ${salaryTable.find(s => s.gross === 35000)?.net.toLocaleString('sv-SE')} kr netto per månad efter skatt.` },
-  { question: 'Betalar jag statlig skatt i denna kommun?', answer: `Statlig inkomstskatt (20%) är densamma oavsett kommun och betalas på beskattningsbar inkomst över 615 300 kr per år. Det som skiljer mellan kommuner är kommunalskattesatsen.` },
+  { question: `Vad är kommunalskatten i ${kommun.name} 2026?`, answer: `Kommunalskatten i ${kommun.name} är ${taux(kommun.rate)} % (2026). Det inkluderar både kommunens och ${kommun.lan}s regionskatt. Det placerar ${kommun.name} på plats ${_rang} av ${KOMMUNER.length} bland de kommuner vi följer, ${_ecartPts >= 0 ? `omkring ${taux(Math.abs(_ecartPts))} procentenheter över` : `omkring ${taux(Math.abs(_ecartPts))} procentenheter under`} genomsnittet. Kommunfullmäktige beslutar om satsen inför varje budgetår, och regionen lägger sin del ovanpå.` },
+  { question: `Hur mycket nettolön får jag i ${kommun.name}?`, answer: `Med en bruttolön på 35 000 kr per månad och ${kommun.name}s kommunalskatt på ${taux(kommun.rate)} % får du ungefär ${salaryTable.find(s => s.gross === 35000)?.net.toLocaleString('sv-SE')} kr netto per månad efter skatt. Beloppet förutsätter ingen kyrkoavgift och inga avdrag utöver grundavdrag och jobbskatteavdrag, som båda räknas in automatiskt i skattetabellen. Statlig inkomstskatt tillkommer först över skiktgränsen och påverkar alltså inte den här lönenivån.` },
+  { question: `Betalar jag statlig skatt i ${kommun.name}?`, answer: `Statlig inkomstskatt (20%) är densamma oavsett kommun och betalas på beskattningsbar inkomst över 615 300 kr per år. Det som skiljer mellan kommuner är kommunalskattesatsen. Skiktgränsen räknas upp varje år enligt inkomstbasbeloppet, så den flyttar sig även när riksdagen inte fattat något nytt beslut. För de flesta löntagare i ${kommun.name} ligger den utom räckhåll, vilket gör kommunalskatten till hela skatten på lönen.` },
 ];
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
+import SkattKontext from '../../components/SkattKontext.astro';
 ---
 
 <CalculatorLayout
   slug={`/kommun/${kommun.slug}`}
   title={`Lönekalkylator ${kommun.name}`}
-  metaTitle={`Lön efter skatt i ${kommun.name} 2026 | ${kommun.rate}% kommunalskatt`}
-  metaDescription={`Beräkna din nettolön i ${kommun.name} med ${kommun.rate}% kommunalskatt. Se lön efter skatt för alla lönenivåer i kommunen 2026. Gratis kalkylator med Skatteverkets data.`}
+  metaTitle={`Lön efter skatt i ${kommun.name} 2026 | ${taux(kommun.rate)} % kommunalskatt`}
+  metaDescription={`Beräkna din nettolön i ${kommun.name} med ${taux(kommun.rate)} % kommunalskatt. Se lön efter skatt för alla lönenivåer i kommunen 2026. Gratis kalkylator med Skatteverkets data.`}
   h1={`Lön efter skatt i ${kommun.name} 2026`}
-  intro={`Beräkna din nettolön i ${kommun.name} med ${kommun.rate}% kommunalskatt (${kommun.lan}). Uppdaterad med Skatteverkets 2026-data.`}
+  intro={`Beräkna din nettolön i ${kommun.name} med ${taux(kommun.rate)} % kommunalskatt (${kommun.lan}). Uppdaterad med Skatteverkets 2026-data.`}
   faqs={faqs}
 >
   <LonKalkylator client:idle initialGross={35000} />
@@ -57,4 +71,6 @@ const faqs = [
     <h2>Skattesats i {kommun.name}</h2>
     <p>{kommun.name} tillhör {kommun.lan} och har en total kommunalskattesats på {kommun.rate}%. Det placerar {kommun.name} {kommun.rate < 32.37 ? 'under' : kommun.rate > 32.37 ? 'över' : 'nära'} riksgenomsnittet på 32,37%.</p>
   </div>
+  <OfficiellaKallor />
+  <SkattKontext />
 </CalculatorLayout>

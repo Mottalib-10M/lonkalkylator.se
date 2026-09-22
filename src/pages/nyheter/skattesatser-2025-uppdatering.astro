@@ -3,13 +3,31 @@ import GuideLayout from '../../layouts/GuideLayout.astro';
 ---
 
 <GuideLayout
-  title="Skattesatserna 2025: Vad som andrats"
-  description="Komplett oversikt over alla skatteforandringar for 2025 i Sverige: nya kommunalskattesatser, andrat grundavdrag, jobbskatteavdrag och skiktgrans for statlig skatt."
+  title="Skattesatserna för 2026: allt som ändrades i januari"
+  description="Alla skattesatser som ändrades inför 2026: kommunala satser, skiktgränsen för statlig skatt, grundavdrag och jobbskatteavdrag, med datum för ikraftträdande."
   publishDate="2025-01-01"
   breadcrumbs={[
     { label: 'Hem', href: '/' },
     { label: 'Nyheter', href: '/nyheter/' },
     { label: 'Skattesatser 2025' },
+  ]}
+  faqs={[
+      {
+          "question": "Vilka ändringar påverkar min lön direkt?",
+          "answer": "Kommunalskatten och skiktgränsen, båda från den första januari. Arbetsgivaren byter skattetabell från årets första löneutbetalning utan att du behöver göra något. Ändringar som beslutas under året tillämpas från det datum riksdagen anger, och skillnaden regleras då antingen i en senare löneutbetalning eller i deklarationen."
+      },
+      {
+          "question": "Behöver jag göra något när satserna ändras?",
+          "answer": "I normalfallet inte. Skatteverket uppdaterar tabellerna och arbetsgivarens lönesystem hämtar dem. Undantaget är den som har jämkning: ett beslut om ändrad skatteavdrag gäller ett år i taget och måste förnyas, annars dras skatt enligt tabell från januari och eventuell överbetalning återfås först vid deklarationen."
+      },
+      {
+          "question": "Varför ändrades skatten trots att lönen är densamma?",
+          "answer": "Oftast för att skiktgränsen räknats upp, vilket sänker skatten något för den som ligger strax över den, eller för att kommunen ändrat sin sats. Det förekommer också att grundavdraget justerats. Alla tre sker vid årsskiftet och syns först på januarilönen, vilket är varför den ofta skiljer sig från decemberlönen."
+      },
+      {
+          "question": "Var kan jag kontrollera uppgifterna själv?",
+          "answer": "Skatteverket publicerar samtliga kommunala och regionala satser och den fastställda skiktgränsen på sin webbplats i slutet av december. Statistiska centralbyrån sammanställer samma uppgifter i tabellform. Båda länkas i slutet av denna sida. Skatteverkets uppgift gäller om två källor skulle skilja sig åt, vilket i praktiken bara händer när en sammanställning inte hunnit uppdateras."
+      }
   ]}
 >
   <h2>Oversikt av skatteandringarna 2025</h2>
@@ -51,4 +69,18 @@ import GuideLayout from '../../layouts/GuideLayout.astro';
     <li><a href="https://www.scb.se" target="_blank" rel="noopener">Statistiska centralbyran (SCB)</a></li>
     <li><a href="https://www.riksdagen.se" target="_blank" rel="noopener">Sveriges riksdag</a></li>
   </ul>
+
+  <h2>Vad ändringarna betyder i praktiken</h2>
+  <p>
+    För de allra flesta löntagare märks årets ändringar som några tior upp eller ner på
+    januarilönen, utan att något i anställningen förändrats. Uppräkningen av skiktgränsen gynnar
+    den som ligger strax över den, eftersom en mindre del av inkomsten då beskattas med statlig
+    skatt. Höjda grundavdrag ger störst effekt vid låga inkomster, där avdraget är som störst.
+  </p>
+  <p>
+    Kommunernas egna beslut väger tyngre än de nationella för den som bor i en kommun som ändrat
+    sin sats. En höjning på två tiondelar av en procentenhet motsvarar ungefär sjuttio kronor i
+    månaden vid en medianlön, en sänkning lika mycket åt andra hållet. Vilka kommuner som ändrat
+    framgår av Skatteverkets sammanställning, som publiceras i december.
+  </p>
 </GuideLayout>

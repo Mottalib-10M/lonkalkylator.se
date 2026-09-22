@@ -54,13 +54,39 @@ const letters = ['A', 'B', 'D', 'F', 'G', 'H', 'I', 'J', 'K', 'M', 'N', 'P', 'R'
 ---
 
 <GuideLayout
-  title="Swedish Tax Glossary 2026 - Key Tax Terms Explained"
+  title="Swedish payroll and tax terms explained plainly 2026"
   description="Complete glossary of Swedish tax terms with English explanations. Understand A-skatt, bruttolön, nettolön, jobbskatteavdrag and more from Skatteverket."
   publishDate="2026-06-01"
   lang="en"
   breadcrumbs={[
     { label: 'Home', href: '/en/' },
     { label: 'Glossary' },
+  ]}
+  faqs={[
+      {
+          "question": "What is the difference between gross and net salary in Sweden?",
+          "answer": "Gross salary is the figure in the employment contract, before deductions. Net salary is what reaches the account after municipal tax, state income tax where it applies, and the burial fee. The gap normally runs between twenty-five and forty percent depending on income and municipality, and it widens above the state tax threshold."
+      },
+      {
+          "question": "What is the skiktgräns?",
+          "answer": "The income level above which state income tax of twenty percent is charged in addition to municipal tax. It is uprated annually and applies to taxable income, meaning after the basic deduction. Passing it does not raise the tax on income already earned: only the portion above the threshold carries the higher rate."
+      },
+      {
+          "question": "What is grundavdrag?",
+          "answer": "A basic deduction everyone receives, which reduces the income on which tax is calculated. It is largest at low incomes and tapers off above them, so someone earning very little pays a substantially smaller share in tax. From the year you turn sixty-six it increases sharply, which is why pensioners are taxed differently."
+      },
+      {
+          "question": "What is jobbskatteavdrag?",
+          "answer": "An earned income tax credit applied automatically by the employer through the tax tables, so it never appears as its own line on a payslip. It reduces municipal tax only, never state tax, and it cannot exceed the tax owed. It explains why net pay is often higher than a calculation on the headline rate suggests."
+      },
+      {
+          "question": "Is the church fee compulsory?",
+          "answer": "No. It is paid only by members of the Church of Sweden or another religious community that collects through the Swedish Tax Agency, and it typically runs around one percent. The burial fee is different: everyone pays it regardless of membership, at a low rate, because it funds cemeteries rather than any denomination."
+      },
+      {
+          "question": "What does marginalskatt mean?",
+          "answer": "The share of tax on the next krona earned, as opposed to the average rate paid across the whole salary. The marginal rate is always the higher of the two and is the figure that matters for a pay rise or an extra shift. Confusing the two is why people believe a raise can reduce net pay, which the system does not allow."
+      }
   ]}
 >
   <script type="application/ld+json" set:html={defined_terms_schema} />

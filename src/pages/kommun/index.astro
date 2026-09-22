@@ -1,0 +1,137 @@
+---
+/**
+ * Page-mere des communes : toutes les communes, un seul tableau.
+ *
+ * Le site portait trente pages de commune engendrees par le meme gabarit, dont
+ * le texte etait identique a 96,8 % d'une commune a l'autre : seuls le nom et
+ * le taux changeaient. Google traite une telle famille comme un contenu
+ * duplique et n'en retient au mieux qu'une page.
+ *
+ * Huit communes gardent une page a elles, les plus peuplees, ou la recherche
+ * « lon efter skatt + nom de ville » a un volume reel. Les vingt-deux autres
+ * sont ici, avec leur taux et leur net calcule : c'est la comparaison que le
+ * lecteur cherchait, et qu'aucune page isolee ne permettait de faire.
+ *
+ * Tous les montants sortent du moteur du site, jamais saisis a la main.
+ */
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import { KOMMUNER, KOMMUNER_MED_SIDA } from '../../data/tax-2026';
+import { calculateTakeHome } from '../../lib/tax-engine-se';
+
+/** Salaire de reference : proche du salaire median suedois a temps plein. */
+const REFERENCE = 35000;
+
+const lignes = KOMMUNER
+  .map((k) => {
+    const r = calculateTakeHome({ monthlyGross: REFERENCE, kommunalskattRate: k.rate });
+    return { ...k, net: r.netMonthly, harSida: KOMMUNER_MED_SIDA.includes(k.slug) };
+  })
+  .sort((a, b) => a.rate - b.rate);
+
+const kr = (v: number) => v.toLocaleString('sv-SE') + ' kr';
+const pct = (v: number) => v.toLocaleString('sv-SE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
+
+const laegst = lignes[0];
+const hoegst = lignes[lignes.length - 1];
+const skillnad = laegst.net - hoegst.net;
+const medel = lignes.reduce((s, l) => s + l.rate, 0) / lignes.length;
+
+const faqs = [
+  {
+    question: 'Varför skiljer sig skatten mellan kommuner?',
+    answer:
+      'Varje kommun beslutar själv om sin skattesats, och till den läggs regionens skatt. Tillsammans utgör de den kommunalskatt som dras på lönen. Skillnaderna speglar hur mycket kommunen och regionen behöver för skola, omsorg och kollektivtrafik, samt hur stort skatteunderlaget är. Systemet för kommunal utjämning minskar skillnaderna, men tar inte bort dem.',
+  },
+  {
+    question: 'Hur mycket kan valet av kommun påverka lönen?',
+    answer:
+      `På en månadslön om ${kr(REFERENCE)} skiljer det ${kr(Math.abs(skillnad))} i månaden mellan kommunen med lägst och högst skattesats i tabellen, vilket blir ${kr(Math.abs(skillnad) * 12)} om året. Skillnaden växer med lönen, eftersom kommunalskatten är proportionell och tas ut på hela den beskattningsbara inkomsten.`,
+  },
+  {
+    question: 'Vilken kommun gäller om jag flyttar under året?',
+    answer:
+      'Skatten följer den kommun där du var folkbokförd den 1 november året före inkomståret. En flytt i mars påverkar alltså inte årets skatt, utan nästa års. Det är en detalj som ofta överraskar den som flyttar till en kommun med lägre skatt och förväntar sig se effekten direkt på lönebeskedet.',
+  },
+  {
+    question: 'Ingår kyrkoavgiften i de här siffrorna?',
+    answer:
+      'Nej. Tabellen visar kommunalskatt och regionskatt, som alla betalar. Kyrkoavgiften tillkommer endast för den som är medlem i Svenska kyrkan eller ett annat trossamfund som tar ut avgift via Skatteverket, och ligger typiskt kring en procent. Begravningsavgiften betalar däremot alla, oavsett medlemskap.',
+  },
+  {
+    question: 'Varför har bara vissa kommuner en egen sida?',
+    answer:
+      'Därför att en sida som skiljer sig från tjugonio andra bara genom ett namn och en siffra inte besvarar någon fråga bättre än den här tabellen. De kommuner som behållit en egen sida är de största, där sökningarna faktiskt görs. Övriga leder hit, där de kan jämföras direkt mot varandra.',
+  },
+  {
+    question: 'Hur ofta ändras skattesatserna?',
+    answer:
+      'Kommunfullmäktige beslutar om skattesatsen inför varje nytt budgetår, och ändringar träder i kraft den 1 januari. De flesta kommuner ligger stilla flera år i rad, men höjningar och sänkningar på några tiondelar förekommer varje år. Tabellen bygger på Skatteverkets fastställda satser för 2026.',
+  },
+];
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
+---
+
+<CalculatorLayout
+  slug="kommun"
+  title="Kommunalskatt 2026"
+  metaTitle="Kommunalskatt 2026: alla kommuner och lön efter skatt"
+  metaDescription="Kommunalskatt 2026 för Sveriges största kommuner, med nettolön uträknad på 35 000 kr i månaden. Jämför skattesatser och se vad skillnaden blir i kronor."
+  h1="Kommunalskatt och nettolön per kommun (2026)"
+  intro="Vad kommunalskatten är där du bor, och vad den kostar dig i kronor varje månad."
+  faqs={faqs}
+>
+  <section class="mx-auto max-w-4xl px-4 py-8">
+    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+      Kommunalskatten är den största enskilda posten på de flesta lönebesked, större än den
+      statliga inkomstskatten för alla utom höginkomsttagare. Den är proportionell: samma
+      procentsats på hela den beskattningsbara inkomsten, utan trappsteg. Tabellen nedan visar
+      satsen i varje kommun och vad den ger i nettolön på {kr(REFERENCE)} i månaden.
+    </p>
+    <p class="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
+      Genomsnittet för kommunerna nedan ligger på {pct(medel)}. Mellan {laegst.name}, som har den
+      lägsta satsen, och {hoegst.name}, som har den högsta, skiljer det {kr(Math.abs(skillnad))} i
+      månaden på samma bruttolön, alltså {kr(Math.abs(skillnad) * 12)} om året.
+    </p>
+
+    <div class="mt-8 overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="bg-gray-50 dark:bg-gray-800">
+            <th class="px-4 py-3 text-left font-semibold">Kommun</th>
+            <th class="px-4 py-3 text-left font-semibold">Län</th>
+            <th class="px-4 py-3 text-right font-semibold">Skattesats</th>
+            <th class="px-4 py-3 text-right font-semibold">Netto på {kr(REFERENCE)}</th>
+            <th class="px-4 py-3 text-left font-semibold"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {lignes.map((l) => (
+            <tr class="border-t border-gray-100 dark:border-gray-700">
+              <td class="px-4 py-2.5 font-medium">{l.name}</td>
+              <td class="px-4 py-2.5 text-gray-500">{l.lan}</td>
+              <td class="px-4 py-2.5 text-right tabular-nums">{pct(l.rate)}</td>
+              <td class="px-4 py-2.5 text-right tabular-nums font-semibold">{kr(l.net)}</td>
+              <td class="px-4 py-2.5">
+                {l.harSida ? <a href={`/kommun/${l.slug}/`} class="text-brand-600 hover:underline">Detaljer</a> : null}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="mt-12 text-2xl font-bold">Vad tabellen inte säger</h2>
+    <p class="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
+      En låg skattesats är inte i sig ett skäl att flytta. Kommuner med låg skatt har ofta högre
+      boendekostnader, och skillnaden i hyra eller bostadspris äter snabbt upp några hundralappar
+      i månaden. Omvänt kan en högre sats motsvara avgiftsfri barnomsorg eller kortare köer, som
+      inte syns på lönebeskedet men som väger tungt i hushållets ekonomi.
+    </p>
+    <p class="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
+      Tabellen svarar på skattefrågan exakt, och bara på den. Den statliga inkomstskatten
+      tillkommer på inkomster över skiktgränsen och är densamma i hela landet, liksom
+      jobbskatteavdraget och grundavdraget, som båda minskar den kommunala skatten.
+    </p>
+  </section>
+  <OfficiellaKallor />
+</CalculatorLayout>

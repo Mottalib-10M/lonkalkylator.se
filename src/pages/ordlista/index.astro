@@ -51,16 +51,44 @@ const defined_terms_schema = JSON.stringify({
 });
 
 const letters = ['A', 'B', 'D', 'F', 'G', 'H', 'I', 'J', 'K', 'M', 'N', 'P', 'R', 'S', 'T'];
+import SkattKontext from '../../components/SkattKontext.astro';
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
 ---
 
 <GuideLayout
-  title="Skatteordlista 2026 - Alla skattebegrepp i Sverige"
+  title="Ordlista för lön, skatt och avdrag i Sverige år 2026"
   description="Ordlista med 35+ svenska skattebegrepp for 2026. Tydliga förklaringar av A-skatt, bruttolön, nettolön, jobbskatteavdrag, kommunalskatt och statlig skatt."
   publishDate="2026-06-01"
   breadcrumbs={[
     { label: 'Hem', href: '/' },
     { label: 'Guider', href: '/guides/' },
     { label: 'Skatteordlista' },
+  ]}
+  faqs={[
+      {
+          "question": "Vad är skillnaden mellan bruttolön och nettolön?",
+          "answer": "Bruttolönen är beloppet i anställningsavtalet, före avdrag. Nettolönen är det som når kontot när kommunalskatt, eventuell statlig skatt och begravningsavgift dragits. Skillnaden ligger normalt mellan tjugofem och fyrtio procent beroende på inkomst och kommun, och den växer med lönen eftersom den statliga skatten tillkommer ovanför skiktgränsen."
+      },
+      {
+          "question": "Vad betyder skiktgräns?",
+          "answer": "Skiktgränsen är den inkomst över vilken statlig inkomstskatt på tjugo procent börjar tas ut, utöver kommunalskatten. Den räknas upp varje år och gäller den beskattningsbara inkomsten, alltså efter grundavdrag. Att passera den höjer inte skatten på inkomst du redan tjänat: bara den del som ligger över gränsen beskattas med den högre satsen."
+      },
+      {
+          "question": "Vad är grundavdrag?",
+          "answer": "Ett avdrag som alla får och som minskar den inkomst skatten beräknas på. Det är störst vid låga inkomster och trappas ned därefter, vilket gör att den som tjänar minst betalar en betydligt lägre andel i skatt. Från det år du fyller 66 höjs det kraftigt, vilket är en av anledningarna till att pensionärer beskattas annorlunda."
+      },
+      {
+          "question": "Vad innebär marginalskatt?",
+          "answer": "Andelen skatt på nästa intjänade krona, till skillnad från den genomsnittliga skatt du faktiskt betalar på hela lönen. Marginalskatten är alltid högst av de två och är det tal som gäller vid en löneförhöjning eller ett extrapass. Att förväxla dem är skälet till att många tror att en höjning kan ge lägre nettolön, vilket systemet inte tillåter."
+      },
+      {
+          "question": "Vad är allmän pensionsavgift?",
+          "answer": "En avgift på sju procent av inkomsten som finansierar den allmänna pensionen. Den syns sällan på lönebeskedet eftersom den i praktiken kvittas mot en skattereduktion av samma storlek, så nettoeffekten blir noll för de flesta. Den ingår ändå i beräkningen och är en av posterna som gör en handräkning av nettolönen svår."
+      },
+      {
+          "question": "Vad är en preliminär skattetabell?",
+          "answer": "Tabellen som arbetsgivaren använder för att dra rätt skatt varje månad, baserad på din kommun och din ålder. Skatteverket publicerar en tabell per kommun. Eftersom den bygger på en jämn inkomst över året blir avdraget fel om lönen varierar kraftigt, och skillnaden regleras i deklarationen året därpå."
+      }
   ]}
 >
   <script type="application/ld+json" set:html={defined_terms_schema} />
@@ -230,4 +258,6 @@ const letters = ['A', 'B', 'D', 'F', 'G', 'H', 'I', 'J', 'K', 'M', 'N', 'P', 'R'
 
   <h2>Beräkna din lön efter skatt</h2>
   <p>Vill du se hur dessa begrepp påverkar din lön i praktiken? Använd vår <a href="/">lönekalkylator</a> for att beräkna din nettolön baserat på din kommun och bruttolön. Du kan också använda vår <a href="/netto-till-brutto/">netto-till-brutto-kalkylator</a> for att räkna baklänges från önskad nettolön.</p>
+  <SkattKontext />
+  <OfficiellaKallor />
 </GuideLayout>

@@ -6,6 +6,10 @@ import { calculateTakeHome } from '../../lib/tax-engine-se';
 import { formatKr } from '../../lib/format';
 import { getSalaryPageContent } from '../../lib/salary-content';
 
+/** Le taux s'ecrit a la suedoise, virgule decimale, dans le texte ET dans le JSON-LD. */
+const taux = (v: number) => v.toLocaleString('sv-SE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+
 export function getStaticPaths() {
   return SALARY_AMOUNTS.map(amount => ({
     params: { slug: String(amount) },
@@ -171,12 +175,31 @@ const visadeKommuner = KOMMUNER.slice(kommunOffset * 3, kommunOffset * 3 + 10).s
     <p>
       Din nettol\u00f6n varierar beroende p\u00e5 var du bor. H\u00e4r \u00e4r n\u00e5gra exempel vid {formattedAmount} kr bruttol\u00f6n:
     </p>
-    <ul>
-      {visadeKommuner.map(k => {
-        const r = calculateTakeHome({ monthlyGross: amount, kommunalskattRate: k.rate });
-        return <li><strong>{k.name}</strong> ({k.rate}%): nettol\u00f6n {formatKr(r.netMonthly)}/m\u00e5n, skatt {formatKr(Math.round(r.totalSkatt / 12))}/m\u00e5n</li>;
-      })}
-    </ul>
+    <div class="overflow-x-auto not-prose">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b-2 border-gray-300 dark:border-gray-600">
+            <th class="px-3 py-2 text-left font-semibold">Kommun</th>
+            <th class="px-3 py-2 text-right font-semibold">Skattesats</th>
+            <th class="px-3 py-2 text-right font-semibold">Nettolön per månad</th>
+            <th class="px-3 py-2 text-right font-semibold">Skatt per månad</th>
+          </tr>
+        </thead>
+        <tbody>
+          {visadeKommuner.map((k) => {
+            const r = calculateTakeHome({ monthlyGross: amount, kommunalskattRate: k.rate });
+            return (
+              <tr class="border-b border-gray-100 dark:border-gray-700 last:border-0">
+                <td class="px-3 py-2 font-medium">{k.name}</td>
+                <td class="px-3 py-2 text-right tabular-nums">{taux(k.rate)}&nbsp;%</td>
+                <td class="px-3 py-2 text-right tabular-nums font-semibold">{formatKr(r.netMonthly)}</td>
+                <td class="px-3 py-2 text-right tabular-nums text-gray-500">{formatKr(amount - r.netMonthly)}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section class="mt-12 not-prose" slot="content" aria-labelledby="sources-heading">

@@ -1,134 +1,124 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/inter-400.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/inter-500.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("/fonts/inter-600.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/inter-700.woff2") format("woff2");
-}
-
+/*
+ * Identite visuelle : le drapeau suedois.
+ *
+ * Le bleu deja present, #005293, etait proche du bleu officiel ; on retient
+ * #006AA7, celui du drapeau, mesure a 5,80:1 sur blanc, et sa version foncee
+ * #00507E a 8,58:1 pour les titres. Le jaune #FECC02 ne tient que 1,52:1 sur
+ * blanc : il ne porte jamais de texte sur fond clair, mais 11,72:1 avec du
+ * texte sombre dessus, et 5,66:1 pose sur le bleu fonce.
+ */
 @theme {
-  --color-brand-50: #e6f0f8;
-  --color-brand-100: #cce0f1;
-  --color-brand-200: #99c1e3;
-  --color-brand-300: #66a2d5;
-  --color-brand-400: #3383c7;
-  --color-brand-500: #005293;
-  --color-brand-600: #004a84;
-  --color-brand-700: #003d6e;
-  --color-brand-800: #002f55;
-  --color-brand-900: #00213d;
-  --color-brand-950: #001528;
+  --color-brand-50: #eaf4fa;
+  --color-brand-100: #e3f1fa;
+  --color-brand-200: #d4e8f7;   /* 5,4:1 sur la carte bleue, ou il sert de texte */
+  --color-brand-300: #5fabd6;
+  --color-brand-400: #2189c2;
+  --color-brand-500: #006aa7;
+  --color-brand-600: #00507e;
+  --color-brand-700: #003e62;
+  --color-brand-800: #002f4b;
+  --color-brand-900: #002138;
+  --color-primary: #006aa7;
+  --color-primary-dark: #00507e;
+  --color-primary-light: #5fabd6;
+  --color-accent: #8a6f00;          /* version texte du jaune, 4,9:1 */
+  --color-accent-dark: #8a6f00;
+  --color-surface: #f7f9fb;
+  --color-border: #dde5ec;
+  --color-text: #141a20;
+  --color-text-muted: #5a6672;
 
-  --color-accent-50: #fff9e6;
-  --color-accent-100: #fff3cc;
-  --color-accent-200: #ffe799;
-  --color-accent-300: #fedb66;
-  --color-accent-400: #fed433;
-  --color-accent-500: #FECC02;
-  --color-accent-600: #e5b802;
+  /*
+   * Couleurs semantiques redefinies pour la lisibilite : celles de Tailwind
+   * sont calibrees pour des aplats. Mesures sur blanc, emerald-600 ne tient que
+   * 3,77:1, green-600 3,30:1, amber-600 3,19:1 et red-500 3,76:1, sous le seuil
+   * AA de 4,5:1. Elles ne servent ici que de couleurs de texte.
+   */
+  --color-emerald-500: #047857;
+  --color-emerald-600: #047857;
+  --color-emerald-700: #065f46;
+  --color-green-500: #15803d;
+  --color-green-600: #15803d;
+  --color-amber-500: #b45309;
+  --color-amber-600: #b45309;
+  --color-red-500: #b91c1c;
+  --color-red-600: #b91c1c;
 
-  --color-charcoal: #1f2937;
-  --color-light-gray: #f3f4f6;
-  --color-medium-gray: #9ca3af;
-
-  --color-dark-bg: #111827;
-  --color-dark-surface: #1f2937;
-  --color-dark-border: #374151;
-  --color-dark-text: #f9fafb;
-  --color-dark-text-muted: #9ca3af;
-
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'SF Mono', ui-monospace, SFMono-Regular, 'Cascadia Code', monospace;
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 
-html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply bg-surface text-text font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
+  h1 { letter-spacing: -0.025em; }
+  h2, h3 { letter-spacing: -0.015em; }
+  p { text-wrap: pretty; }
+
+  table, .tabular-nums, td, th { font-variant-numeric: tabular-nums; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 }
 
-.tabular-nums {
-  font-variant-numeric: tabular-nums;
+/* Signature graphique : les bandes du drapeau, reduites a un filet. */
+.flag-rule {
+  background: linear-gradient(to right, var(--color-primary) 0 38%, var(--color-accent-bright) 38% 62%, var(--color-primary) 62% 100%);
 }
 
-.result-value {
-  transition: opacity 0.15s ease;
+/*
+ * Pas de regle sur les liens du pied : il est clair sur ce site
+ * (`bg-gray-50`), et les liens y prennent donc la couleur de marque, qui
+ * tient le contraste. Le mode sombre s'en charge plus bas.
+ */
+
+/*
+ * Pas de regles `.prose` ici : @tailwindcss/typography est installe sur ce
+ * site et fournit deja la mise en forme des pages de texte. En ajouter une
+ * seconde serie reviendrait a entretenir deux sources pour les memes classes.
+ */
+
+/*
+ * Mode sombre. La version precedente empilait des `!important` sur des classes
+ * Tailwind et repassait les liens en bleu ciel generique, ce qui faisait perdre
+ * son identite au site. On redefinit ici les jetons, eclaircis.
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-surface: #0f141a;
+    --color-border: #2a333d;
+    --color-text: #e5eaf0;
+    --color-text-muted: #99a5b2;
+  }
+
+  body { background-color: #0f141a; color: #e5eaf0; }
+
+  a { color: #fecc02; }
+  a:hover { color: #ffffff; }
+
+  .bg-white { background-color: #171d25; }
+
+  input, select, textarea {
+    background-color: #171d25;
+    color: #e5eaf0;
+    border-color: #2a333d;
+  }
+
+  .prose li::marker { color: #fecc02; }
+
+  :focus-visible { outline-color: #fecc02; }
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  height: 6px;
-  border-radius: 3px;
-  outline: none;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  cursor: pointer;
-  background: var(--color-brand-500);
-}
-
-.focus-ring:focus-visible {
-  outline: 2px solid var(--color-brand-500);
-  outline-offset: 2px;
-}
-
-@keyframes bar-grow {
-  from { width: 0%; }
-  to { width: var(--bar-width); }
-}
-
-.bar-segment {
-  animation: bar-grow 0.4s ease-out forwards;
-}
-
-.skip-link {
-  position: absolute;
-  top: -100%;
-  left: 0;
-  z-index: 100;
-  padding: 0.5rem 1rem;
-}
-
-.skip-link:focus {
-  top: 0;
+@media print {
+  header, footer, nav, .no-print { display: none !important; }
+  body { background: #fff; color: #000; }
 }

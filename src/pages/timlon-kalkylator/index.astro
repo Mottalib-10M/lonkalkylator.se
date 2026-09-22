@@ -3,10 +3,28 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import TimlonKalkylator from '../../components/calculators/TimlonKalkylator';
 
 const faqs = [
-  { question: 'Hur omvandlar jag timlön till månadslön?', answer: 'Multiplicera din timlön med antalet arbetstimmar per vecka och 52 veckor, dela sedan med 12. Exempelvis: 200 kr/tim × 40 tim × 52 / 12 = 34 667 kr/mån.' },
-  { question: 'Hur många timmar arbetar man normalt per månad?', answer: 'En heltidstjänst i Sverige är normalt 40 timmar per vecka, vilket ger cirka 173 timmar per månad (40 × 52 / 12).' },
-  { question: 'Vad är minimilön i Sverige?', answer: 'Sverige har ingen lagstadgad minimilön. Istället regleras löner genom kollektivavtal. Ingångslöner varierar efter bransch, men ligger ofta mellan 22 000 och 26 000 kr per månad.' },
+  {
+    question: "Ingår semesterersättning i timlönen?",
+    answer:
+      "Det beror på anställningsformen. Vid tillsvidareanställning tjänas semester in och betalas som semesterlön. Vid korttidsanställning läggs i stället semesterersättning på, vanligen 12 procent av lönen, ibland redovisad separat på lönebeskedet. Att jämföra en timlön med semesterersättning mot en utan ger en skillnad på just den andelen.",
+  },
+  {
+    question: "Hur många timmar är heltid i Sverige?",
+    answer:
+      "Normalt 40 timmar per vecka, vilket ger cirka 173 timmar per månad över året. Kollektivavtal kan sätta en kortare arbetstid, särskilt vid skiftarbete, där heltid ibland ligger under 36 timmar. Det påverkar månadslönen vid omräkning från timlön och är värt att kontrollera innan jämförelsen görs.",
+  },
+  {
+    question: "Hur beskattas övertid?",
+    answer:
+      "Precis som vanlig lön. Det finns ingen särskild övertidsskatt, trots att många tror det. Känslan av att övertid beskattas hårdare kommer av att den läggs ovanpå månadslönen och därmed beskattas med marginalskatten, som är högre än genomsnittsskatten på hela lönen.",
+  },
+
+  { question: 'Hur omvandlar jag timlön till månadslön?', answer: 'Multiplicera din timlön med antalet arbetstimmar per vecka och 52 veckor, dela sedan med 12. Exempelvis: 200 kr/tim × 40 tim × 52 / 12 = 34 667 kr/mån. Beräkningen förutsätter betald tid alla veckor. För en korttidsanställning tillkommer semesterersättning, vanligen 12 procent, som ska läggas till innan jämförelsen med en månadslön blir rättvisande.' },
+  { question: 'Hur många timmar arbetar man normalt per månad?', answer: 'En heltidstjänst i Sverige är normalt 40 timmar per vecka, vilket ger cirka 173 timmar per månad (40 × 52 / 12). Kollektivavtal kan sätta kortare arbetstid, särskilt vid skiftarbete där heltid ibland ligger under 36 timmar i veckan. Det påverkar omräkningen från timlön till månadslön och är värt att kontrollera innan två erbjudanden jämförs.' },
+  { question: 'Vad är minimilön i Sverige?', answer: 'Sverige har ingen lagstadgad minimilön. Istället regleras löner genom kollektivavtal. Ingångslöner varierar efter bransch, men ligger ofta mellan 22 000 och 26 000 kr per månad. Den som inte omfattas av kollektivavtal har alltså ingen golvnivå i lag att luta sig mot, vilket gör det extra viktigt att kontrollera vad som gäller på arbetsplatsen innan anställningen börjar.' },
 ];
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
+import SkattKontext from '../../components/SkattKontext.astro';
 ---
 
 <CalculatorLayout
@@ -36,4 +54,6 @@ const faqs = [
     </table>
     <p><em>Ungefärliga belopp. Nettolönen varierar med kommun och kyrkoavgift.</em></p>
   </div>
+  <OfficiellaKallor />
+  <SkattKontext />
 </CalculatorLayout>

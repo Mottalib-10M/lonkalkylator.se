@@ -3,13 +3,31 @@ import GuideLayout from '../../../layouts/GuideLayout.astro';
 ---
 
 <GuideLayout
-  title="Var metodik - Sa beraknar vi lon efter skatt"
-  description="Detaljerad forklaring av var berakningsmetodik for lon efter skatt i Sverige. Datakallor, berakningssteg, noggrannhet och uppdateringsrutiner."
+  title="Metodik: så beräknas lön efter skatt steg för steg"
+  description="Hur beräkningarna görs steg för steg: grundavdrag, kommunalskatt, statlig skatt och jobbskatteavdrag, med angiven källa bakom varenda siffra som används."
   publishDate="2026-01-01"
   breadcrumbs={[
     { label: 'Hem', href: '/' },
     { label: 'Guider', href: '/guides/' },
     { label: 'Var metodik' },
+  ]}
+  faqs={[
+      {
+          "question": "Vilka källor bygger beräkningen på?",
+          "answer": "Skatteverkets publicerade skattesatser och skiktgränser för inkomståret, Statistiska centralbyråns sammanställning av kommunala och regionala satser, och Pensionsmyndighetens uppgifter om allmän pensionsavgift. Varje sida anger sin granskningsdag, och samtliga siffror går att kontrollera mot dessa källor, som alltid har företräde framför sammanfattningen här."
+      },
+      {
+          "question": "Hur ofta uppdateras siffrorna?",
+          "answer": "Skattesatserna ändras den första januari, och sidan uppdateras när Skatteverket publicerat de fastställda värdena, vilket normalt sker i slutet av december. Skiktgränsen räknas upp årligen enligt inkomstbasbeloppet. Ändringar mitt under året förekommer bara vid riksdagsbeslut och anges då med det datum de träder i kraft."
+      },
+      {
+          "question": "Vad ingår inte i beräkningen?",
+          "answer": "Kyrkoavgift om du inte anger den, förmånsbeskattning som tjänstebil eller sjukvårdsförsäkring, avdrag som yrkas i deklarationen, samt tjänstepension utöver den allmänna. Inget av det går att sluta sig till från en bruttolön, och att gissa värdena skulle göra resultatet mindre tillförlitligt snarare än mer."
+      },
+      {
+          "question": "Varför skiljer sig resultatet från mitt lönebesked?",
+          "answer": "Oftast på grund av en jämkning, en förmån eller ett avdrag som arbetsgivaren känner till men som ingen kalkylator kan veta om. Skattetabellerna utgår dessutom från jämn inkomst över året, så en ojämn lön ger avvikelser månad för månad som jämnas ut i deklarationen. Avvikelser på några tior är normala."
+      }
   ]}
 >
   <h2>Introduktion</h2>

@@ -8,8 +8,36 @@ const guides = [
 ];
 
 const faqs = [
-  { question: 'Är guiderna uppdaterade för 2026?', answer: 'Ja. Alla guider använder Skatteverkets aktuella data för beskattningsåret 2026 inklusive prisbasbelopp, skiktgräns och kommunalskattesatser.' },
+  {
+    question: "Vilken guide bör jag läsa först?",
+    answer:
+      "Börja med guiden om kommunalskatt, eftersom den utgör den största delen av skatten på en vanlig lön och skiljer sig mest mellan kommuner. Därefter jobbskatteavdraget, som förklarar varför nettolönen ofta är högre än en enkel procenträkning ger. Guiden om statlig skatt blir relevant först över skiktgränsen.",
+  },
+  {
+    question: "Gäller guiderna även för egenföretagare?",
+    answer:
+      "Delvis. Skattesatser och avdrag är desamma, men en enskild firma betalar egenavgifter i stället för arbetsgivaravgifter, deklarerar på NE-bilaga och gör skatteavdrag själv genom debiterad preliminärskatt. Guiderna utgår genomgående från anställning, och där skillnaden är väsentlig anges det i texten.",
+  },
+  {
+    question: "Hur aktuella är siffrorna i guiderna?",
+    answer:
+      "Varje guide anger sin granskningsdag överst och nederst, och källorna listas i slutet. Skattesatser och skiktgräns ändras vid årsskiftet, så en guide granskad efter det speglar innevarande år. En granskningsdag äldre än ett år är en signal att kontrollera mot Skatteverket.",
+  },
+  {
+    question: "Ersätter guiderna en skatterådgivare?",
+    answer:
+      "För en vanlig anställning räcker de. När det handlar om eget företag, inkomst från utlandet, optionsprogram eller uthyrning blir samspelet mellan reglerna så specifikt att professionell rådgivning lönar sig. Skatteverkets egen vägledning är gratis och auktoritativ och är värd att läsa först.",
+  },
+  {
+    question: "Varför nämns Stockholm så ofta i exemplen?",
+    answer:
+      "För att det är landets folkrikaste kommun och därmed den mest användbara enskilda referenspunkten när en behövs. Varje beräkning går att byta till vilken kommun som helst, och kommunsidan jämför dem mot varandra i stället för att behandla Stockholm som representativt.",
+  },
+
+  { question: 'Är guiderna uppdaterade för 2026?', answer: 'Ja. Alla guider använder Skatteverkets aktuella data för beskattningsåret 2026 inklusive prisbasbelopp, skiktgräns och kommunalskattesatser. Granskningsdagen står överst och nederst på varje guide, och källorna anges i slutet. Skattesatserna ändras vid årsskiftet och guiderna ses över minst en gång per år, oftare när en regeländring motiverar det.' },
 ];
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
+import SkattKontext from '../../components/SkattKontext.astro';
 ---
 
 <CalculatorLayout
@@ -26,8 +54,10 @@ const faqs = [
       <a href={guide.href} class="block group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface p-6 hover:border-brand-500 dark:hover:border-brand-400 hover:shadow-md transition-all">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">{guide.title}</h2>
         <p class="mt-2 text-gray-500 dark:text-gray-400">{guide.description}</p>
-        <p class="mt-2 text-xs text-gray-400 dark:text-gray-500">Publicerad {guide.date}</p>
+        <p class="mt-2 text-xs text-gray-500 dark:text-gray-500">Publicerad {guide.date}</p>
       </a>
     ))}
   </div>
+  <OfficiellaKallor />
+  <SkattKontext />
 </CalculatorLayout>

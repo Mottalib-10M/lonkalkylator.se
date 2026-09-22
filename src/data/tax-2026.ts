@@ -48,6 +48,22 @@ export interface Kommun {
  * Kommunalskattesatser 2026 — Total skattesats (kommunalskatt + regionskatt)
  * Källa: SCB / Skatteverket
  */
+/**
+ * Communes conservant une page dediee.
+ *
+ * Les trente pages de commune etaient identiques a 96,8 % : meme texte, seuls
+ * le nom et le taux changeaient. On garde les huit plus peuplees, ou la
+ * recherche « lon efter skatt + ville » a un volume reel ; les vingt-deux
+ * autres figurent dans le tableau de /kommun/, qui les compare.
+ *
+ * Retirer une commune d'ici demande une redirection dans `astro.config.mjs`,
+ * faute de quoi son URL retournerait une 404.
+ */
+export const KOMMUNER_MED_SIDA: string[] = [
+  'stockholm', 'goteborg', 'malmo', 'uppsala',
+  'linkoping', 'vasteras', 'orebro', 'helsingborg',
+];
+
 export const KOMMUNER: Kommun[] = [
   { name: 'Stockholm', slug: 'stockholm', rate: 30.48, lan: 'Stockholms län' },
   { name: 'Göteborg', slug: 'goteborg', rate: 33.11, lan: 'Västra Götalands län' },

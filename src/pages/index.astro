@@ -16,8 +16,8 @@ const faqs = [
     answer: 'Din nettolön beräknas genom att dra av kommunalskatt, eventuell statlig inkomstskatt, allmän pensionsavgift och begravningsavgift från din bruttolön. Sedan läggs skattereduktioner som jobbskatteavdrag och grundavdrag till. Kommunalskatten varierar mellan olika kommuner, från cirka 29% i Täby till över 35% i vissa kommuner.'
   },
   {
-    question: 'Vad är skillnaden mellan bruttolön och nettolön?',
-    answer: 'Bruttolön är din lön före skatt, det vill säga det belopp som står i ditt anställningsavtal. Nettolön är det du faktiskt får utbetalt till ditt bankkonto efter att skatter och avgifter har dragits av. Skillnaden beror framför allt på din kommunalskatt, om du betalar statlig skatt samt dina skattereduktioner.'
+    question: 'Varför får jag och en kollega med samma bruttolön olika nettolön?',
+    answer: 'Den vanligaste förklaringen är att ni är folkbokförda i olika kommuner: kommunalskatten skiljer sig med flera procentenheter mellan landets kommuner, och den dras på hela inkomsten. Därtill kommer om någon av er är medlem i Svenska kyrkan, vilket lägger på kyrkoavgift, och individuella skattereduktioner som jobbskatteavdrag vid olika ålder eller avdrag för resor till arbetet.'
   },
   {
     question: 'Vad är kommunalskatt och hur mycket varierar den?',
@@ -40,6 +40,8 @@ const faqs = [
     answer: 'Grundavdraget är ett avdrag som alla skattebetalare i Sverige har rätt till. Det minskar den beskattningsbara inkomsten och varierar beroende på inkomstnivå. År 2026 ligger grundavdraget på cirka 16 800–45 300 kr beroende på inkomst. Avdraget baseras på prisbasbeloppet som är 58 800 kr för 2026.'
   },
 ];
+import OfficiellaKallor from '../components/OfficiellaKallor.astro';
+import SkattKontext from '../components/SkattKontext.astro';
 ---
 
 <CalculatorLayout
@@ -101,4 +103,6 @@ const faqs = [
     </p>
   </section>
   <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+  <OfficiellaKallor />
+  <SkattKontext />
 </CalculatorLayout>

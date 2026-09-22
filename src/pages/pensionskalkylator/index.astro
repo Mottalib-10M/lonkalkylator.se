@@ -3,10 +3,28 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import PensionsKalkylator from '../../components/calculators/PensionsKalkylator';
 
 const faqs = [
-  { question: 'Vad är allmän pensionsavgift?', answer: 'Allmän pensionsavgift är 7% av din bruttolön, upp till ett tak på 614 000 kr per år (2026). Du får full skattereduktion för avgiften, så den påverkar inte din nettolön direkt men bidrar till din allmänna pension.' },
-  { question: 'Vad är skillnaden mellan allmän pension och tjänstepension?', answer: 'Allmän pension (inkomstpension + premiepension) betalas via skattesystemet. Tjänstepension betalas av din arbetsgivare utöver lönen, vanligtvis 4,5% (ITP1) eller enligt kollektivavtal.' },
-  { question: 'Hur mycket tjänstepension får jag?', answer: 'De flesta anställda med kollektivavtal har ITP1 (4,5% på lönedelar upp till 7,5 prisbasbelopp + 30% på delen över). Utan kollektivavtal varierar det. Kontrollera med din arbetsgivare.' },
+  {
+    question: "Vad ingår i den allmänna pensionen?",
+    answer:
+      "Inkomstpension och premiepension, båda finansierade av den allmänna pensionsavgiften och arbetsgivaravgifterna. Inkomstpensionen följer inkomstutvecklingen i samhället, premiepensionen utvecklingen i de fonder du valt. Därtill finns garantipension för den som haft låg eller ingen inkomst, som betalas ur statsbudgeten och inte bygger på inbetalda avgifter.",
+  },
+  {
+    question: "Hur mycket tjänstepension är normalt?",
+    answer:
+      "Med kollektivavtal avsätter arbetsgivaren vanligen 4,5 procent av lönen upp till 7,5 inkomstbasbelopp och 30 procent på delen däröver, enligt ITP1 eller motsvarande. Utan kollektivavtal varierar det helt, från ingenting till mer än avtalsnivån. Det är värt att kontrollera vid en anställning, eftersom skillnaden över ett yrkesliv blir stor.",
+  },
+  {
+    question: "Påverkar pensionsuttag skatten på lönen?",
+    answer:
+      "Ja, om du tar ut pension och arbetar samtidigt. Båda inkomsterna läggs ihop och beskattas gemensamt, vilket kan föra den samlade inkomsten över skiktgränsen. Arbetsgivaren och Pensionsmyndigheten drar däremot skatt var för sig utan att känna till den andra, så kvarskatt är vanligt i den situationen.",
+  },
+
+  { question: 'Hur mycket är den allmänna pensionsavgiften?', answer: 'Allmän pensionsavgift är 7% av din bruttolön, upp till ett tak på 614 000 kr per år (2026). Du får full skattereduktion för avgiften, så den påverkar inte din nettolön direkt men bidrar till din allmänna pension. Avgiften syns sällan på lönebeskedet just för att skattereduktionen kvittar den, vilket får många att tro att den inte finns. Den ingår ändå i beräkningen, och den är ett av skälen till att en handräkning av nettolönen sällan går ihop.' },
+  { question: 'Vad är skillnaden mellan allmän pension och tjänstepension?', answer: 'Allmän pension (inkomstpension + premiepension) betalas via skattesystemet. Tjänstepension betalas av din arbetsgivare utöver lönen, vanligtvis 4,5% (ITP1) eller enligt kollektivavtal. Skillnaden märks tydligast vid en anställning utan kollektivavtal, där tjänstepensionen kan saknas helt. Över ett yrkesliv motsvarar den skillnaden ofta flera tusen kronor i månaden i pension, vilket gör den värd att kontrollera vid varje jobbyte.' },
+  { question: 'Hur mycket tjänstepension får jag?', answer: 'De flesta anställda med kollektivavtal har ITP1 (4,5% på lönedelar upp till 7,5 prisbasbelopp + 30% på delen över). Utan kollektivavtal varierar det. Kontrollera med din arbetsgivare. Pensionsmyndighetens prognos på minpension.se visar hela bilden, allmän pension och tjänstepension tillsammans, vilket är den enda siffra som säger något om den faktiska levnadsstandarden efter arbetslivet.' },
 ];
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
+import SkattKontext from '../../components/SkattKontext.astro';
 ---
 
 <CalculatorLayout
@@ -46,4 +64,6 @@ const faqs = [
       </tbody>
     </table>
   </div>
+  <OfficiellaKallor />
+  <SkattKontext />
 </CalculatorLayout>

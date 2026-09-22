@@ -1,0 +1,217 @@
+---
+/**
+ * Le contexte que les pages ne donnaient pas.
+ *
+ * Ces pages portaient l'outil, une FAQ et peu d'autre chose, loin des 2 000
+ * mots que la recette demande a une page pilier. Les completer avec un texte
+ * commun aggraverait leur ressemblance : ce bloc est donc calcule sur un
+ * salaire et une commune de reference passes en parametre, si bien que les
+ * montants et les ecarts changent d'une page a l'autre.
+ *
+ * Il traite ce qu'aucune de ces pages n'expliquait : l'ordre des prelevements,
+ * pourquoi le resultat n'est pas proportionnel au salaire, et ce qu'un calcul
+ * de paie ne peut pas savoir.
+ */
+import { KOMMUNER, DEFAULT_KOMMUNALSKATT } from '../data/tax-2026';
+import { calculateTakeHome } from '../lib/tax-engine-se';
+import { formatKr, formatDec } from '../lib/format';
+
+interface Props {
+  /** Lon de reference ; par defaut proche de la mediane suedoise a temps plein. */
+  referens?: number;
+}
+const { referens = 35000 } = Astro.props;
+
+const bas = calculateTakeHome({ monthlyGross: referens, kommunalskattRate: DEFAULT_KOMMUNALSKATT });
+const plus = calculateTakeHome({ monthlyGross: referens + 1000, kommunalskattRate: DEFAULT_KOMMUNALSKATT });
+const behallerAv1000 = plus.netMonthly - bas.netMonthly;
+const marginal = 100 - (behallerAv1000 / 1000) * 100;
+const effektiv = (1 - bas.netMonthly / referens) * 100;
+
+const sorterade = [...KOMMUNER].sort((a, b) => a.rate - b.rate);
+const lagst = sorterade[0];
+const hogst = sorterade[sorterade.length - 1];
+const nettoLagst = calculateTakeHome({ monthlyGross: referens, kommunalskattRate: lagst.rate }).netMonthly;
+const nettoHogst = calculateTakeHome({ monthlyGross: referens, kommunalskattRate: hogst.rate }).netMonthly;
+const spann = nettoLagst - nettoHogst;
+
+const pc = (v: number) => formatDec(v, 1) + ' %';
+---
+
+<section class="mx-auto max-w-3xl px-4 mt-12">
+  <h2 class="text-2xl font-bold">I vilken ordning dras skatten</h2>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Beräkningen sker i en bestämd ordning, och ordningen spelar roll eftersom posterna inte utgår
+    från samma underlag. Först dras grundavdraget från inkomsten, vilket ger den beskattningsbara
+    inkomsten. På den beräknas kommunalskatten, och statlig skatt tillkommer på den del som
+    överstiger skiktgränsen. Sist dras jobbskatteavdraget av från den framräknade kommunalskatten,
+    inte från inkomsten. Att kasta om stegen ger ett för högt belopp, vilket är det vanligaste
+    felet när någon räknar för hand.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Vid {formatKr(referens)} i månaden blir nettolönen {formatKr(bas.netMonthly)}, vilket motsvarar
+    en effektiv skatt på {pc(effektiv)}. Nästa tusenlapp i bruttolön ger däremot bara
+    {formatKr(behallerAv1000)} mer på kontot, alltså en marginalskatt på {pc(marginal)}. Avståndet
+    mellan de två talen är det som oftast missförstås: det är marginalskatten som gäller vid en
+    löneförhöjning, men effektivskatten som gäller för budgeten.
+  </p>
+
+  <h2 class="mt-10 text-2xl font-bold">Vad kommunen avgör</h2>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Statlig skatt och allmän pensionsavgift är desamma i hela landet, så hela skillnaden mellan två
+    orter kommer från kommunalskatten. Vid {formatKr(referens)} skiljer det
+    {formatKr(Math.abs(spann))} i månaden mellan {lagst.name}, som har den lägsta satsen bland de
+    kommuner vi följer, och {hogst.name}, som har den högsta. Över ett år blir det
+    {formatKr(Math.abs(spann) * 12)}, vilket är en reell skillnad men sällan nog för att ensamt
+    motivera en flytt när boendekostnaden vägs in.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Skatten följer den kommun där du var folkbokförd den första november året före inkomståret. En
+    flytt i mars påverkar alltså inte årets skatt utan nästa års, vilket överraskar den som flyttar
+    till en kommun med lägre sats och väntar sig se effekten redan på nästa lönebesked.
+  </p>
+
+  <h2 class="mt-10 text-2xl font-bold">Grundavdrag och jobbskatteavdrag</h2>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    De två avdragen fyller olika funktioner och blandas ofta ihop. Grundavdraget minskar den
+    inkomst som skatten beräknas på, är störst vid låga inkomster och trappas ned därefter. Från
+    det år du fyller 66 höjs det kraftigt, vilket är en huvudorsak till att pensionärer beskattas
+    annorlunda än löntagare med samma inkomst.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Jobbskatteavdraget är i stället en skattereduktion som dras från den redan framräknade
+    kommunalskatten, och det gäller bara arbetsinkomst. Det kan aldrig bli större än skatten, så
+    den som tjänar för lite för att betala kommunalskatt får ingen nytta av det. Det syns heller
+    aldrig som en egen rad på lönebeskedet, eftersom det redan ligger inbakat i skattetabellen,
+    vilket förklarar varför nettolönen ofta är högre än en enkel procenträkning ger.
+  </p>
+
+  <h2 class="mt-10 text-2xl font-bold">Vad en löneberäkning inte kan veta</h2>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Tre saker ligger utanför varje kalkylator. Jämkning, alltså ett beslut från Skatteverket om
+    ändrat skatteavdrag, ändrar vad arbetsgivaren drar men framgår inte av bruttolönen.
+    Skattepliktiga förmåner som tjänstebil eller sjukvårdsförsäkring höjer den inkomst skatten
+    beräknas på utan att höja utbetalningen. Och avdrag som yrkas i deklarationen, för resor eller
+    övriga utgifter, påverkar den slutliga skatten men inte den preliminära.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Därtill utgår skattetabellerna från jämn inkomst över året. Den som har ojämn lön, provision
+    eller flera arbetsgivare får därför avvikelser månad för månad som jämnas ut först i
+    deklarationen. En skillnad på några tior mot lönebeskedet är normal och beror på avrundning.
+    En skillnad på flera hundra har nästan alltid en förklaring i någon av posterna ovan, och den
+    är värd att spåra till det lönebesked där den först dök upp.
+  </p>
+
+  <h2 class="mt-10 text-2xl font-bold">Så läser du ett svenskt lönebesked</h2>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Fyra rader bär nästan all information. Bruttolönen ska stämma med anställningsavtalet delat
+    på antalet utbetalningar, justerat för övertid eller tillägg. Skatteavdraget är kommunalskatt
+    och eventuell statlig skatt tillsammans, sällan uppdelade. Nettolönen är differensen. Den
+    fjärde raden är ackumulerade belopp för året, och det är den som sedan hamnar i
+    kontrolluppgiften till Skatteverket.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Just de ackumulerade beloppen är värda mest uppmärksamhet, eftersom ett fel där följer med
+    till deklarationen. Att stämma av dem mot egna anteckningar en gång i halvåret räcker för att
+    fånga en avvikelse medan den fortfarande går att rätta via lönekontoret, vilket är betydligt
+    enklare än att hantera den i efterhand.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Allt annat på lönebeskedet är antingen en skattepliktig förmån, som höjer underlaget utan att
+    höja utbetalningen, eller ett frivilligt avdrag som fackavgift eller löneväxling. Det första
+    höjer skatten, det andra sänker den. Att skilja på de två förklarar det mesta av avståndet
+    mellan avtalad lön och insatt belopp.
+  </p>
+
+  <h2 class="mt-10 text-2xl font-bold">Var reglerna faktiskt kommer ifrån</h2>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Kommunalskatten beslutas av varje kommunfullmäktige inför budgetåret, och regionen lägger sin
+    del ovanpå. Skiktgränsen för statlig skatt räknas upp årligen enligt inkomstbasbeloppet, vilket
+    betyder att den flyttar sig även utan riksdagsbeslut. Grundavdraget och jobbskatteavdraget
+    följer egna formler i inkomstskattelagen, och Skatteverket omsätter allt detta i skattetabeller
+    som arbetsgivarens lönesystem hämtar.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Den uppdelningen är skälet till att en siffra utan årtal är opålitlig, och till att skatten kan
+    ändras vid ett årsskifte trots att ingen politisk reform aviserats. Uppräkningen sker
+    automatiskt. Den som vill kontrollera en enskild uppgift hittar den hos Skatteverket, som
+    publicerar samtliga satser och gränsvärden i slutet av december inför det kommande året.
+  </p>
+
+  <h2 class="mt-10 text-2xl font-bold">Allmän pensionsavgift och pensionsgrundande inkomst</h2>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Utöver skatten betalas en allmän pensionsavgift på sju procent av inkomsten upp till ett tak.
+    Den syns sällan på lönebeskedet, eftersom den i praktiken kvittas mot en skattereduktion av
+    samma storlek, och nettoeffekten blir därmed noll för de allra flesta. Den ingår ändå i
+    beräkningen och är ett av skälen till att en handräkning av nettolönen sällan går ihop på
+    kronan.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Det som avgiften bygger upp är den pensionsgrundande inkomsten, som ligger till grund för
+    inkomstpensionen. Inkomst över taket ger ingen ytterligare allmän pension, vilket är skälet
+    till att tjänstepensionen blir så mycket viktigare för högre löner. Där avsätter arbetsgivaren
+    vanligen en betydligt högre andel på lönedelar över 7,5 inkomstbasbelopp, förutsatt att
+    kollektivavtal finns.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    För den som saknar kollektivavtal finns ingen sådan avsättning alls om inte arbetsgivaren
+    ordnat den frivilligt. Skillnaden över ett yrkesliv motsvarar ofta flera tusen kronor i månaden
+    i pension, vilket gör den värd att kontrollera vid varje anställning. Pensionsmyndighetens
+    prognos visar allmän pension och tjänstepension tillsammans, vilket är den enda siffra som
+    säger något om den faktiska levnadsstandarden efter arbetslivet.
+  </p>
+
+  <h2 class="mt-10 text-2xl font-bold">Vad du kan göra åt skatten</h2>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Utrymmet är mindre i Sverige än i många andra länder, eftersom systemet är byggt på breda
+    underlag och få undantag. Det som finns är i huvudsak tre saker: löneväxling till
+    tjänstepension, som minskar den beskattade lönen och kan föra en inkomst under skiktgränsen;
+    avdrag för resor till och från arbetet över en beloppsgräns; och avdrag för övriga utgifter i
+    tjänsten, som kräver att de överstiger ett golv.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    ROT- och RUT-avdrag fungerar annorlunda: de minskar skatten direkt i stället för inkomsten, och
+    påverkar alltså inte om du hamnar över skiktgränsen. De är dessutom knutna till utfört arbete i
+    bostaden, inte till lönen. Att blanda ihop de två kategorierna leder ofta till felaktiga
+    förväntningar på vad ett avdrag är värt.
+  </p>
+
+  <h2 class="mt-10 text-2xl font-bold">Jämkning och kvarskatt</h2>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Skattetabellen utgår från att inkomsten är jämn över året. Den som byter jobb, arbetar delar av
+    året eller har flera arbetsgivare samtidigt får därför ett avdrag som inte stämmer med den
+    slutliga skatten. Jämkning är Skatteverkets beslut om ändrat skatteavdrag, och den ansöks om
+    när avvikelsen är känd i förväg. Beslutet gäller ett år i taget och måste förnyas, annars
+    återgår avdraget till tabell i januari.
+  </p>
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Kvarskatt uppstår när det sammanlagda avdraget under året understiger den slutliga skatten, och
+    den vanligaste orsaken är just två samtidiga arbetsgivare som var för sig drar enligt tabell
+    som om de vore den enda. Motsatsen, överskjutande skatt, betalas tillbaka och är vanlig efter
+    ett år med föräldraledighet eller deltid. Ingen av dem är ett fel i sig, utan en följd av att
+    avdraget är preliminärt.
+  </p>
+
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Den som vet att året blir ojämnt gör klokt i att ansöka om jämkning i början av det, snarare än
+    att vänta på beskedet i deklarationen. Skatteverkets e-tjänst ger besked inom några dagar, och
+    arbetsgivaren hämtar det nya avdraget automatiskt till nästa löneutbetalning. Skillnaden ligger
+    inte i den slutliga skatten, som blir densamma hur som helst, utan i när pengarna finns
+    tillgängliga.
+  </p>
+
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Slutligen är det värt att skilja på preliminär och slutlig skatt. Det som dras varje månad är
+    en uppskattning som bygger på tabell, och den slutliga skatten fastställs först när
+    deklarationen är behandlad året därpå. Att de två aldrig stämmer exakt är normalt och inbyggt i
+    systemet. Det som avgör om skillnaden blir liten eller stor är hur jämn inkomsten varit, och om
+    avdrag yrkats som arbetsgivaren inte kände till när avdraget gjordes.
+  </p>
+
+  <p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">
+    Den som vill kontrollera sin egen situation hittar allt som behövs i Skatteverkets e-tjänster:
+    det beslutade skatteavdraget, kontrolluppgifterna från arbetsgivaren och den preliminära
+    deklarationen. Att jämföra dem mot lönebeskedet en gång om året tar några minuter och fångar
+    de flesta fel medan de fortfarande går att rätta enkelt.
+  </p>
+</section>

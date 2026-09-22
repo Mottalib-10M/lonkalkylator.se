@@ -2,9 +2,32 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 
 const faqs = [
-  { question: 'Lagrar Lön Efter Skatt mina löneuppgifter?', answer: 'Nej. Alla beräkningar sker helt i din webbläsare. Ingen lönedata, kommun eller personuppgifter skickas till eller lagras på våra servrar.' },
-  { question: 'Använder ni cookies?', answer: 'Vi använder Microsoft Clarity för anonym användningsanalys. Inga personidentifierande uppgifter samlas in. Du kan blockera cookies i din webbläsare utan att påverka kalkylatorns funktion.' },
+  {
+    question: "Vad mäter ni om besöken?",
+    answer:
+      "Enbart att ett besök har skett, vilken sida som visats och ungefär varifrån trafiken kom. Ingen profil byggs, ingen besökare följs mellan sidor över tid och inga uppgifter säljs eller delas vidare. Mätningen räcker för att se vilka sidor som används och vilka som inte fyller någon funktion.",
+  },
+  {
+    question: "Lagras det jag skriver in i kalkylatorn?",
+    answer:
+      "Nej, ingenstans. Beräkningen sker i din webbläsare och lönesiffran lämnar aldrig din enhet. Det är ett medvetet val snarare än en teknisk tillfällighet: en tjänst som inte tar emot uppgiften behöver varken skydda den, radera den eller redogöra för vem som haft tillgång till den.",
+  },
+  {
+    question: "Vilka rättigheter har jag enligt GDPR?",
+    answer:
+      "Rätt till tillgång, rättelse, radering, begränsning, dataportabilitet och att invända mot behandling. Eftersom vi inte lagrar några personuppgifter från kalkylatorn finns det i praktiken inget att begära ut eller radera i den delen. För eventuell mejlkorrespondens gäller rättigheterna fullt ut och begäran besvaras inom en månad.",
+  },
+  {
+    question: "Sätter ni några cookies alls?",
+    answer:
+      "Endast sådana som krävs för att sidan ska fungera, till exempel att komma ihåg om du valt mörkt läge. Inga cookies för annonsering, ingen spårning mellan webbplatser och ingen delning med tredje part. Det är också skälet till att ingen samtyckesruta möter dig vid första besöket.",
+  },
+
+  { question: 'Lagrar Lön Efter Skatt mina löneuppgifter?', answer: 'Nej. Alla beräkningar sker helt i din webbläsare. Ingen lönedata, kommun eller personuppgifter skickas till eller lagras på våra servrar. Beräkningen sker i din egen webbläsare och siffran lämnar aldrig enheten. Det är ett medvetet val: en tjänst som inte tar emot uppgiften behöver varken skydda den, radera den eller redovisa vem som haft tillgång till den.' },
+  { question: 'Använder ni cookies?', answer: 'Vi använder Microsoft Clarity för anonym användningsanalys. Inga personidentifierande uppgifter samlas in. Du kan blockera cookies i din webbläsare utan att påverka kalkylatorns funktion. De som finns krävs för att sidan ska fungera, exempelvis för att komma ihåg mörkt läge. Inga cookies för annonsering, ingen spårning mellan webbplatser och ingen delning med tredje part, vilket också är skälet till att ingen samtyckesruta visas.' },
 ];
+import SkattKontext from '../../components/SkattKontext.astro';
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
 ---
 
 <CalculatorLayout
@@ -54,4 +77,6 @@ const faqs = [
     <h2>8. Kontakt</h2>
     <p>Frågor om vår integritetspolicy? Kontakta oss på <a href="mailto:contact@lonefterskatt.se">contact@lonefterskatt.se</a> eller besök vår <a href="/kontakt/">kontaktsida</a>.</p>
   </div>
+  <SkattKontext />
+  <OfficiellaKallor />
 </CalculatorLayout>

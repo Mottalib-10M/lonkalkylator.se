@@ -1,0 +1,57 @@
+---
+/**
+ * Bloc « officiella källor », commun aux pages pilier.
+ *
+ * RECETTE §7 : une page pilier cite au moins trois textes officiels. Sur un
+ * sujet de paie et d'impot c'est le signal E-E-A-T le plus direct, et le plus
+ * verifiable : chaque taux du site doit pouvoir etre remonte jusqu'a l'organisme
+ * qui le fixe ou le publie.
+ */
+interface Props {
+  intro?: string;
+  lang?: 'sv' | 'en';
+}
+const { intro, lang = 'sv' } = Astro.props;
+
+const kallor = [
+  {
+    url: 'https://www.skatteverket.se/privat/skatter/arbeteochinkomst/skattetabeller.4.18e1b10334ebe8bc80005221.html',
+    namn: 'Skatteverket: skattetabeller',
+    not: 'Tabellerna för preliminär skatt på lön, som avgör vad arbetsgivaren drar varje månad.',
+  },
+  {
+    url: 'https://www.skatteverket.se/beloppochprocent',
+    namn: 'Skatteverket: belopp och procent',
+    not: 'Skiktgränsen för statlig inkomstskatt och hur den räknas upp enligt inkomstbasbeloppet.',
+  },
+  {
+    url: 'https://www.scb.se/hitta-statistik/statistik-efter-amne/offentlig-ekonomi/finanser-for-den-kommunala-sektorn/kommunalskatterna/',
+    namn: 'SCB: kommunalskatterna',
+    not: 'Statistisk sammanställning av skattesatserna, använd som kontroll mot Skatteverkets uppgift.',
+  },
+  {
+    url: 'https://www.pensionsmyndigheten.se/',
+    namn: 'Pensionsmyndigheten',
+    not: 'Allmän pensionsavgift, inkomstbasbelopp och underlaget för den allmänna pensionen.',
+  },
+];
+---
+
+<section class="mx-auto max-w-3xl px-4 mt-12 border-t border-gray-200 dark:border-gray-700 pt-8">
+  <h2 class="text-2xl font-bold">{lang === 'en' ? 'Official sources' : 'Officiella källor'}</h2>
+  <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+    {intro ?? (lang === 'en'
+      ? 'Every rate on this page comes from the publications below. No figure is taken from a third-party summary.'
+      : 'Alla skattesatser på den här sidan kommer från publikationerna nedan. Ingen siffra är hämtad från en sammanfattning i andra hand.')}
+  </p>
+  <ul class="mt-4 space-y-3">
+    {kallor.map((k) => (
+      <li>
+        <a href={k.url} target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-600 no-underline hover:underline">
+          {k.namn}
+        </a>
+        <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">{k.not}</p>
+      </li>
+    ))}
+  </ul>
+</section>

@@ -3,11 +3,28 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import LonKalkylator from '../../components/calculators/LonKalkylator';
 
 const faqs = [
+  {
+    question: "How is Swedish income tax structured?",
+    answer:
+      "In two layers. Municipal tax, set by each municipality and region together, applies to all taxable income and ranges roughly from twenty-nine to thirty-five percent. State income tax of twenty percent applies only above a threshold that is uprated annually. Most employees pay municipal tax alone, which is why the municipality matters more than the national rate.",
+  },
+  {
+    question: "What is the basic deduction?",
+    answer:
+      "An allowance everyone receives that reduces the income on which tax is calculated. It is largest at low incomes and tapers off above them, and from the year you turn sixty-six it increases substantially. Together with the earned income tax credit it is the main reason net pay is higher than a simple percentage calculation suggests.",
+  },
+  {
+    question: "Do I pay tax on pension contributions?",
+    answer:
+      "The general pension contribution of seven percent is offset by a tax reduction of the same size, so it has no direct effect on net pay. Occupational pension contributions are paid by the employer on top of salary and are not taxed as income when paid, only when drawn in retirement.",
+  },
+
   { question: 'How is salary after tax calculated in Sweden?', answer: 'Your net salary is calculated by deducting municipal tax, any state income tax, pension contributions, and burial fee from your gross salary. Tax reductions like jobbskatteavdrag (earned income tax credit) and grundavdrag (basic allowance) are then applied. Municipal tax rates vary by municipality, from about 29% to over 35%.' },
-  { question: 'What is the state income tax threshold in 2026?', answer: 'If your taxable earned income exceeds 615,300 SEK per year, you pay an additional 20% state income tax on the excess. This corresponds to a monthly gross salary of approximately 53,000–56,000 SEK.' },
+  { question: 'What is the state income tax threshold in 2026?', answer: 'If your taxable earned income exceeds 615,300 SEK per year, you pay an additional 20% state income tax on the excess. This corresponds to a monthly gross salary of approximately 53,000–56,000 SEK. The threshold is uprated each year in line with the income base amount, so it moves even when parliament has decided nothing. Most employees never reach it, which is why the municipal rate decides almost the whole tax bill on an ordinary salary.' },
   { question: 'What is kommunalskatt (municipal tax)?', answer: 'Municipal tax is the combined tax rate of your municipality and region. It is the main component of Swedish income tax and ranges from about 29.68% (Täby) to over 35% depending on where you live. The national average in 2026 is 32.37%.' },
-  { question: 'Do I need to file a tax return in Sweden?', answer: 'Yes, all Swedish residents must file a tax return (deklaration). Skatteverket sends a pre-filled declaration each spring. If your only income is employment income with correct withholding, you can often approve it digitally without changes.' },
+  { question: 'Do I need to file a tax return in Sweden?', answer: 'Yes, all Swedish residents must file a tax return (deklaration). Skatteverket sends a pre-filled declaration each spring. If your only income is employment income with correct withholding, you can often approve it digitally without changes. The Swedish Tax Agency pre-fills most returns with the figures employers have reported, so the task is usually to check rather than to compile. Deductions for travel, or for work-related expenses above a floor, have to be added by you and are the most commonly missed.' },
 ];
+import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
 ---
 
 <CalculatorLayout
@@ -53,4 +70,5 @@ const faqs = [
     <h3>Employer Costs</h3>
     <p>Your employer pays social security contributions (arbetsgivaravgifter) of 31.42% on top of your gross salary. These are not visible on your payslip but represent a significant additional cost.</p>
   </div>
+  <OfficiellaKallor lang="en" />
 </CalculatorLayout>

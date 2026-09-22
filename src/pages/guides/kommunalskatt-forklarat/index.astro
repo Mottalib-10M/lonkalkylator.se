@@ -2,18 +2,41 @@
 import GuideLayout from '../../../layouts/GuideLayout.astro';
 import { KOMMUNER } from '../../../data/tax-2026';
 
+/** Le taux s'ecrit a la suedoise, virgule decimale, dans le texte ET dans le JSON-LD. */
+const taux = (v: number) => v.toLocaleString('sv-SE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+
 const lowest = [...KOMMUNER].sort((a, b) => a.rate - b.rate).slice(0, 5);
 const highest = [...KOMMUNER].sort((a, b) => b.rate - a.rate).slice(0, 5);
+import OfficiellaKallor from '../../../components/OfficiellaKallor.astro';
 ---
 
 <GuideLayout
-  title="Kommunalskatt i Sverige 2026 – Guide"
+  title="Kommunalskatt förklarad: vem bestämmer den och varför"
   description="Hur kommunalskatten fungerar i Sverige 2026, varför den varierar mellan kommuner och vilka som har högst och lägst skattesats. Komplett guide med exempel."
   publishDate="2026-01-01"
   breadcrumbs={[
     { label: 'Hem', href: '/' },
     { label: 'Guider', href: '/guides/' },
     { label: 'Kommunalskatt förklarat' },
+  ]}
+  faqs={[
+      {
+          "question": "Varför beslutar kommunerna själva om skattesatsen?",
+          "answer": "Den kommunala självstyrelsen är grundlagsfäst, och beskattningsrätten är dess ekonomiska förutsättning. Varje kommunfullmäktige fastställer satsen inför budgetåret utifrån vad skola, omsorg och infrastruktur kostar och hur stort skatteunderlaget är. Regionen lägger sin egen sats ovanpå, främst för hälso- och sjukvård, och det är summan av de två som dras på lönen."
+      },
+      {
+          "question": "Vad är kommunal skatteutjämning?",
+          "answer": "Ett system som omfördelar medel mellan kommuner så att en kommun med svagt skatteunderlag kan erbjuda ungefär samma service som en med starkt. Utan det skulle skillnaderna i skattesats vara betydligt större än de dryga fem procentenheter som skiljer landets ytterligheter i dag. Systemet är omdiskuterat men har funnits i olika former sedan 1900-talets mitt."
+      },
+      {
+          "question": "Kan jag överklaga kommunalskatten?",
+          "answer": "Nej, inte som enskild skattebetalare. Satsen är ett politiskt beslut fattat av kommunfullmäktige, och den prövas i val snarare än i domstol. Det som går att överklaga är hur skatten beräknats i din egen deklaration, vilket är en helt annan sak och hanteras av Skatteverket och förvaltningsrätten."
+      },
+      {
+          "question": "Påverkar kyrkoavgiften den kommunala skatten?",
+          "answer": "Nej, de är separata. Kommunalskatten betalar alla folkbokförda. Kyrkoavgiften betalar bara den som är medlem i Svenska kyrkan eller ett annat trossamfund som tar ut avgift via Skatteverket, och den ligger typiskt kring en procent. Begravningsavgiften är däremot obligatorisk för alla, oavsett medlemskap, och tas ut med en låg sats."
+      }
   ]}
 >
   <h2>Vad är kommunalskatt?</h2>
@@ -39,7 +62,7 @@ const highest = [...KOMMUNER].sort((a, b) => b.rate - a.rate).slice(0, 5);
         <tr>
           <td><a href={`/kommun/${k.slug}/`}>{k.name}</a></td>
           <td>{k.lan}</td>
-          <td>{k.rate}%</td>
+          <td>{taux(k.rate)} %</td>
         </tr>
       ))}
     </tbody>
@@ -54,7 +77,7 @@ const highest = [...KOMMUNER].sort((a, b) => b.rate - a.rate).slice(0, 5);
         <tr>
           <td><a href={`/kommun/${k.slug}/`}>{k.name}</a></td>
           <td>{k.lan}</td>
-          <td>{k.rate}%</td>
+          <td>{taux(k.rate)} %</td>
         </tr>
       ))}
     </tbody>
@@ -88,4 +111,5 @@ const highest = [...KOMMUNER].sort((a, b) => b.rate - a.rate).slice(0, 5);
 
   <h2>Sammanfattning</h2>
   <p>Kommunalskatten är den viktigaste skatten för de flesta svenska löntagare och finansierar grundläggande välfärdstjänster som skola, vård och omsorg. Skattesatsen varierar mellan kommuner, från de lägsta nivåerna i storstadsregionerna till de högsta i glesbygdskommuner. Skillnaden kan innebära tusentals kronor i nettolön per månad. Det enda sättet att ändra sin kommunalskatt är att flytta, och din folkbokföring den 1 november avgör vilken skattesats som gäller för nästkommande år. Genom att förstå hur kommunalskatten fungerar kan du bättre planera din ekonomi och fatta mer informerade beslut om var du vill bo.</p>
+  <OfficiellaKallor />
 </GuideLayout>
