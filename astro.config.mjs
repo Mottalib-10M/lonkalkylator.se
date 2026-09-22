@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://lonefterskatt.se',
+  site: 'https://lonkalkylator.se',
   /*
    * Pages consolidees le 2026-09-22 : vingt-deux communes dont le texte ne
    * differait que par un nom et un taux, 555 paires relevees trop proches.
@@ -47,7 +47,7 @@ export default defineConfig({
     },
   },
   integrations: [
-    trustKit({ lang: 'sv', siteUrl: 'https://lonefterskatt.se', siteName: 'Lön Efter Skatt', founded: '2026-06-27', about: '/om-oss/', method: '/metod/' }), react(), sitemap()],
+    trustKit({ lang: 'sv', siteUrl: 'https://lonkalkylator.se', siteName: 'Lönekalkylator', founded: '2026-06-27', about: '/om-oss/', method: '/metod/' }), react(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
   },

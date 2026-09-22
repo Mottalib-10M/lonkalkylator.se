@@ -3,7 +3,7 @@
  */
 export const sv = {
   // Allmänt
-  'site.name': 'Lön Efter Skatt',
+  'site.name': 'Lönekalkylator',
   'site.tagline': 'Beräkna din nettolön — enkel och gratis lönekalkylator',
   'site.description': 'Beräkna din lön efter skatt 2025. Se nettolön, kommunalskatt, statlig skatt, jobbskatteavdrag och grundavdrag. Gratis och alltid uppdaterad.',
   'nav.home': 'Hem',
@@ -95,7 +95,7 @@ export const sv = {
   'footer.privacy': '100% beräknas i din webbläsare',
   'footer.free': 'Gratis & privat',
   'footer.disclaimer': 'Denna kalkylator ger uppskattningar enbart i informationssyfte. Det utgör inte skatterådgivning. Kontakta en kvalificerad skatterådgivare för personlig vägledning. Resultaten kan skilja sig från din faktiska skattskyldighet.',
-  'footer.copyright': 'Lön Efter Skatt. Alla rättigheter förbehållna.',
+  'footer.copyright': 'Lönekalkylator. Alla rättigheter förbehållna.',
   'footer.about': 'Om oss',
   'footer.contact': 'Kontakt',
   'footer.privacy_policy': 'Integritetspolicy',

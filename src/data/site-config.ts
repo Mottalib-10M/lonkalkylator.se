@@ -1,9 +1,9 @@
 /**
- * Site configuration for lonefterskatt.se
+ * Site configuration for lonkalkylator.se
  */
 
-export const SITE_NAME = 'Lön Efter Skatt';
-export const SITE_URL = 'https://lonefterskatt.se';
+export const SITE_NAME = 'Lönekalkylator';
+export const SITE_URL = 'https://lonkalkylator.se';
 export const CURRENCY = 'SEK';
 export const CURRENCY_SYMBOL = 'kr';
 export const LOCALE = 'sv-SE';
@@ -13,7 +13,7 @@ export const OG_IMAGE = `${SITE_URL}/og-default.png`;
 export const OG_IMAGE_WIDTH = '1200';
 export const OG_IMAGE_HEIGHT = '630';
 
-export const CONTACT_EMAIL = 'kontakt@lonefterskatt.se';
+export const CONTACT_EMAIL = 'kontakt@lonkalkylator.se';
 
 /*
  * Identite legale de l'editeur (RECETTE-SITE.md, controle check-legal).

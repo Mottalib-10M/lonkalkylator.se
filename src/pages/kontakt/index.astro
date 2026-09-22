@@ -20,7 +20,7 @@ const faqs = [
 
   { question: 'Hur snabbt svarar ni?', answer: 'Vi strävar efter att svara på alla meddelanden inom 48 timmar under vardagar. Beskriv gärna vilken sida frågan gäller och vilka värden du använde, så går svaret att ge direkt i stället för att kräva ett par vändor fram och tillbaka. Frågor som rör din egen deklaration hänvisas till Skatteverket, som svarar bindande och kostnadsfritt.' },
   { question: 'Kan ni hjälpa med skattefrågor?', answer: 'Vi kan svara på frågor om hur kalkylatorn fungerar, men vi ger inte individuell skatterådgivning. Kontakta Skatteverket eller en auktoriserad skatterådgivare för personlig vägledning. Gränsen går vid din egen situation: hur ett avdrag beräknas i allmänhet kan vi förklara, men om just du har rätt till det kräver kännedom om hela din ekonomi och därtill auktorisation som vi inte har.' },
-  { question: 'Jag hittade ett fel i kalkylatorn – vad gör jag?', answer: 'Skicka gärna ett mejl till contact@lonefterskatt.se med detaljer om felet. Beskriv vilken kalkylator du använde, vilka värden du matade in och vad resultatet blev. Vi uppskattar alla felrapporter. Rapporter utan indata tar betydligt längre tid att utreda, och ibland går felet inte att bekräfta alls. Med värdena i handen går det däremot oftast att återskapa på några minuter och rätta samma dag.' },
+  { question: 'Jag hittade ett fel i kalkylatorn – vad gör jag?', answer: 'Skicka gärna ett mejl till contact@lonkalkylator.se med detaljer om felet. Beskriv vilken kalkylator du använde, vilka värden du matade in och vad resultatet blev. Vi uppskattar alla felrapporter. Rapporter utan indata tar betydligt längre tid att utreda, och ibland går felet inte att bekräfta alls. Med värdena i handen går det däremot oftast att återskapa på några minuter och rätta samma dag.' },
 ];
 import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
 import SkattKontext from '../../components/SkattKontext.astro';
@@ -29,8 +29,8 @@ import SkattKontext from '../../components/SkattKontext.astro';
 <CalculatorLayout
   slug="/kontakt"
   title="Kontakt"
-  metaTitle="Kontakt Lön Efter Skatt | Frågor om skattekalkylatorn"
-  metaDescription="Kontakta oss på Lön Efter Skatt. Har du frågor om skattekalkylatorn, felrapporter eller förslag? Nå oss på contact@lonefterskatt.se. Svar inom 48 timmar."
+  metaTitle="Kontakt Lönekalkylator | Frågor om skattekalkylatorn"
+  metaDescription="Kontakta oss på Lönekalkylator. Har du frågor om skattekalkylatorn, felrapporter eller förslag? Nå oss på contact@lonkalkylator.se. Svar inom 48 timmar."
   h1="Kontakta oss"
   intro="Har du frågor om våra skattekalkylatorer? Vi hjälper dig gärna."
   faqs={faqs}
@@ -39,7 +39,7 @@ import SkattKontext from '../../components/SkattKontext.astro';
     <h2>Så når du oss</h2>
     <p>Vi välkomnar frågor, förslag och felrapporter. Det bästa sättet att nå oss är via e-post:</p>
     <p class="text-xl font-semibold">
-      <a href="mailto:contact@lonefterskatt.se">contact@lonefterskatt.se</a>
+      <a href="mailto:contact@lonkalkylator.se">contact@lonkalkylator.se</a>
     </p>
     <p>Vi svarar normalt inom 48 timmar under vardagar.</p>
 
@@ -64,8 +64,8 @@ import SkattKontext from '../../components/SkattKontext.astro';
     </ul>
     <p>Alla felrapporter hjälper oss att hålla kalkylatorerna exakta och tillförlitliga.</p>
 
-    <h2>Om Lön Efter Skatt</h2>
-    <p>Lön Efter Skatt drivs av <strong>Radif Partners</strong>, Utgivare av kalkylatorer och praktiska guider. Sajten erbjuder gratis skattekalkylatorer byggda med Skatteverkets officiella data. Läs mer på vår <a href="/om-oss/">om oss-sida</a>.</p>
+    <h2>Om Lönekalkylator</h2>
+    <p>Lönekalkylator drivs av <strong>Radif Partners</strong>, Utgivare av kalkylatorer och praktiska guider. Sajten erbjuder gratis skattekalkylatorer byggda med Skatteverkets officiella data. Läs mer på vår <a href="/om-oss/">om oss-sida</a>.</p>
   </div>
   <OfficiellaKallor />
   <SkattKontext />

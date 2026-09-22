@@ -40,13 +40,13 @@ const defined_terms_schema = JSON.stringify({
   '@type': 'DefinedTermSet',
   name: 'Svensk skatteordlista 2026',
   description: 'Ordlista med svenska skattebegrepp och termer som används vid löneberäkning och deklaration i Sverige.',
-  url: 'https://lonefterskatt.se/ordlista/',
+  url: 'https://lonkalkylator.se/ordlista/',
   inLanguage: 'sv',
   hasDefinedTerm: defined_terms.map(t => ({
     '@type': 'DefinedTerm',
     name: t.term,
     description: t.definition.replace(/<[^>]*>/g, ''),
-    inDefinedTermSet: 'https://lonefterskatt.se/ordlista/',
+    inDefinedTermSet: 'https://lonkalkylator.se/ordlista/',
   })),
 });
 

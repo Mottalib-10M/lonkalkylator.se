@@ -23,7 +23,7 @@ const faqs = [
       "De är korrekta på kronan för en vanlig anställning med standardavdrag. Det de inte kan veta är jämkning, skattepliktiga förmåner, avdrag som yrkas i deklarationen eller tjänstepension utöver den allmänna. Betrakta resultatet som en tillförlitlig utgångspunkt snarare än som ett lönebesked, och stäm av mot Skatteverket vid tveksamhet.",
   },
 
-  { question: 'Vem driver Lön Efter Skatt?', answer: 'Lön Efter Skatt drivs av Radif Partners, utgivare av kalkylatorer och praktiska guider med inriktning på privatekonomiska verktyg. Alla kalkylatorer är byggda med Skatteverkets officiella data. Verktygen är byggda för att svara på en fråga i taget, med siffror som går att spåra till sin källa. Varje sida anger sin granskningsdag och länkar de publikationer den bygger på, så att inget behöver tas på förtroende.' },
+  { question: 'Vem driver Lönekalkylator?', answer: 'Lönekalkylator drivs av Radif Partners, utgivare av kalkylatorer och praktiska guider med inriktning på privatekonomiska verktyg. Alla kalkylatorer är byggda med Skatteverkets officiella data. Verktygen är byggda för att svara på en fråga i taget, med siffror som går att spåra till sin källa. Varje sida anger sin granskningsdag och länkar de publikationer den bygger på, så att inget behöver tas på förtroende.' },
   { question: 'Hur exakta är kalkylatorerna?', answer: 'Våra kalkylatorer använder Skatteverkets aktuella skattesatser, jobbskatteavdrag, grundavdrag och kommunalskattesatser för 2026. Alla beräkningar sker i din webbläsare. Ingen data skickas till någon server. Det de inte kan veta är jämkning, skattepliktiga förmåner eller avdrag som yrkas i deklarationen, eftersom inget av det går att sluta sig till från en bruttolön. Betrakta resultatet som en tillförlitlig utgångspunkt snarare än som ett lönebesked.' },
 ];
 import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
@@ -33,18 +33,18 @@ import SkattKontext from '../../components/SkattKontext.astro';
 <CalculatorLayout
   slug="/om-oss"
   title="Om oss"
-  metaTitle="Om Lön Efter Skatt | Gratis svenska skattekalkylatorer"
-  metaDescription="Vem som driver Lön Efter Skatt, vilka källor beräkningarna bygger på, hur ofta siffrorna ses över, och vad verktygen inte kan svara på åt dig som besökare."
-  h1="Om Lön Efter Skatt"
+  metaTitle="Om Lönekalkylator | Gratis svenska skattekalkylatorer"
+  metaDescription="Vem som driver Lönekalkylator, vilka källor beräkningarna bygger på, hur ofta siffrorna ses över, och vad verktygen inte kan svara på åt dig som besökare."
+  h1="Om Lönekalkylator"
   intro="Gratis, exakta skattekalkylatorer för svenska löntagare, byggda med Skatteverkets officiella data."
   faqs={faqs}
 >
   <div class="prose prose-lg dark:prose-invert max-w-none">
     <h2>Vårt uppdrag</h2>
-    <p>Lön Efter Skatt ger gratis, exakta skattekalkylatorer så att varje svensk löntagare kan förstå sin lön. Vi tror att ekonomisk kunskap börjar med att veta exakt var pengarna tar vägen.</p>
+    <p>Lönekalkylator ger gratis, exakta skattekalkylatorer så att varje svensk löntagare kan förstå sin lön. Vi tror att ekonomisk kunskap börjar med att veta exakt var pengarna tar vägen.</p>
 
     <h2>Om skaparen</h2>
-    <p><strong>Radif Partners</strong> är utgivare av kalkylatorer och praktiska guider. Med bakgrund inom finans och teknologi skapade företaget Lön Efter Skatt för att göra skatteberäkningar tillgängliga, transparenta och gratis för alla.</p>
+    <p><strong>Radif Partners</strong> är utgivare av kalkylatorer och praktiska guider. Med bakgrund inom finans och teknologi skapade företaget Lönekalkylator för att göra skatteberäkningar tillgängliga, transparenta och gratis för alla.</p>
 
     <h2>Hur våra kalkylatorer fungerar</h2>
     <ul>
@@ -54,7 +54,7 @@ import SkattKontext from '../../components/SkattKontext.astro';
     </ul>
 
     <h2>Ansvarsfriskrivning</h2>
-    <p>Lön Efter Skatt ger uppskattningar enbart i informationssyfte. Våra kalkylatorer ersätter inte professionell skatterådgivning. Kontakta alltid en auktoriserad skatterådgivare för personlig vägledning.</p>
+    <p>Lönekalkylator ger uppskattningar enbart i informationssyfte. Våra kalkylatorer ersätter inte professionell skatterådgivning. Kontakta alltid en auktoriserad skatterådgivare för personlig vägledning.</p>
   </div>
   <OfficiellaKallor />
   <SkattKontext />

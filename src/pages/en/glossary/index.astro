@@ -40,13 +40,13 @@ const defined_terms_schema = JSON.stringify({
   '@type': 'DefinedTermSet',
   name: 'Swedish Tax Glossary 2026',
   description: 'Glossary of Swedish tax terms used in salary calculation and income tax filing in Sweden.',
-  url: 'https://lonefterskatt.se/en/glossary/',
+  url: 'https://lonkalkylator.se/en/glossary/',
   inLanguage: 'en',
   hasDefinedTerm: defined_terms.map(t => ({
     '@type': 'DefinedTerm',
     name: t.term,
     description: t.definition.replace(/<[^>]*>/g, ''),
-    inDefinedTermSet: 'https://lonefterskatt.se/en/glossary/',
+    inDefinedTermSet: 'https://lonkalkylator.se/en/glossary/',
   })),
 });
 
