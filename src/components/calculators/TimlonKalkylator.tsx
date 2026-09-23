@@ -33,7 +33,7 @@ export default function TimlonKalkylator() {
           prefix="kr"
           suffix="/timme"
           help="Din timlön före skatt"
-          step={10}
+          step="any"
           min={0}
           max={5000}
         />

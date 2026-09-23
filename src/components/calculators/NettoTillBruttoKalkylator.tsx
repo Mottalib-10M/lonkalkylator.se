@@ -25,7 +25,7 @@ export default function NettoTillBruttoKalkylator() {
           onChange={setTargetNet}
           prefix="kr"
           help="Den nettolön du vill ha utbetald per månad"
-          step={1000}
+          step="any"
           min={0}
           max={500000}
         />

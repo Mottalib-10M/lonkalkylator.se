@@ -41,7 +41,7 @@ export default function LonKalkylator({ initialGross = 35000 }: Props) {
           onChange={setMonthlyGross}
           prefix="kr"
           help="Ange din bruttolön per månad före skatt"
-          step={1000}
+          step="any"
           min={0}
           max={500000}
         />
