@@ -5,7 +5,7 @@ import { KOMMUNER } from '../../../data/tax-2026';
 import { calculateTakeHome } from '../../../lib/tax-engine-se';
 
 /** Le taux s'ecrit a la suedoise, virgule decimale, dans le texte ET dans le JSON-LD. */
-const taux = (v: number) => v.toLocaleString('sv-SE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const taux = (v: number) => v.toLocaleString('sv-SE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
 
 const sortedKommuner = [...KOMMUNER].sort((a, b) => a.rate - b.rate);

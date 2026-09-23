@@ -7,7 +7,7 @@ import { formatKr } from '../../lib/format';
 import { getSalaryPageContent } from '../../lib/salary-content';
 
 /** Le taux s'ecrit a la suedoise, virgule decimale, dans le texte ET dans le JSON-LD. */
-const taux = (v: number) => v.toLocaleString('sv-SE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const taux = (v: number) => v.toLocaleString('sv-SE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
 
 export function getStaticPaths() {

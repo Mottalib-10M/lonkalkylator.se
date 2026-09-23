@@ -12,8 +12,8 @@ const sekFormatter = new Intl.NumberFormat('sv-SE', {
 const sekDetailFormatter = new Intl.NumberFormat('sv-SE', {
   style: 'currency',
   currency: 'SEK',
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
 });
 
 const percentFormatter = new Intl.NumberFormat('sv-SE', {

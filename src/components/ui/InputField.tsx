@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { useId, useState } from 'react';
 
 interface Props {
   label: string;
@@ -12,8 +12,17 @@ interface Props {
   help?: string;
 }
 
-export default function InputField({ label, value, onChange, prefix = 'kr', suffix, min = 0, max, step = 1000, help }: Props) {
+export default function InputField({ label, value, onChange, prefix = 'kr', suffix, min = 0, max, help }: Props) {
   const id = useId();
+  // Texte brut pendant la saisie. Sans lui, un champ vide vaut zéro, React le
+  // réécrit, et le champ ne peut plus être effacé.
+  const [texte, setTexte] = useState<string | null>(null);
+
+  const affiche = texte !== null
+    ? texte
+    : Number.isFinite(value) && value !== 0
+      ? Math.round(value).toLocaleString('sv-SE')
+      : '';
 
   return (
     <div className="mb-4">
@@ -28,13 +37,17 @@ export default function InputField({ label, value, onChange, prefix = 'kr', suff
         )}
         <input
           id={id}
-          type="number"
-          inputMode="numeric"
-          value={value || ''}
-          onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
-          min={min}
-          max={max}
-          step={step}
+          type="text"
+          inputMode="decimal"
+          value={affiche}
+          onChange={(e) => {
+            const brut = e.target.value.replace(/[^\d.,\s\u00a0\u202f]/g, '');
+            setTexte(brut);
+            const n = parseFloat(brut.replace(/[\s\u00a0\u202f]/g, '').replace(',', '.'));
+            onChange(Number.isFinite(n) && n >= 0 ? (max !== undefined ? Math.min(n, max) : n) : 0);
+          }}
+          onFocus={() => setTexte(value ? String(Math.round(value)) : '')}
+          onBlur={() => setTexte(null)}
           className={`w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-surface py-3 text-lg font-medium tabular-nums text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-colors ${prefix ? 'pl-10' : 'pl-4'} ${suffix ? 'pr-16' : 'pr-4'}`}
           aria-describedby={help ? `${id}-help` : undefined}
         />
