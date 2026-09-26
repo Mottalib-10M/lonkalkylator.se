@@ -1,5 +1,5 @@
 /**
- * i18n — översättningsfunktioner
+ * i18n, översättningsfunktioner
  */
 
 import { sv } from './sv';

@@ -1,5 +1,6 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import { LON_AVSNITT } from '../../data/angles-lokalt';
 import LonKalkylator from '../../components/calculators/LonKalkylator';
 import { SALARY_AMOUNTS, KOMMUNER } from '../../data/tax-2026';
 import { calculateTakeHome } from '../../lib/tax-engine-se';
@@ -39,9 +40,11 @@ const visadeKommuner = KOMMUNER.slice(kommunOffset * 3, kommunOffset * 3 + 10).s
   intro={`Med en bruttol\u00f6n p\u00e5 ${formattedAmount} kr per m\u00e5nad blir din nettol\u00f6n ungef\u00e4r ${formatKr(result.netMonthly)} per m\u00e5nad med genomsnittlig kommunalskatt. Se den fullst\u00e4ndiga skatteber\u00e4kningen nedan.`}
   faqs={faqs}
 >
-  <LonKalkylator client:idle initialGross={amount} />
+  <div data-chrome>
+    <LonKalkylator client:idle initialGross={amount} />
+  </div>
 
-  <section class="mt-12 prose prose-gray dark:prose-invert max-w-none" slot="content">
+  <section data-chrome class="mt-12 prose prose-gray dark:prose-invert max-w-none" slot="content">
     <h2>Vad inneb\u00e4r en bruttol\u00f6n p\u00e5 {formattedAmount} kr per m\u00e5nad?</h2>
     <p>{bandContext}</p>
 
@@ -202,7 +205,7 @@ const visadeKommuner = KOMMUNER.slice(kommunOffset * 3, kommunOffset * 3 + 10).s
     </div>
   </section>
 
-  <section class="mt-12 not-prose" slot="content" aria-labelledby="sources-heading">
+  <section data-chrome class="mt-12 not-prose" slot="content" aria-labelledby="sources-heading">
     <h2 id="sources-heading" class="text-xl font-bold text-gray-900 dark:text-white mb-4">
       K\u00e4llor och referenser
     </h2>
@@ -216,7 +219,7 @@ const visadeKommuner = KOMMUNER.slice(kommunOffset * 3, kommunOffset * 3 + 10).s
           <a href="https://skatteverket.se" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300 hover:underline">
             Skatteverket
           </a>
-          <span class="text-gray-500 dark:text-gray-400"> &mdash; Skattetabeller, grundavdrag och regler f\u00f6r inkomstskatt 2026</span>
+          <span class="text-gray-500 dark:text-gray-400">, Skattetabeller, grundavdrag och regler f\u00f6r inkomstskatt 2026</span>
         </div>
       </li>
       <li class="flex items-start gap-2">
@@ -225,7 +228,7 @@ const visadeKommuner = KOMMUNER.slice(kommunOffset * 3, kommunOffset * 3 + 10).s
           <a href="https://scb.se" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300 hover:underline">
             SCB \u2013 Statistiska centralbyr\u00e5n
           </a>
-          <span class="text-gray-500 dark:text-gray-400"> &mdash; L\u00f6nestatistik och ekonomiska uppgifter f\u00f6r Sverige</span>
+          <span class="text-gray-500 dark:text-gray-400">, L\u00f6nestatistik och ekonomiska uppgifter f\u00f6r Sverige</span>
         </div>
       </li>
       <li class="flex items-start gap-2">
@@ -234,9 +237,17 @@ const visadeKommuner = KOMMUNER.slice(kommunOffset * 3, kommunOffset * 3 + 10).s
           <a href="https://pensionsmyndigheten.se" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300 hover:underline">
             Pensionsmyndigheten
           </a>
-          <span class="text-gray-500 dark:text-gray-400"> &mdash; Information om allm\u00e4n pension och pensionsavgifter</span>
+          <span class="text-gray-500 dark:text-gray-400">, Information om allm\u00e4n pension och pensionsavgifter</span>
         </div>
       </li>
     </ul>
+  </section>
+  <section slot="content" class="mt-12">
+    {(LON_AVSNITT[amount] ?? []).map((a) => (
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">{a.rubrik}</h2>
+        {a.stycken.map((p) => <p class="mb-4 text-gray-700 leading-relaxed dark:text-gray-300">{p}</p>)}
+      </div>
+    ))}
   </section>
 </CalculatorLayout>

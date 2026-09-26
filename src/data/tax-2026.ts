@@ -25,13 +25,13 @@ export const PENSIONSAVGIFT_SATS = 0.07;
 /** Tak för pensionsavgift (8,07 inkomstbasbelopp, ca 614 000 kr 2026) */
 export const PENSIONSAVGIFT_TAK = 614_000;
 
-/** Skattereduktion för pensionsavgift — full avräkning */
+/** Skattereduktion för pensionsavgift, full avräkning */
 export const PENSIONSAVGIFT_REDUKTION = 1.0;
 
 /** Genomsnittlig kommunalskattesats 2026 */
 export const DEFAULT_KOMMUNALSKATT = 32.37;
 
-/** Kyrkoavgift (medel, valfri — endast för Svenska kyrkan) */
+/** Kyrkoavgift (medel, valfri, endast för Svenska kyrkan) */
 export const KYRKOAVGIFT_DEFAULT = 0;
 
 /** Begravningsavgift (medel) */
@@ -45,7 +45,7 @@ export interface Kommun {
 }
 
 /**
- * Kommunalskattesatser 2026 — Total skattesats (kommunalskatt + regionskatt)
+ * Kommunalskattesatser 2026, Total skattesats (kommunalskatt + regionskatt)
  * Källa: SCB / Skatteverket
  */
 /**

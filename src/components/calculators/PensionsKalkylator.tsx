@@ -13,7 +13,7 @@ export default function PensionsKalkylator() {
   const result = calculateTakeHome({ monthlyGross });
   const overCap = grossAnnual > PENSIONSAVGIFT_TAK;
 
-  // Tjänstepension (schablonberäkning — arbetsgivaren betalar ca 4,5% ITP1 / 30% ITP2)
+  // Tjänstepension (schablonberäkning, arbetsgivaren betalar ca 4,5% ITP1 / 30% ITP2)
   const tjanstepensionRate = 0.045;
   const tjanstepension = Math.round(grossAnnual * tjanstepensionRate);
 

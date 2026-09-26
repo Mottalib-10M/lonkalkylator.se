@@ -5,6 +5,7 @@ import FAQAccordion from '../components/ui/FAQAccordion.astro';
 import RelatedCalculators from '../components/ui/RelatedCalculators.astro';
 import Breadcrumbs from '../components/ui/Breadcrumbs.astro';
 import '../styles/global.css';
+import { RESUMES } from '../data/resumes';
 import { buildCanonical, SITE_NAME, SITE_URL, OG_IMAGE, OG_IMAGE_WIDTH, OG_IMAGE_HEIGHT, LAST_UPDATED, webApplicationSchema, faqSchema, breadcrumbSchema, websiteSearchSchema, organizationSchema, personSchema } from '../lib/seo';
 import { getAlternatePath } from '../i18n/routes';
 
@@ -16,10 +17,14 @@ interface Props {
   h1: string;
   intro: string;
   faqs: { question: string; answer: string }[];
+  /** Paragraphe citable (RECETTE §21), rendu dans le corps. */
+  resume?: string;
   lang?: string;
 }
 
-const { slug, title, metaTitle, metaDescription, h1, intro, faqs, lang = 'sv' } = Astro.props;
+const { slug, title, metaTitle, metaDescription, h1, intro, faqs, resume, lang = 'sv' } = Astro.props;
+const resumeAffiche = resume ?? RESUMES[Astro.url.pathname]
+  ?? RESUMES[Astro.url.pathname.replace(/\/$/, '') + '/'];
 const canonical = buildCanonical(slug);
 
 const currentPath = Astro.url.pathname;
@@ -101,23 +106,27 @@ if (slug === '/') {
       </p>
     </div>
 
+    {resumeAffiche && (
+      <p class="mb-8 text-gray-700 leading-relaxed dark:text-gray-300">{resumeAffiche}</p>
+    )}
+
     <slot />
 
-    <div class="mt-8 flex items-center gap-4 rounded-lg border border-gray-200 dark:border-gray-700 px-5 py-4">
+    <div data-chrome class="mt-8 flex items-center gap-4 rounded-lg border border-gray-200 dark:border-gray-700 px-5 py-4">
       <div class="text-sm">
         <p class="font-semibold text-gray-900 dark:text-white">Av <a href="/om-oss/" class="text-brand-600 hover:underline dark:text-brand-400">Radif Partners</a></p>
         <p class="text-gray-500 dark:text-gray-400">Publisher of calculators and practical guides &middot; Finansexpert</p>
       </div>
     </div>
 
-    <p class="mt-4 text-sm text-gray-500 dark:text-gray-500">
+    <p data-chrome class="mt-4 text-sm text-gray-500 dark:text-gray-500">
       Uppdaterad för skatteår 2026 &middot; Senast verifierad {LAST_UPDATED}
     </p>
 
     <slot name="content" />
 
     {faqs.length > 0 && (
-      <section class="mt-12" aria-labelledby="faq-heading">
+      <section data-chrome class="mt-12" aria-labelledby="faq-heading">
         <h2 id="faq-heading" class="text-2xl font-bold text-gray-900 dark:text-white">
           Vanliga frågor
         </h2>

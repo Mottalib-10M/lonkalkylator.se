@@ -1,5 +1,5 @@
 /**
- * SEO-verktyg — Schema.org-generatorer, titel- och canonical-byggare
+ * SEO-verktyg, Schema.org-generatorer, titel- och canonical-byggare
  */
 
 import { SITE_NAME, SITE_URL, TAX_YEAR, LAST_UPDATED, OG_IMAGE, OG_IMAGE_WIDTH, OG_IMAGE_HEIGHT } from '../data/site-config';

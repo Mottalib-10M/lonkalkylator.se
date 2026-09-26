@@ -53,7 +53,9 @@ import SkattKontext from '../components/SkattKontext.astro';
   intro="Ange din bruttolön, välj kommun och se direkt vad du får ut i nettolön. Vår kalkylator använder Skatteverkets aktuella skattesatser för 2026 inklusive kommunalskatt, statlig inkomstskatt, jobbskatteavdrag och grundavdrag."
   faqs={faqs}
 >
-  <LonKalkylator client:idle />
+  <div data-chrome>
+    <LonKalkylator client:idle />
+  </div>
 
   <section class="mt-12 prose prose-gray dark:prose-invert max-w-none" slot="content">
     <h2>Så fungerar löneberäkningen i Sverige 2026</h2>

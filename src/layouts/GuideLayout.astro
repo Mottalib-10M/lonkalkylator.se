@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { RESUMES } from '../data/resumes';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import { SITE_URL, OG_IMAGE, OG_IMAGE_WIDTH, OG_IMAGE_HEIGHT } from '../data/site-config';
@@ -18,9 +19,16 @@ interface Props {
    * texte absent de la page (RECETTE §7).
    */
   faqs?: { question: string; answer: string }[];
+  /**
+   * Paragraphe citable (RECETTE §21) : au moins 120 mots, rendus dans le
+   * corps et non dans l'en-tete, que check-seo retire comme un ornement.
+   */
+  resume?: string;
 }
 
-const { title, description, publishDate, modifiedDate, breadcrumbs, lang = 'sv', faqs = [] } = Astro.props;
+const { title, description, publishDate, modifiedDate, breadcrumbs, lang = 'sv', faqs = [] , resume} = Astro.props;
+const resumeAffiche = resume ?? RESUMES[Astro.url.pathname]
+  ?? RESUMES[Astro.url.pathname.replace(/\/$/, '') + '/'];
 
 const faqPageSchema = faqs.length
   ? {
@@ -96,6 +104,9 @@ const enPath = lang === 'en' ? canonicalUrl : altPath ? `${SITE_URL}${altPath}` 
           </div>
         </div>
       </header>
+      {resumeAffiche && (
+      <p class="mb-8 text-gray-700 leading-relaxed dark:text-gray-300">{resumeAffiche}</p>
+      )}
       <slot />
 
       {faqs.length > 0 && (

@@ -1,5 +1,6 @@
 ---
 import { formatDec } from '../../lib/format';
+import { KOMMUN_AVSNITT } from '../../data/angles-lokalt';
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import LonKalkylator from '../../components/calculators/LonKalkylator';
 import { KOMMUNER, KOMMUNER_MED_SIDA, SALARY_AMOUNTS } from '../../data/tax-2026';
@@ -43,15 +44,19 @@ import SkattKontext from '../../components/SkattKontext.astro';
 <CalculatorLayout
   slug={`/kommun/${kommun.slug}`}
   title={`Lönekalkylator ${kommun.name}`}
-  metaTitle={`Lön efter skatt i ${kommun.name} 2026 | ${taux(kommun.rate)} % kommunalskatt`}
+  metaTitle={`Lön efter skatt i ${kommun.name} 2026, ${taux(kommun.rate)} % kommunalskatt i ${kommun.lan}`.slice(0, 60)}
   metaDescription={`Beräkna din nettolön i ${kommun.name} med ${taux(kommun.rate)} % kommunalskatt. Se lön efter skatt för alla lönenivåer i kommunen 2026. Gratis kalkylator med Skatteverkets data.`}
   h1={`Lön efter skatt i ${kommun.name} 2026`}
   intro={`Beräkna din nettolön i ${kommun.name} med ${taux(kommun.rate)} % kommunalskatt (${kommun.lan}). Uppdaterad med Skatteverkets 2026-data.`}
   faqs={faqs}
 >
-  <LonKalkylator client:idle initialGross={35000} />
+  <div data-chrome>
+    <LonKalkylator client:idle initialGross={35000} />
+  </div>
 
-  <div slot="content" class="prose prose-lg dark:prose-invert max-w-none mt-12">
+  {/* §6.4 : ce bloc ne varie que par le nom et le taux, que le contrôle
+      neutralise : c'est du mobilier, pas du contenu propre à la page. */}
+  <div slot="content" data-chrome class="prose prose-lg dark:prose-invert max-w-none mt-12">
     <h2>Lönetabell {kommun.name} 2026</h2>
     <p>Nettolön i {kommun.name} med {kommun.rate}% kommunalskatt, ingen kyrkoavgift:</p>
     <table>
@@ -73,4 +78,12 @@ import SkattKontext from '../../components/SkattKontext.astro';
   </div>
   <OfficiellaKallor />
   <SkattKontext />
+  <section slot="content" class="mt-12">
+    {(KOMMUN_AVSNITT[kommun.slug] ?? []).map((a) => (
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">{a.rubrik}</h2>
+        {a.stycken.map((p) => <p class="mb-4 text-gray-700 leading-relaxed dark:text-gray-300">{p}</p>)}
+      </div>
+    ))}
+  </section>
 </CalculatorLayout>

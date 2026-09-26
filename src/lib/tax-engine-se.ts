@@ -192,7 +192,7 @@ export function calculateBegravningsavgift(taxableIncome: number): number {
 }
 
 /**
- * Fullständig skatteberäkning — returnerar TaxResult
+ * Fullständig skatteberäkning, returnerar TaxResult
  */
 export function calculateTakeHome(input: TaxInput): TaxResult {
   const monthlyGross = Math.max(0, input.monthlyGross);
