@@ -56,7 +56,7 @@ export const headerGuideLinks: Record<string, NavGroup> = {
   sv: {
     label: 'Guider',
     children: [
-      { href: '/guides/skattesatser-2025/', label: 'Skattesatser 2025' },
+      { href: '/guides/skattesatser-2026/', label: 'Skattesatser 2026' },
       { href: '/guides/jobbskatteavdrag-forklarat/', label: 'Jobbskatteavdrag förklarat' },
       { href: '/guides/kommunalskatt-forklarat/', label: 'Kommunalskatt förklarat' },
       { href: '/guides/', label: 'Alla guider' },
@@ -106,7 +106,7 @@ export const footerSalaryLinks: Record<string, NavLink[]> = {
 
 export const footerGuideLinks: Record<string, NavLink[]> = {
   sv: [
-    { href: '/guides/skattesatser-2025/', label: 'Skattesatser 2025' },
+    { href: '/guides/skattesatser-2026/', label: 'Skattesatser 2026' },
     { href: '/guides/jobbskatteavdrag-forklarat/', label: 'Jobbskatteavdrag' },
     { href: '/guides/kommunalskatt-forklarat/', label: 'Kommunalskatt' },
     { href: '/guides/metodik/', label: 'Var metodik' },

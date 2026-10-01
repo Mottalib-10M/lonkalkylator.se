@@ -32,7 +32,7 @@ export default function PensionsKalkylator() {
         />
 
         <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface p-6 space-y-4">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Pensionsberäkning 2025</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Pensionsberäkning 2026</h3>
 
           <div className="space-y-3">
             <div className="flex justify-between text-sm">

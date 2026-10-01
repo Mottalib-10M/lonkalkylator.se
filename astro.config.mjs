@@ -14,6 +14,8 @@ export default defineConfig({
    * en plus de les comparer entre elles.
    */
   redirects: {
+    '/guides/skattesatser-2025/': '/guides/skattesatser-2026/',
+    '/nyheter/skattesatser-2025-uppdatering/': '/nyheter/skattesatser-2026-uppdatering/',
     '/kommun/boras/': '/kommun/',
     '/kommun/eskilstuna/': '/kommun/',
     '/kommun/falun/': '/kommun/',

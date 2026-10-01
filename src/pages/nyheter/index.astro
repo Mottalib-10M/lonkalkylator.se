@@ -42,6 +42,7 @@ const faqs = [
 ];
 import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
 import SkattKontext from '../../components/SkattKontext.astro';
+import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
 ---
 
 <CalculatorLayout
@@ -58,6 +59,8 @@ import SkattKontext from '../../components/SkattKontext.astro';
       <a href={article.href} class="block group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface p-6 hover:border-brand-500 dark:hover:border-brand-400 hover:shadow-md transition-all">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">{article.title}</h2>
         <p class="mt-2 text-gray-500 dark:text-gray-400">{article.description}</p>
+<MiniSimAutonome client:visible kind="netto" lang="sv" locale="sv-SE" href="/" />
+
         <p class="mt-2 text-xs text-gray-500 dark:text-gray-500">Publicerad {article.date}</p>
       </a>
     ))}

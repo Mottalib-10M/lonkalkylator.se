@@ -5,7 +5,7 @@ export const sv = {
   // Allmänt
   'site.name': 'Lönekalkylator',
   'site.tagline': 'Beräkna din nettolön, enkel och gratis lönekalkylator',
-  'site.description': 'Beräkna din lön efter skatt 2025. Se nettolön, kommunalskatt, statlig skatt, jobbskatteavdrag och grundavdrag. Gratis och alltid uppdaterad.',
+  'site.description': 'Beräkna din lön efter skatt 2026. Se nettolön, kommunalskatt, statlig skatt, jobbskatteavdrag och grundavdrag. Gratis och alltid uppdaterad.',
   'nav.home': 'Hem',
   'nav.calculators': 'Kalkylatorer',
   'nav.guides': 'Guider',
@@ -70,28 +70,28 @@ export const sv = {
   'result.deductions': 'Avdrag & reduktioner',
 
   // Sidor
-  'page.home.title': 'Lönekalkylator 2025, Beräkna din lön efter skatt',
-  'page.home.h1': 'Beräkna din lön efter skatt 2025',
+  'page.home.title': 'Lönekalkylator 2026, Beräkna din lön efter skatt',
+  'page.home.h1': 'Beräkna din lön efter skatt 2026',
   'page.home.intro': 'Snabb och pålitlig beräkning av din nettolön. Välj kommun, ange bruttolön och se exakt vad du får ut.',
 
-  'page.statlig.title': 'Statlig skatt-kalkylator 2025, Beräkna statlig inkomstskatt',
-  'page.statlig.h1': 'Statlig inkomstskatt-kalkylator 2025',
-  'page.statlig.intro': 'Se om din inkomst överstiger skiktgränsen på 615 300 kr och beräkna den statliga skatten.',
+  'page.statlig.title': 'Statlig skatt-kalkylator 2026, Beräkna statlig inkomstskatt',
+  'page.statlig.h1': 'Statlig inkomstskatt-kalkylator 2026',
+  'page.statlig.intro': 'Se om din inkomst överstiger skiktgränsen på 643 000 kr och beräkna den statliga skatten.',
 
-  'page.pension.title': 'Pensionskalkylator 2025, Beräkna allmän pensionsavgift',
-  'page.pension.h1': 'Pensionskalkylator 2025',
+  'page.pension.title': 'Pensionskalkylator 2026, Beräkna allmän pensionsavgift',
+  'page.pension.h1': 'Pensionskalkylator 2026',
   'page.pension.intro': 'Beräkna din allmänna pensionsavgift (7%) och se hur den påverkar din nettolön.',
 
-  'page.netToGross.title': 'Netto till brutto-kalkylator 2025, Räkna ut bruttolön',
-  'page.netToGross.h1': 'Netto till brutto-kalkylator 2025',
+  'page.netToGross.title': 'Netto till brutto-kalkylator 2026, Räkna ut bruttolön',
+  'page.netToGross.h1': 'Netto till brutto-kalkylator 2026',
   'page.netToGross.intro': 'Ange den nettolön du vill ha och se vilken bruttolön som krävs.',
 
-  'page.hourly.title': 'Timlönkalkylator 2025, Omvandla timlön till månadslön',
-  'page.hourly.h1': 'Timlönkalkylator 2025',
+  'page.hourly.title': 'Timlönkalkylator 2026, Omvandla timlön till månadslön',
+  'page.hourly.h1': 'Timlönkalkylator 2026',
   'page.hourly.intro': 'Omvandla din timlön till bruttolön per månad och beräkna nettolönen.',
 
   // Footer
-  'footer.source': 'Skatteverkets data 2025',
+  'footer.source': 'Skatteverkets data 2026',
   'footer.privacy': '100% beräknas i din webbläsare',
   'footer.free': 'Gratis & privat',
   'footer.disclaimer': 'Denna kalkylator ger uppskattningar enbart i informationssyfte. Det utgör inte skatterådgivning. Kontakta en kvalificerad skatterådgivare för personlig vägledning. Resultaten kan skilja sig från din faktiska skattskyldighet.',

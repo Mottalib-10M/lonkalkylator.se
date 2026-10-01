@@ -1,5 +1,9 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import { KOMMUNER, BEGRAVNINGSAVGIFT } from '../../data/tax-2026';
+const pctSE = (x: number) => x.toLocaleString('sv-SE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
+const pct1SE = (x: number) => x.toLocaleString('sv-SE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%';
+const MARGINAL_RADER = ['stockholm', 'goteborg', 'malmo'].map((slug) => KOMMUNER.find((k) => k.slug === slug)!);
 import LonKalkylator from '../../components/calculators/LonKalkylator';
 
 const faqs = [
@@ -19,8 +23,8 @@ const faqs = [
       "En avsättning till tjänstepension genom löneväxling minskar den lön som beskattas och kan föra inkomsten under skiktgränsen. Det är den vanligaste metoden och kräver att arbetsgivaren erbjuder den. Privat pensionssparande ger däremot inget avdrag längre för den som har tjänstepension, vilket ofta förväxlas med det förra.",
   },
 
-  { question: 'Vad är statlig inkomstskatt?', answer: 'Statlig inkomstskatt är en extra skatt på 20% som betalas på den del av din beskattningsbara förvärvsinkomst som överstiger skiktgränsen 615 300 kr per år (2026). Det innebär en bruttolön på ungefär 53 000–56 000 kr per månad beroende på grundavdrag.' },
-  { question: 'Hur mycket är marginalskatten med statlig skatt?', answer: 'Med statlig skatt blir marginalskatten kommunalskatt + 20% + begravningsavgift. I Stockholm (30,48%) blir det cirka 50,8%, i Göteborg (33,11%) cirka 53,4%. Det är den siffra som gäller vid en löneförhöjning eller ett extrapass, inte genomsnittsskatten på hela lönen. Skillnaden mellan de två är skälet till att många underskattar vad de faktiskt behåller och överskattar vad en höjning ger.' },
+  { question: 'Vad är statlig inkomstskatt?', answer: 'Statlig inkomstskatt är en extra skatt på 20% som betalas på den del av din beskattningsbara förvärvsinkomst som överstiger skiktgränsen 643 000 kr per år (2026). Räknat i lön före grundavdrag går brytpunkten vid 660 400 kr per år, ungefär 55 000 kr per månad.' },
+  { question: 'Hur mycket är marginalskatten med statlig skatt?', answer: 'Med statlig skatt blir marginalskatten kommunalskatt + 20% + begravningsavgift. I Stockholm (30,55%, begravningsavgift 0,07%) blir det cirka 50,6%, i Göteborg (32,60%, begravningsavgift 0,292%) cirka 52,9%. Det är den siffra som gäller vid en löneförhöjning eller ett extrapass, inte genomsnittsskatten på hela lönen. Skillnaden mellan de två är skälet till att många underskattar vad de faktiskt behåller och överskattar vad en höjning ger.' },
   { question: 'Kan jag sänka min statliga skatt?', answer: 'Ja, genom att göra pensionsavsättningar, använda ROT/RUT-avdrag eller göra avdrag för resor och övriga kostnader kan du minska din beskattningsbara inkomst under skiktgränsen. Löneväxling till tjänstepension är den vanligaste metoden och kräver att arbetsgivaren erbjuder den. ROT och RUT minskar däremot skatten direkt i stället för inkomsten, och påverkar alltså inte om du hamnar över skiktgränsen.' },
 ];
 import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
@@ -31,9 +35,9 @@ import SkattKontext from '../../components/SkattKontext.astro';
   slug="/statlig-skatt-kalkylator"
   title="Statlig skatt-kalkylator"
   metaTitle="Statlig Inkomstskatt 2026 | Beräkna skatten i Sverige"
-  metaDescription="Beräkna din statliga inkomstskatt 2026. Se om du betalar 20% statlig skatt över skiktgränsen 615 300 kr. Kalkylator med marginalskatt och effektiv skattesats."
+  metaDescription="Beräkna din statliga inkomstskatt 2026. Se om du betalar 20% statlig skatt över skiktgränsen 643 000 kr. Kalkylator med marginalskatt och effektiv skattesats."
   h1="Statlig inkomstskatt-kalkylator 2026"
-  intro="Se om du betalar statlig inkomstskatt (20%) och hur den påverkar din nettolön. Skiktgränsen 2026 är 615 300 kr."
+  intro="Se om du betalar statlig inkomstskatt (20%) och hur den påverkar din nettolön. Skiktgränsen 2026 är 643 000 kr."
   faqs={faqs}
 >
   <LonKalkylator client:idle />
@@ -46,9 +50,10 @@ import SkattKontext from '../../components/SkattKontext.astro';
     <table>
       <thead><tr><th>Beskattningsår</th><th>Skiktgräns</th></tr></thead>
       <tbody>
-        <tr><td>2026</td><td>615 300 kr</td></tr>
+        <tr><td>2026</td><td>643 000 kr</td></tr>
+        <tr><td>2025</td><td>625 800 kr</td></tr>
         <tr><td>2024</td><td>598 500 kr</td></tr>
-        <tr><td>2023</td><td>554 900 kr</td></tr>
+        <tr><td>2023</td><td>598 500 kr</td></tr>
       </tbody>
     </table>
 
@@ -56,12 +61,12 @@ import SkattKontext from '../../components/SkattKontext.astro';
     <table>
       <thead><tr><th>Kommun</th><th>Utan statlig skatt</th><th>Med statlig skatt</th></tr></thead>
       <tbody>
-        <tr><td>Stockholm (30,48%)</td><td>~30,8%</td><td>~50,8%</td></tr>
-        <tr><td>Göteborg (33,11%)</td><td>~33,4%</td><td>~53,4%</td></tr>
-        <tr><td>Malmö (33,73%)</td><td>~34,0%</td><td>~54,0%</td></tr>
+        {MARGINAL_RADER.map((k) => (
+          <tr><td>{k.name} ({pctSE(k.rate)})</td><td>{pct1SE(k.rate + (k.slug === 'stockholm' ? 0.07 : BEGRAVNINGSAVGIFT))}</td><td>{pct1SE(k.rate + (k.slug === 'stockholm' ? 0.07 : BEGRAVNINGSAVGIFT) + 20)}</td></tr>
+        ))}
       </tbody>
     </table>
-    <p><em>Inkluderar begravningsavgift (0,28%). Jobbskatteavdraget sänker den faktiska skatten ytterligare.</em></p>
+    <p><em>Inkluderar begravningsavgift (0,292%, i Stockholm 0,07%). Jobbskatteavdraget sänker den faktiska skatten ytterligare.</em></p>
 
     <h2>Tre satt att undvika en onodig marginaleffekt</h2>
     <p>Skiktgransen galler arsinkomst efter grundavdrag, och det oppnar tre handlingsutrymmen som inte har med skattesatser att gora. Det forsta ar loneavaxling till tjanstepension: en avsattning minskar den beskattningsbara inkomsten det aret, och pensionen beskattas senare, ofta under gransen. Det andra ar periodiseringen av en bonus, som i vissa avtal kan flyttas over ett arsskifte och da beskattas i ett ar med lagre ovrig inkomst. Det tredje ar avdrag som ligger i deklarationen och inte hos arbetsgivaren: reseavdrag, avdrag for dubbelt boende och ranteavdrag minskar den beskattningsbara inkomsten och kan sanka den under gransen.</p>

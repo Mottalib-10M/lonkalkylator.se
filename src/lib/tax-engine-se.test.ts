@@ -26,10 +26,16 @@ describe('calculateGrundavdrag', () => {
     expect(mid).toBeGreaterThanOrEqual(low);
   });
 
-  it('ger rimligt grundavdrag vid 420 000 kr', () => {
-    const avdrag = calculateGrundavdrag(420_000);
-    expect(avdrag).toBeGreaterThan(30_000);
-    expect(avdrag).toBeLessThan(50_000);
+  it('ger 22 000 kr vid 420 000 kr (0,77 PBB minus 10 % av inkomsten över 3,11 PBB)', () => {
+    expect(calculateGrundavdrag(420_000)).toBe(22_000);
+  });
+
+  // Exemplen i Skatteverkets tekniska beskrivning SKV 433, utgåva 36 (2026)
+  it('följer Skatteverkets exempel för 2026', () => {
+    expect(calculateGrundavdrag(28_000)).toBe(25_100);
+    expect(calculateGrundavdrag(90_000)).toBe(31_400);
+    expect(calculateGrundavdrag(240_000)).toBe(40_000);
+    expect(calculateGrundavdrag(1_000_000)).toBe(17_400);
   });
 });
 
@@ -110,9 +116,22 @@ describe('calculateBegravningsavgift', () => {
     expect(calculateBegravningsavgift(0)).toBe(0);
   });
 
-  it('beräknar 0.28% korrekt', () => {
+  it('beräknar 0,292 % korrekt', () => {
     const result = calculateBegravningsavgift(400_000);
-    expect(result).toBe(Math.round(400_000 * 0.0028));
+    expect(result).toBe(Math.round(400_000 * 0.00292));
+  });
+});
+
+describe('Skatteverkets exempel 2026 (SKV 433)', () => {
+  it('jobbskatteavdrag vid skattesats 32,84 %', () => {
+    expect(calculateJobbskatteavdrag(90_000, 32.84)).toBe(11_976);
+    expect(calculateJobbskatteavdrag(240_000, 32.84)).toBe(26_083);
+  });
+
+  it('allmän pensionsavgift avrundas till hundratal, 50 kr nedåt, högst 47 100 kr', () => {
+    expect(calculatePensionsavgift(181_200)).toBe(12_700);
+    expect(calculatePensionsavgift(55_000)).toBe(3_800);
+    expect(calculatePensionsavgift(900_000)).toBe(47_100);
   });
 });
 

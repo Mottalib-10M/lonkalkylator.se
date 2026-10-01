@@ -5,7 +5,7 @@ export const en: Record<string, string> = {
   // General
   'site.name': 'Salary After Tax',
   'site.tagline': 'Calculate your net salary, simple and free salary calculator',
-  'site.description': 'Calculate your salary after tax in Sweden 2025. See net salary, municipal tax, state tax, employment tax credit and basic deduction. Free and always up to date.',
+  'site.description': 'Calculate your salary after tax in Sweden 2026. See net salary, municipal tax, state tax, employment tax credit and basic deduction. Free and always up to date.',
   'nav.home': 'Home',
   'nav.calculators': 'Calculators',
   'nav.guides': 'Guides',
@@ -70,12 +70,12 @@ export const en: Record<string, string> = {
   'result.deductions': 'Deductions & credits',
 
   // Pages
-  'page.home.title': 'Salary Calculator Sweden 2025, Calculate your net salary',
-  'page.home.h1': 'Calculate your salary after tax 2025',
+  'page.home.title': 'Salary Calculator Sweden 2026, Calculate your net salary',
+  'page.home.h1': 'Calculate your salary after tax 2026',
   'page.home.intro': 'Fast and reliable net salary calculation. Select municipality, enter gross salary and see exactly what you take home.',
 
   // Footer
-  'footer.source': 'Skatteverket 2025 data',
+  'footer.source': 'Skatteverket 2026 data',
   'footer.privacy': '100% calculated in your browser',
   'footer.free': 'Free & private',
   'footer.disclaimer': 'This calculator provides estimates for informational purposes only. It is not tax advice. Consult a qualified tax professional for personalized guidance. Results may differ from your actual tax liability.',

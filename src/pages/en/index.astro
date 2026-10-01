@@ -1,5 +1,8 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import { calculateTakeHome } from '../../lib/tax-engine-se';
+const EX_ROWS = [25000, 30000, 35000, 40000, 50000].map((m) => ({ m, r: calculateTakeHome({ monthlyGross: m }) }));
+const sek = (x: number) => Math.round(x).toLocaleString('en-US') + ' SEK';
 import LonKalkylator from '../../components/calculators/LonKalkylator';
 
 const faqs = [
@@ -20,8 +23,8 @@ const faqs = [
   },
 
   { question: 'How is salary after tax calculated in Sweden?', answer: 'Your net salary is calculated by deducting municipal tax, any state income tax, pension contributions, and burial fee from your gross salary. Tax reductions like jobbskatteavdrag (earned income tax credit) and grundavdrag (basic allowance) are then applied. Municipal tax rates vary by municipality, from about 29% to over 35%.' },
-  { question: 'What is the state income tax threshold in 2026?', answer: 'If your taxable earned income exceeds 615,300 SEK per year, you pay an additional 20% state income tax on the excess. This corresponds to a monthly gross salary of approximately 53,000–56,000 SEK. The threshold is uprated each year in line with the income base amount, so it moves even when parliament has decided nothing. Most employees never reach it, which is why the municipal rate decides almost the whole tax bill on an ordinary salary.' },
-  { question: 'What is kommunalskatt (municipal tax)?', answer: 'Municipal tax is the combined tax rate of your municipality and region. It is the main component of Swedish income tax and ranges from about 29.68% (Täby) to over 35% depending on where you live. The national average in 2026 is 32.37%.' },
+  { question: 'What is the state income tax threshold in 2026?', answer: 'If your taxable earned income exceeds 643,000 SEK per year, you pay an additional 20% state income tax on the excess. This corresponds to a gross salary of 660,400 SEK per year, or about 55,000 SEK per month. The threshold is uprated each year in line with the income base amount, so it moves even when parliament has decided nothing. Most employees never reach it, which is why the municipal rate decides almost the whole tax bill on an ordinary salary.' },
+  { question: 'What is kommunalskatt (municipal tax)?', answer: 'Municipal tax is the combined tax rate of your municipality and region. It is the main component of Swedish income tax and ranges from 28.93% (Österåker) to 35.65% (Dorotea) in 2026, depending on where you live. The national average in 2026 is 32.38%.' },
   { question: 'Do I need to file a tax return in Sweden?', answer: 'Yes, all Swedish residents must file a tax return (deklaration). Skatteverket sends a pre-filled declaration each spring. If your only income is employment income with correct withholding, you can often approve it digitally without changes. The Swedish Tax Agency pre-fills most returns with the figures employers have reported, so the task is usually to check rather than to compile. Deductions for travel, or for work-related expenses above a floor, have to be added by you and are the most commonly missed.' },
 ];
 import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
@@ -47,11 +50,11 @@ import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
     <table>
       <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
       <tbody>
-        <tr><td>Price base amount (prisbasbelopp)</td><td>58,800 SEK</td></tr>
-        <tr><td>State tax threshold</td><td>615,300 SEK/year</td></tr>
+        <tr><td>Price base amount (prisbasbelopp)</td><td>59,200 SEK</td></tr>
+        <tr><td>State tax threshold</td><td>643,000 SEK/year</td></tr>
         <tr><td>State tax rate</td><td>20%</td></tr>
-        <tr><td>Average municipal tax rate</td><td>32.37%</td></tr>
-        <tr><td>General pension contribution</td><td>7% (cap: 614,000 SEK)</td></tr>
+        <tr><td>Average municipal tax rate</td><td>32.38%</td></tr>
+        <tr><td>General pension contribution</td><td>7% (cap: 673,038 SEK)</td></tr>
       </tbody>
     </table>
 
@@ -59,12 +62,10 @@ import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
     <table>
       <thead><tr><th>Gross Monthly</th><th>Net Monthly (approx)</th><th>Effective Tax Rate</th></tr></thead>
       <tbody>
-        <tr><td>25,000 SEK</td><td>~20,200 SEK</td><td>~19%</td></tr>
-        <tr><td>30,000 SEK</td><td>~23,500 SEK</td><td>~22%</td></tr>
-        <tr><td>35,000 SEK</td><td>~26,700 SEK</td><td>~24%</td></tr>
-        <tr><td>40,000 SEK</td><td>~29,700 SEK</td><td>~26%</td></tr>
-        <tr><td>50,000 SEK</td><td>~35,500 SEK</td><td>~29%</td></tr>
-      </tbody>
+            {EX_ROWS.map(({ m, r }) => (
+              <tr><td>{sek(m)}</td><td>{sek(r.netMonthly)}</td><td>{r.effectiveTaxRate.toFixed(1)}%</td></tr>
+            ))}
+          </tbody>
     </table>
 
     <h3>Employer Costs</h3>

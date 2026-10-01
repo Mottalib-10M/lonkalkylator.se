@@ -29,7 +29,7 @@ export default function LonKalkylator({ initialGross = 35000 }: Props) {
     { label: 'Kommunalskatt', value: result.kommunalskatt, color: '#ef4444' },
     { label: 'Statlig skatt', value: result.statligSkatt, color: '#f97316' },
     { label: 'Pensionsavgift', value: Math.max(0, result.pensionsavgift - result.pensionsavgiftReduktion), color: '#eab308' },
-    { label: 'Begravningsavgift', value: result.begravningsavgift, color: '#8b5cf6' },
+    { label: 'Begravnings- och public service-avgift', value: result.begravningsavgift + result.publicServiceAvgift, color: '#8b5cf6' },
   ].filter(s => s.value > 0);
 
   return (

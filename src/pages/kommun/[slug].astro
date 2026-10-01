@@ -35,7 +35,7 @@ const salaryTable = SALARY_AMOUNTS.map((gross) => {
 const faqs = [
   { question: `Vad är kommunalskatten i ${kommun.name} 2026?`, answer: `Kommunalskatten i ${kommun.name} är ${taux(kommun.rate)} % (2026). Det inkluderar både kommunens och ${kommun.lan}s regionskatt. Det placerar ${kommun.name} på plats ${_rang} av ${KOMMUNER.length} bland de kommuner vi följer, ${_ecartPts >= 0 ? `omkring ${taux(Math.abs(_ecartPts))} procentenheter över` : `omkring ${taux(Math.abs(_ecartPts))} procentenheter under`} genomsnittet. Kommunfullmäktige beslutar om satsen inför varje budgetår, och regionen lägger sin del ovanpå.` },
   { question: `Hur mycket nettolön får jag i ${kommun.name}?`, answer: `Med en bruttolön på 35 000 kr per månad och ${kommun.name}s kommunalskatt på ${taux(kommun.rate)} % får du ungefär ${salaryTable.find(s => s.gross === 35000)?.net.toLocaleString('sv-SE')} kr netto per månad efter skatt. Beloppet förutsätter ingen kyrkoavgift och inga avdrag utöver grundavdrag och jobbskatteavdrag, som båda räknas in automatiskt i skattetabellen. Statlig inkomstskatt tillkommer först över skiktgränsen och påverkar alltså inte den här lönenivån.` },
-  { question: `Betalar jag statlig skatt i ${kommun.name}?`, answer: `Statlig inkomstskatt (20%) är densamma oavsett kommun och betalas på beskattningsbar inkomst över 615 300 kr per år. Det som skiljer mellan kommuner är kommunalskattesatsen. Skiktgränsen räknas upp varje år enligt inkomstbasbeloppet, så den flyttar sig även när riksdagen inte fattat något nytt beslut. För de flesta löntagare i ${kommun.name} ligger den utom räckhåll, vilket gör kommunalskatten till hela skatten på lönen.` },
+  { question: `Betalar jag statlig skatt i ${kommun.name}?`, answer: `Statlig inkomstskatt (20%) är densamma oavsett kommun och betalas på beskattningsbar inkomst över 643 000 kr per år. Det som skiljer mellan kommuner är kommunalskattesatsen. Skiktgränsen räknas upp varje år enligt inkomstbasbeloppet, så den flyttar sig även när riksdagen inte fattat något nytt beslut. För de flesta löntagare i ${kommun.name} ligger den utom räckhåll, vilket gör kommunalskatten till hela skatten på lönen.` },
 ];
 import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
 import SkattKontext from '../../components/SkattKontext.astro';
@@ -74,7 +74,7 @@ import SkattKontext from '../../components/SkattKontext.astro';
     </table>
 
     <h2>Skattesats i {kommun.name}</h2>
-    <p>{kommun.name} tillhör {kommun.lan} och har en total kommunalskattesats på {kommun.rate}%. Det placerar {kommun.name} {kommun.rate < 32.37 ? 'under' : kommun.rate > 32.37 ? 'över' : 'nära'} riksgenomsnittet på 32,37%.</p>
+    <p>{kommun.name} tillhör {kommun.lan} och har en total kommunalskattesats på {kommun.rate}%. Det placerar {kommun.name} {kommun.rate < 32.38 ? 'under' : kommun.rate > 32.38 ? 'över' : 'nära'} riksgenomsnittet på 32,38%.</p>
   </div>
   <OfficiellaKallor />
   <SkattKontext />

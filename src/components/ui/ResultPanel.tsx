@@ -33,12 +33,16 @@ export default function ResultPanel({ result }: Props) {
         )}
         <Row label="Allmän pensionsavgift (7%)" value={-result.pensionsavgift} negative />
         <Row label="Begravningsavgift" value={-result.begravningsavgift} negative />
+        <Row label="Public service-avgift" value={-result.publicServiceAvgift} negative />
         {result.kyrkoavgift > 0 && (
           <Row label="Kyrkoavgift" value={-result.kyrkoavgift} negative />
         )}
         <Divider />
         <Row label="Skattereduktion pensionsavgift" value={result.pensionsavgiftReduktion} positive note="Reduktion" />
         <Row label="Jobbskatteavdrag" value={result.jobbskatteavdrag} positive note="Reduktion" />
+        {result.forvarvsreduktion > 0 && (
+          <Row label="Skattereduktion förvärvsinkomst" value={result.forvarvsreduktion} positive note="Reduktion" />
+        )}
         <Divider />
         <Row label="Total skatt" value={-result.totalSkatt} negative bold />
         <Row label="Nettolön per år" value={result.netAnnual} bold accent />

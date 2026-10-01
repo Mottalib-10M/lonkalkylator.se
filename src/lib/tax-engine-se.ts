@@ -16,17 +16,23 @@ import {
   PENSIONSAVGIFT_TAK,
   DEFAULT_KOMMUNALSKATT,
   BEGRAVNINGSAVGIFT,
+  PUBLIC_SERVICE_SATS,
+  PUBLIC_SERVICE_MAX,
+  JSA_2026,
+  FORVARVSREDUKTION,
 } from '../data/tax-2026';
 
 export interface TaxInput {
   /** Bruttolön per månad i kr */
   monthlyGross: number;
-  /** Kommunalskattesats i % (t.ex. 32.37) */
+  /** Kommunalskattesats i % (t.ex. 32.38) */
   kommunalskattRate?: number;
   /** Kyrkoavgift i % (0 om ej medlem) */
   kyrkoavgift?: number;
   /** Ålder (under 65/över 65 påverkar jobbskatteavdrag) */
   age?: number;
+  /** Internt : hoppa över marginalskatten (används när motorn anropar sig själv) */
+  skipMarginal?: boolean;
 }
 
 export interface TaxResult {
@@ -48,8 +54,12 @@ export interface TaxResult {
   pensionsavgiftReduktion: number;
   /** Jobbskatteavdrag (årligt) */
   jobbskatteavdrag: number;
+  /** Skattereduktion för förvärvsinkomst (årlig, högst 1 500 kr) */
+  forvarvsreduktion: number;
   /** Begravningsavgift (årlig) */
   begravningsavgift: number;
+  /** Public service-avgift (årlig) */
+  publicServiceAvgift: number;
   /** Kyrkoavgift (årlig) */
   kyrkoavgift: number;
   /** Total skatt (årlig) */
@@ -69,39 +79,35 @@ export interface TaxResult {
 }
 
 /**
- * Beräkna grundavdrag baserat på förvärvsinkomst
- * Grundavdraget beror på den taxerade inkomsten och baseras på prisbasbeloppet (PBB).
+ * Beräkna grundavdrag (63 kap. 3 § inkomstskattelagen, SKV 433 avsnitt 6)
  *
- * Förenklad modell baserad på Skatteverkets tabeller:
- * - Inkomst 0–0.99 PBB: 0.423 PBB
- * - Inkomst 0.99–2.72 PBB: 0.423 PBB + 0.202 * (inkomst - 0.99 PBB)
- * - Inkomst 2.72–3.82 PBB: 0.77 PBB
- * - Inkomst 3.82–4.78 PBB: 0.77 PBB - 0.1 * (inkomst - 3.82 PBB)
- * - Inkomst > 4.78 PBB: 0.674 PBB
+ * - Inkomst högst 0,99 PBB : 0,423 PBB
+ * - 0,99–2,72 PBB : 0,423 PBB + 20 % av inkomsten över 0,99 PBB
+ * - 2,72–3,11 PBB : 0,77 PBB
+ * - 3,11–7,88 PBB : 0,77 PBB − 10 % av inkomsten över 3,11 PBB
+ * - över 7,88 PBB : 0,293 PBB
+ * Avrundas uppåt till närmaste hundratal och kan inte överstiga inkomsten.
  */
 export function calculateGrundavdrag(grossAnnual: number): number {
   if (grossAnnual <= 0) return 0;
 
   const pbb = PRISBASBELOPP;
-  const inkomstIPbb = grossAnnual / pbb;
+  let avdrag: number;
 
-  let avdragIPbb: number;
-
-  if (inkomstIPbb <= 0.99) {
-    avdragIPbb = 0.423;
-  } else if (inkomstIPbb <= 2.72) {
-    avdragIPbb = 0.423 + 0.202 * (inkomstIPbb - 0.99);
-  } else if (inkomstIPbb <= 3.82) {
-    avdragIPbb = 0.77;
-  } else if (inkomstIPbb <= 4.78) {
-    avdragIPbb = 0.77 - 0.10 * (inkomstIPbb - 3.82);
+  if (grossAnnual <= 0.99 * pbb) {
+    avdrag = 0.423 * pbb;
+  } else if (grossAnnual <= 2.72 * pbb) {
+    avdrag = 0.423 * pbb + 0.2 * (grossAnnual - 0.99 * pbb);
+  } else if (grossAnnual <= 3.11 * pbb) {
+    avdrag = 0.77 * pbb;
+  } else if (grossAnnual <= 7.88 * pbb) {
+    avdrag = 0.77 * pbb - 0.1 * (grossAnnual - 3.11 * pbb);
   } else {
-    avdragIPbb = 0.674;
+    avdrag = 0.293 * pbb;
   }
 
-  // Avrunda nedåt till närmaste 100-tal
-  const avdrag = Math.floor((avdragIPbb * pbb) / 100) * 100;
-  return Math.max(avdrag, 16_800);
+  // Avrunda uppåt till närmaste 100-tal (en tusendel dras av för att inte lyfta ett jämnt belopp på grund av flyttal)
+  return Math.min(Math.ceil((avdrag - 0.001) / 100) * 100, Math.floor(grossAnnual));
 }
 
 /**
@@ -121,66 +127,60 @@ export function calculateStatligSkatt(taxableIncome: number): number {
 }
 
 /**
- * Beräkna allmän pensionsavgift (7% upp till taket)
+ * Beräkna allmän pensionsavgift : 7 % av inkomsten upp till 8,07 inkomstbasbelopp,
+ * avrundat till närmaste hundratal (50 kr avrundas nedåt). Ingen avgift under 0,423 PBB.
  */
 export function calculatePensionsavgift(grossAnnual: number): number {
-  if (grossAnnual <= 0) return 0;
+  if (grossAnnual < 0.423 * PRISBASBELOPP) return 0;
   const underlag = Math.min(grossAnnual, PENSIONSAVGIFT_TAK);
-  return Math.round(underlag * PENSIONSAVGIFT_SATS);
+  const avgift = Math.round(underlag * PENSIONSAVGIFT_SATS * 100) / 100;
+  return Math.ceil((avgift - 50) / 100 - 1e-9) * 100;
 }
 
 /**
- * Beräkna jobbskatteavdrag (JSA) 2026
+ * Beräkna jobbskatteavdrag (JSA) 2026, under 66 år
  *
- * Kalibrerad modell baserad på 67 kap. inkomstskattelagen och Skatteverkets
- * skattetabeller. JSA beror på arbetsinkomst, grundavdrag och kommunalskattesats.
- *
- * Inkomstintervallen uttrycks i prisbasbelopp (PBB = 58 800 kr).
- * Koefficienterna är kalibrerade mot Skatteverkets skattetabeller för 2026.
+ * 67 kap. 7 § inkomstskattelagen, enligt Skatteverkets tekniska beskrivning SKV 433 (avsnitt 7.5.2).
+ * AI = arbetsinkomst (avrundad nedåt till hundratal), GA = grundavdrag, KI = kommunal skattesats.
+ * - AI högst 0,91 PBB : (AI − GA) × KI
+ * - 0,91–3,24 PBB : (0,91 PBB + 38,74 % × (AI − 0,91 PBB) − GA) × KI
+ * - 3,24–8,08 PBB : (1,813 PBB + 25,1 % × (AI − 3,24 PBB) − GA) × KI
+ * - över 8,08 PBB : (3,027 PBB − GA) × KI
  */
 export function calculateJobbskatteavdrag(grossAnnual: number, kommunalskattRate: number): number {
   if (grossAnnual <= 0) return 0;
 
   const pbb = PRISBASBELOPP;
-  const rate = kommunalskattRate / 100;
-  const grundavdrag = calculateGrundavdrag(grossAnnual);
+  const ki = kommunalskattRate / 100;
+  const ai = Math.floor(grossAnnual / 100) * 100;
+  const ga = calculateGrundavdrag(grossAnnual);
+  const j = JSA_2026;
 
-  if (grossAnnual <= grundavdrag) return 0;
-
-  const b1 = 0.91 * pbb;   // 53 508 kr
-  const b2 = 3.24 * pbb;   // 190 512 kr
-  const b3 = 8.08 * pbb;   // 475 104 kr
-  const b4 = 13.54 * pbb;  // 796 152 kr
-
-  let jsa: number;
-
-  if (grossAnnual <= b1) {
-    // Låga inkomster: JSA = hela skatten på (inkomst - grundavdrag)
-    jsa = (grossAnnual - grundavdrag) * rate;
-  } else if (grossAnnual <= b2) {
-    // Medelinkomster: grunddel + 10,7% på inkomst över 0.91 PBB
-    jsa = Math.max(0, (b1 - grundavdrag)) * rate + (grossAnnual - b1) * 0.107;
-  } else if (grossAnnual <= b3) {
-    // Högre inkomster: avtagande tillväxt med 7,2%
-    jsa = Math.max(0, (b1 - grundavdrag)) * rate
-      + (b2 - b1) * 0.107
-      + (grossAnnual - b2) * 0.072;
-  } else if (grossAnnual <= b4) {
-    // Höga inkomster: avtagande tillväxt med 4,8%
-    jsa = Math.max(0, (b1 - grundavdrag)) * rate
-      + (b2 - b1) * 0.107
-      + (b3 - b2) * 0.072
-      + (grossAnnual - b3) * 0.048;
+  let underlag: number;
+  if (ai <= j.grans1 * pbb) {
+    underlag = ai - ga;
+  } else if (ai <= j.grans2 * pbb) {
+    underlag = j.grans1 * pbb + j.sats2 * (ai - j.grans1 * pbb) - ga;
+  } else if (ai <= j.grans3 * pbb) {
+    underlag = j.bas3 * pbb + j.sats3 * (ai - j.grans2 * pbb) - ga;
   } else {
-    // Mycket höga inkomster: avtrappning med 3%
-    const baseJsa = Math.max(0, (b1 - grundavdrag)) * rate
-      + (b2 - b1) * 0.107
-      + (b3 - b2) * 0.072
-      + (b4 - b3) * 0.048;
-    jsa = Math.max(0, baseJsa - (grossAnnual - b4) * 0.03);
+    underlag = j.tak * pbb - ga;
   }
 
-  return Math.round(jsa);
+  return Math.max(0, Math.floor(underlag * ki));
+}
+
+/** Skattereduktion för förvärvsinkomst : 0,75 % av beskattningsbar inkomst över 40 000 kr, högst 1 500 kr. */
+export function calculateForvarvsreduktion(taxableIncome: number): number {
+  const f = FORVARVSREDUKTION;
+  if (taxableIncome <= f.fran) return 0;
+  return Math.min(f.max, Math.floor((taxableIncome - f.fran) * f.sats));
+}
+
+/** Public service-avgift : 1 % av beskattningsbar förvärvsinkomst, högst 1 184 kr 2026. */
+export function calculatePublicService(taxableIncome: number): number {
+  if (taxableIncome <= 0) return 0;
+  return Math.min(PUBLIC_SERVICE_MAX, Math.floor(taxableIncome * PUBLIC_SERVICE_SATS));
 }
 
 /**
@@ -212,23 +212,28 @@ export function calculateTakeHome(input: TaxInput): TaxResult {
   // 4. Statlig inkomstskatt
   const statligSkatt = calculateStatligSkatt(taxableIncome);
 
-  // 5. Allmän pensionsavgift
+  // 5. Allmän pensionsavgift, och skattereduktionen som motsvarar den (kan inte överstiga inkomstskatten)
   const pensionsavgift = calculatePensionsavgift(grossAnnual);
-  const pensionsavgiftReduktion = pensionsavgift; // Full skattereduktion
+  const pensionsavgiftReduktion = Math.min(pensionsavgift, kommunalskatt + statligSkatt);
 
-  // 6. Jobbskatteavdrag
-  const jobbskatteavdrag = calculateJobbskatteavdrag(grossAnnual, kommunalskattRate);
+  // 6. Jobbskatteavdrag och skattereduktion för förvärvsinkomst : räknas bara av mot kommunal inkomstskatt
+  const kommunalKvar = Math.max(0, kommunalskatt - Math.max(0, pensionsavgiftReduktion - statligSkatt));
+  const jsaBeraknat = calculateJobbskatteavdrag(grossAnnual, kommunalskattRate);
+  const jsaUtnyttjat = Math.min(jsaBeraknat, kommunalKvar);
+  const forvarvsreduktion = Math.min(calculateForvarvsreduktion(taxableIncome), kommunalKvar - jsaUtnyttjat);
+  const jobbskatteavdrag = jsaUtnyttjat;
 
-  // 7. Begravningsavgift
+  // 7. Begravningsavgift och public service-avgift : påverkas inte av skattereduktionerna
   const begravningsavgift = calculateBegravningsavgift(taxableIncome);
+  const publicServiceAvgift = calculatePublicService(taxableIncome);
 
   // 8. Kyrkoavgift
   const kyrkoavgift = kyrkoavgiftRate > 0 ? Math.round(taxableIncome * (kyrkoavgiftRate / 100)) : 0;
 
-  // 9. Total skatt = kommunalskatt + statlig skatt + begravningsavgift + kyrkoavgift + pensionsavgift - pensionsreduktion - jobbskatteavdrag
-  const totalSkattBeforeReductions = kommunalskatt + statligSkatt + begravningsavgift + kyrkoavgift + pensionsavgift;
-  const totalReductions = pensionsavgiftReduktion + jobbskatteavdrag;
-  const totalSkatt = Math.max(0, totalSkattBeforeReductions - totalReductions);
+  // 9. Total skatt
+  const totalSkatt =
+    kommunalskatt + statligSkatt + begravningsavgift + publicServiceAvgift + kyrkoavgift + pensionsavgift
+    - pensionsavgiftReduktion - jobbskatteavdrag - forvarvsreduktion;
 
   // 10. Nettolön
   const netAnnual = grossAnnual - totalSkatt;
@@ -238,11 +243,11 @@ export function calculateTakeHome(input: TaxInput): TaxResult {
   // 11. Skattesatser
   const effectiveTaxRate = grossAnnual > 0 ? (totalSkatt / grossAnnual) * 100 : 0;
 
-  // Marginalskatt: kommunalskatt + eventuell statlig skatt
-  let marginalTaxRate = kommunalskattRate + BEGRAVNINGSAVGIFT;
-  if (taxableIncome > SKIKTGRANS_STATLIG) {
-    marginalTaxRate += STATLIG_SKATTESATS * 100;
-  }
+  // Marginalskatt : skatten på ytterligare 12 000 kr per år (1 000 kr i månaden), mätt i motorn själv
+  // så att grundavdragets och jobbskatteavdragets avtrappning räknas med.
+  const marginalTaxRate = input.skipMarginal
+    ? 0
+    : ((calculateTakeHome({ ...input, monthlyGross: monthlyGross + 1000, skipMarginal: true }).totalSkatt - totalSkatt) / 12_000) * 100;
 
   return {
     grossAnnual,
@@ -254,7 +259,9 @@ export function calculateTakeHome(input: TaxInput): TaxResult {
     pensionsavgift,
     pensionsavgiftReduktion,
     jobbskatteavdrag,
+    forvarvsreduktion,
     begravningsavgift,
+    publicServiceAvgift,
     kyrkoavgift,
     totalSkatt,
     netAnnual,

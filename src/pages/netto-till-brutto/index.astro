@@ -1,5 +1,8 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import { calculateRequiredGross, calculateTakeHome } from '../../lib/tax-engine-se';
+const krSE = (x: number) => Math.round(x).toLocaleString('sv-SE') + ' kr';
+const NETTO_RADER = [20000, 25000, 30000, 35000, 40000].map((netto) => { const brutto = calculateRequiredGross(netto); return { netto, brutto, skatt: calculateTakeHome({ monthlyGross: brutto }).totalSkatt / 12 }; });
 import NettoTillBruttoKalkylator from '../../components/calculators/NettoTillBruttoKalkylator';
 
 const faqs = [
@@ -44,15 +47,13 @@ import SkattKontext from '../../components/SkattKontext.astro';
 
   <div slot="content" class="prose prose-lg dark:prose-invert max-w-none mt-12">
     <h2>Netto till brutto: exempeltabell</h2>
-    <p>Baserat på genomsnittlig kommunalskatt (32,37%), ingen kyrkoavgift:</p>
+    <p>Baserat på genomsnittlig kommunalskatt (32,38%), ingen kyrkoavgift:</p>
     <table>
       <thead><tr><th>Önskad nettolön</th><th>Bruttolön krävs</th><th>Total skatt</th></tr></thead>
       <tbody>
-        <tr><td>20 000 kr/mån</td><td>~25 500 kr/mån</td><td>~5 500 kr</td></tr>
-        <tr><td>25 000 kr/mån</td><td>~33 000 kr/mån</td><td>~8 000 kr</td></tr>
-        <tr><td>30 000 kr/mån</td><td>~41 000 kr/mån</td><td>~11 000 kr</td></tr>
-        <tr><td>35 000 kr/mån</td><td>~49 000 kr/mån</td><td>~14 000 kr</td></tr>
-        <tr><td>40 000 kr/mån</td><td>~59 000 kr/mån</td><td>~19 000 kr</td></tr>
+        {NETTO_RADER.map((r) => (
+          <tr><td>{krSE(r.netto)}/mån</td><td>{krSE(r.brutto)}/mån</td><td>{krSE(r.skatt)}</td></tr>
+        ))}
       </tbody>
     </table>
     <p><em>Ungefärliga belopp. Välj din kommun i kalkylatorn ovan för exakt resultat.</em></p>

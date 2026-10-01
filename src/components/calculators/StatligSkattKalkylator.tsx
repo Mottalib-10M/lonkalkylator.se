@@ -29,7 +29,7 @@ export default function StatligSkattKalkylator() {
         />
 
         <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface p-6 space-y-4">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Statlig inkomstskatt 2025</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Statlig inkomstskatt 2026</h3>
 
           <div className="space-y-3">
             <div className="flex justify-between text-sm">
@@ -46,7 +46,7 @@ export default function StatligSkattKalkylator() {
             </div>
             <hr className="border-gray-100 dark:border-gray-700" />
             <div className="flex justify-between text-sm">
-              <span className="text-gray-600 dark:text-gray-400">Skiktgräns 2025</span>
+              <span className="text-gray-600 dark:text-gray-400">Skiktgräns 2026</span>
               <span className="font-medium text-gray-900 dark:text-white tabular-nums">{formatKr(SKIKTGRANS_STATLIG)}</span>
             </div>
 

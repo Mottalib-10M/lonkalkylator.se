@@ -19,7 +19,7 @@ const faqs = [
       "Ja, om du tar ut pension och arbetar samtidigt. Båda inkomsterna läggs ihop och beskattas gemensamt, vilket kan föra den samlade inkomsten över skiktgränsen. Arbetsgivaren och Pensionsmyndigheten drar däremot skatt var för sig utan att känna till den andra, så kvarskatt är vanligt i den situationen.",
   },
 
-  { question: 'Hur mycket är den allmänna pensionsavgiften?', answer: 'Allmän pensionsavgift är 7% av din bruttolön, upp till ett tak på 614 000 kr per år (2026). Du får full skattereduktion för avgiften, så den påverkar inte din nettolön direkt men bidrar till din allmänna pension. Avgiften syns sällan på lönebeskedet just för att skattereduktionen kvittar den, vilket får många att tro att den inte finns. Den ingår ändå i beräkningen, och den är ett av skälen till att en handräkning av nettolönen sällan går ihop.' },
+  { question: 'Hur mycket är den allmänna pensionsavgiften?', answer: 'Allmän pensionsavgift är 7% av din bruttolön, upp till ett tak på 673 038 kr per år (2026). Du får full skattereduktion för avgiften, så den påverkar inte din nettolön direkt men bidrar till din allmänna pension. Avgiften syns sällan på lönebeskedet just för att skattereduktionen kvittar den, vilket får många att tro att den inte finns. Den ingår ändå i beräkningen, och den är ett av skälen till att en handräkning av nettolönen sällan går ihop.' },
   { question: 'Vad är skillnaden mellan allmän pension och tjänstepension?', answer: 'Allmän pension (inkomstpension + premiepension) betalas via skattesystemet. Tjänstepension betalas av din arbetsgivare utöver lönen, vanligtvis 4,5% (ITP1) eller enligt kollektivavtal. Skillnaden märks tydligast vid en anställning utan kollektivavtal, där tjänstepensionen kan saknas helt. Över ett yrkesliv motsvarar den skillnaden ofta flera tusen kronor i månaden i pension, vilket gör den värd att kontrollera vid varje jobbyte.' },
   { question: 'Hur mycket tjänstepension får jag?', answer: 'De flesta anställda med kollektivavtal har ITP1 (4,5% på lönedelar upp till 7,5 prisbasbelopp + 30% på delen över). Utan kollektivavtal varierar det. Kontrollera med din arbetsgivare. Pensionsmyndighetens prognos på minpension.se visar hela bilden, allmän pension och tjänstepension tillsammans, vilket är den enda siffra som säger något om den faktiska levnadsstandarden efter arbetslivet.' },
 ];
@@ -31,7 +31,7 @@ import SkattKontext from '../../components/SkattKontext.astro';
   slug="/pensionskalkylator"
   title="Pensionskalkylator"
   metaTitle="Pensionskalkylator 2026 | Allmän pension & tjänstepension"
-  metaDescription="Beräkna din allmänna pensionsavgift och tjänstepension 2026. Se hur pensionsavgiften påverkar din nettolön, totala avsättning och taket på 614 000 kr per år."
+  metaDescription="Beräkna din allmänna pensionsavgift och tjänstepension 2026. Se hur pensionsavgiften påverkar din nettolön, totala avsättning och taket på 673 038 kr per år."
   h1="Pensionskalkylator 2026"
   intro="Beräkna din allmänna pensionsavgift och se hur den påverkar din nettolön."
   faqs={faqs}
@@ -47,8 +47,8 @@ import SkattKontext from '../../components/SkattKontext.astro';
       <thead><tr><th>Parameter</th><th>Värde 2026</th></tr></thead>
       <tbody>
         <tr><td>Avgiftssats</td><td>7%</td></tr>
-        <tr><td>Tak (inkomstbasbelopp × 8,07)</td><td>614 000 kr/år</td></tr>
-        <tr><td>Max avgift per år</td><td>42 980 kr</td></tr>
+        <tr><td>Tak (inkomstbasbelopp × 8,07)</td><td>673 038 kr/år</td></tr>
+        <tr><td>Max avgift per år</td><td>47 100 kr</td></tr>
         <tr><td>Skattereduktion</td><td>100% (full avräkning)</td></tr>
       </tbody>
     </table>
@@ -60,7 +60,7 @@ import SkattKontext from '../../components/SkattKontext.astro';
         <tr><td>25 000 kr</td><td>1 750 kr</td><td>21 000 kr</td></tr>
         <tr><td>35 000 kr</td><td>2 450 kr</td><td>29 400 kr</td></tr>
         <tr><td>45 000 kr</td><td>3 150 kr</td><td>37 800 kr</td></tr>
-        <tr><td>55 000 kr+</td><td>3 582 kr</td><td>42 980 kr (tak)</td></tr>
+        <tr><td>55 000 kr+</td><td>3 582 kr</td><td>47 100 kr (tak)</td></tr>
       </tbody>
     </table>
   </div>

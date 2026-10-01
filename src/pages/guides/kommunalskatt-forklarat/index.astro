@@ -9,6 +9,7 @@ const taux = (v: number) => v.toLocaleString('sv-SE', { minimumFractionDigits: 0
 const lowest = [...KOMMUNER].sort((a, b) => a.rate - b.rate).slice(0, 5);
 const highest = [...KOMMUNER].sort((a, b) => b.rate - a.rate).slice(0, 5);
 import OfficiellaKallor from '../../../components/OfficiellaKallor.astro';
+import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
 ---
 
 <GuideLayout
@@ -41,6 +42,8 @@ import OfficiellaKallor from '../../../components/OfficiellaKallor.astro';
 >
   <h2>Vad är kommunalskatt?</h2>
   <p>Kommunalskatten är den skatt du betalar till din kommun och region och utgör den absolut största delen av den inkomstskatt som de allra flesta svenska löntagare betalar. Den består av två separata delar: den egentliga kommunalskatten, som går till den kommun där du är folkbokförd, och regionalskatten (som fram till 2020 kallades landstingsskatten), som går till din region. Tillsammans utgör dessa två delar din totala kommunalskattesats, som vanligtvis ligger mellan 29 och 35 procent beroende på var i Sverige du bor.</p>
+<MiniSimAutonome client:visible kind="kommunal" lang="sv" locale="sv-SE" href="/" />
+
   <p>Den kommunala delen av skatten finansierar verksamheter som skola, förskola, äldreomsorg, socialtjänst, kultur, fritid, vatten och avlopp samt gator och parker. Regionalskatten finansierar i första hand hälso- och sjukvård, tandvård för barn och unga samt kollektivtrafik. Dessa verksamheter utgör grunden i den svenska välfärden och kommunalskatten är därför den enskilt viktigaste inkomstkällan för kommuner och regioner i Sverige.</p>
   <p>Till skillnad från den statliga inkomstskatten, som är progressiv och bara drabbar inkomster över en viss nivå, är kommunalskatten proportionell. Det innebär att alla betalar samma procentuella skattesats oavsett inkomstnivå, från den som tjänar 15 000 kronor till den som tjänar 150 000 kronor i månaden. Det är dock värt att komma ihåg att grundavdraget och jobbskatteavdraget i praktiken gör att den effektiva skatten ändå blir progressiv, det vill säga att låginkomsttagare betalar en lägre andel av sin inkomst i skatt.</p>
 
@@ -51,7 +54,7 @@ import OfficiellaKallor from '../../../components/OfficiellaKallor.astro';
   <p>Det kommunala utjämningssystemet spelar också en viktig roll. Sverige har ett system för ekonomisk utjämning mellan kommuner, där kommuner med höga skattekrafter (det vill säga höga genomsnittliga inkomster per invånare) betalar en utjämningsavgift som sedan fördelas till kommuner med lägre skattekraft. Detta system är tänkt att ge alla kommuner likvärdiga ekonomiska förutsättningar, men det innebär inte att alla kommuner behöver ha samma skattesats. Strukturella skillnader i kostnader, demografi och geografiska förhållanden gör att variationen består.</p>
 
   <h2>Kommunens och regionens respektive andelar</h2>
-  <p>Den totala kommunalskattesatsen delas upp mellan kommun och region. Riksgenomsnittet för 2026 ligger på cirka 32,37 procent, varav kommunens andel i snitt utgör ungefär 21,5 procent och regionens andel ungefär 11,5 procent. Det finns dock betydande variation även inom dessa delar. Vissa kommuner har en kommunal skattesats under 20 procent, medan andra ligger över 23 procent. På regionnivå varierar skatten från under 10,5 procent till över 12,5 procent.</p>
+  <p>Den totala kommunalskattesatsen delas upp mellan kommun och region. Riksgenomsnittet för 2026 ligger på cirka 32,38 procent, varav kommunens andel i snitt utgör ungefär 21,5 procent och regionens andel ungefär 11,5 procent. Det finns dock betydande variation även inom dessa delar. Vissa kommuner har en kommunal skattesats under 20 procent, medan andra ligger över 23 procent. På regionnivå varierar skatten från under 10,5 procent till över 12,5 procent.</p>
   <p>Det är kommunfullmäktige respektive regionfullmäktige som varje år beslutar om skattesatsen i samband med budgetarbetet. Beslutet fattas normalt i november och gäller från den 1 januari nästkommande år. Om en kommun behöver höja skatten för att finansiera ökade kostnader, till exempel på grund av en växande äldre befolkning eller omfattande investeringar i ny infrastruktur, kan detta alltså ske relativt snabbt. Omvänt kan kommuner som effektiviserar sin verksamhet eller som får ökade statsbidrag ibland sänka skatten.</p>
 
   <h2>Kommuner med lägst skatt 2026</h2>
@@ -91,7 +94,7 @@ import OfficiellaKallor from '../../../components/OfficiellaKallor.astro';
 
   <h2>Historisk utveckling av kommunalskatten</h2>
   <p>Kommunalskatten i Sverige har en lång historia som sträcker sig tillbaka till 1862 års kommunalförordningar. Under 1900-talet var den kommunala skattesatsen relativt låg, men den har stigit kraftigt sedan 1960-talet i takt med att den offentliga sektorn har expanderat. Under 1970- och 1980-talen ökade kommunalskatten markant, delvis på grund av utbyggnaden av barnomsorg, äldreomsorg och hälso- och sjukvård.</p>
-  <p>Under 1990-talet infördes tillfälliga skattestopp för kommuner och landsting som ett led i saneringen av statsfinanserna. Sedan dess har den genomsnittliga kommunalskattesatsen legat förhållandevis stabil runt 31 till 33 procent, med en svag uppåtgående trend. Under de senaste åren har den genomsnittliga kommunalskattesatsen ökat till 32,37 procent 2026, bland annat som en konsekvens av ökade kostnader inom äldreomsorgen och nya krav på kommunernas verksamhet.</p>
+  <p>Under 1990-talet infördes tillfälliga skattestopp för kommuner och landsting som ett led i saneringen av statsfinanserna. Sedan dess har den genomsnittliga kommunalskattesatsen legat förhållandevis stabil runt 31 till 33 procent, med en svag uppåtgående trend. Under de senaste åren har den genomsnittliga kommunalskattesatsen ökat till 32,38 procent 2026, bland annat som en konsekvens av ökade kostnader inom äldreomsorgen och nya krav på kommunernas verksamhet.</p>
 
   <h2>Kan jag påverka min kommunalskatt?</h2>
   <p>Det enda sättet att ändra din kommunalskattesats är att flytta till en annan kommun. Din kommunalskatt baseras på var du var folkbokförd den 1 november året före beskattningsåret. Om du exempelvis flyttar från en högskattekommun till en lågskattkommun den 15 oktober 2026, kommer du att beskattas enligt den nya kommunens skattesats för hela inkomståret 2026. Flyttar du däremot den 5 november 2026 beskattas du enligt den gamla kommunens skattesats under hela 2026.</p>

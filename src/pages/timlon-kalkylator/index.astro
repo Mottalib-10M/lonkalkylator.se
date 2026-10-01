@@ -1,5 +1,8 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import { calculateTakeHome } from '../../lib/tax-engine-se';
+const krSE = (x: number) => Math.round(x).toLocaleString('sv-SE') + ' kr';
+const TIM_RADER = [150, 175, 200, 250, 300, 400].map((tim) => { const brutto = (tim * 40 * 52) / 12; const netto = calculateTakeHome({ monthlyGross: brutto }).netMonthly; return { tim, brutto, netto, nettoTim: (netto * 12) / (40 * 52) }; });
 import TimlonKalkylator from '../../components/calculators/TimlonKalkylator';
 
 const faqs = [
@@ -40,16 +43,13 @@ import SkattKontext from '../../components/SkattKontext.astro';
 
   <div slot="content" class="prose prose-lg dark:prose-invert max-w-none mt-12">
     <h2>Timlön till månadslön: omvandlingstabell</h2>
-    <p>Baserat på 40 timmars arbetsvecka och genomsnittlig kommunalskatt (32,37%):</p>
+    <p>Baserat på 40 timmars arbetsvecka och genomsnittlig kommunalskatt (32,38%):</p>
     <table>
       <thead><tr><th>Timlön</th><th>Brutto/mån</th><th>Netto/mån (ca)</th><th>Netto/tim (ca)</th></tr></thead>
       <tbody>
-        <tr><td>150 kr</td><td>26 000 kr</td><td>~20 600 kr</td><td>~119 kr</td></tr>
-        <tr><td>175 kr</td><td>30 333 kr</td><td>~23 600 kr</td><td>~136 kr</td></tr>
-        <tr><td>200 kr</td><td>34 667 kr</td><td>~26 600 kr</td><td>~153 kr</td></tr>
-        <tr><td>250 kr</td><td>43 333 kr</td><td>~32 400 kr</td><td>~187 kr</td></tr>
-        <tr><td>300 kr</td><td>52 000 kr</td><td>~37 500 kr</td><td>~216 kr</td></tr>
-        <tr><td>400 kr</td><td>69 333 kr</td><td>~45 000 kr</td><td>~260 kr</td></tr>
+        {TIM_RADER.map((r) => (
+          <tr><td>{r.tim} kr</td><td>{krSE(r.brutto)}</td><td>{krSE(r.netto)}</td><td>{krSE(r.nettoTim)}</td></tr>
+        ))}
       </tbody>
     </table>
     <p><em>Ungefärliga belopp. Nettolönen varierar med kommun och kyrkoavgift.</em></p>

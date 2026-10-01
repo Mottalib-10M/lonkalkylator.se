@@ -509,8 +509,8 @@ export function getPensionProjection(amount: number, result: TaxResult): string 
   const annualGross = amount * 12;
 
   // Tj\u00e4nstepension (vanligtvis 4.5% under 7.5 IBB + 30% \u00f6ver)
-  const ibb = 76200; // Inkomstbasbelopp 2026
-  const pensionTak = 7.5 * ibb; // 571 500
+  const ibb = 83400; // Inkomstbasbelopp 2026
+  const pensionTak = 7.5 * ibb; // 625 500
   const tjanstepensionUnder = Math.min(annualGross, pensionTak) * 0.045;
   const tjanstepensionOver = annualGross > pensionTak ? (annualGross - pensionTak) * 0.30 : 0;
   const tjanstepensionTotal = Math.round(tjanstepensionUnder + tjanstepensionOver);
