@@ -49,7 +49,9 @@ export default defineConfig({
     },
   },
   integrations: [
-    trustKit({ lang: 'sv', siteUrl: 'https://lonkalkylator.se', siteName: 'Lönekalkylator', founded: '2026-06-27', about: '/om-oss/', method: '/metod/' }), react(), sitemap()],
+    trustKit({ lang: 'sv', siteUrl: 'https://lonkalkylator.se', siteName: 'Lönekalkylator', founded: '2026-06-27', about: '/om-oss/', method: '/metod/' }), react(),
+    // /embed/ : page d'iframe en noindex, hors sitemap
+    sitemap({ filter: (page) => !new URL(page).pathname.startsWith('/embed/') })],
   vite: {
     plugins: [tailwindcss()],
   },
