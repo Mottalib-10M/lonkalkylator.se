@@ -1,7 +1,7 @@
 ---
 import { formatDec } from '../../../lib/format';
 import GuideLayout from '../../../layouts/GuideLayout.astro';
-import { KOMMUNER } from '../../../data/tax-2026';
+import { KOMMUNER, KOMMUNER_MED_SIDA } from '../../../data/tax-2026';
 import { calculateTakeHome } from '../../../lib/tax-engine-se';
 
 /** Le taux s'ecrit a la suedoise, virgule decimale, dans le texte ET dans le JSON-LD. */
@@ -84,7 +84,7 @@ import MiniSimAutonome from '../../../components/calc/MiniSimAutonome';
     <tbody>
       {sortedKommuner.map((k) => (
         <tr>
-          <td><a href={`/kommun/${k.slug}/`}>{k.name}</a></td>
+          <td>{KOMMUNER_MED_SIDA.includes(k.slug) ? <a href={`/kommun/${k.slug}/`}>{k.name}</a> : k.name}</td>
           <td>{k.lan}</td>
           <td>{taux(k.rate)} %</td>
         </tr>
