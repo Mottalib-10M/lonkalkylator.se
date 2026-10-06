@@ -1,0 +1,57 @@
+---
+import LegalIdentity from '../../../components/LegalIdentity.astro';
+import { CONTACT_EMAIL } from '../../../data/site-config';
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+
+const faqs = [
+  {
+    question: "Are the Swedish net pay results binding?",
+    answer:
+      "No. Every figure is an estimate for information and does not replace advice from Skatteverket or an authorised tax adviser. Small gaps with a real payslip usually come from rounding or from tax tables assuming an even income over the year; larger ones nearly always come from a benefit, an adjustment or a deduction.",
+  },
+  {
+    question: "May I embed the calculator on my own site?",
+    answer:
+      "Yes. The widget is free to embed, including on commercial sites and with no limit on traffic, on one condition: the attribution link in its footer must stay visible and clickable. That link replaces any fee or registration, and the widget loads the current tax rates itself, so it never goes out of date on your page.",
+  },
+];
+---
+
+<CalculatorLayout
+  slug="/en/terms"
+  title="Terms of use"
+  metaTitle="Terms of use | Swedish salary calculator lonkalkylator.se"
+  metaDescription="Publisher, host and the limits of lonkalkylator.se: every Swedish net pay, municipal tax or pension figure is an estimate for information, never tax advice."
+  h1="Terms of use"
+  intro="The conditions for using the Swedish salary and tax calculators on lonkalkylator.se."
+  faqs={faqs}
+  lang="en"
+>
+  <div class="prose prose-lg dark:prose-invert max-w-none">
+    <p><em>Last updated: 6 October 2026</em> · <a href="/villkor/" hreflang="sv" lang="sv">Svensk version</a></p>
+
+    <h2>Publisher</h2>
+    <LegalIdentity mode="publisher" lang="en" />
+
+    <h2>Hosting</h2>
+    <LegalIdentity mode="hosting" lang="en" />
+
+    <h2>1. The service</h2>
+    <p>lonkalkylator.se offers free calculators and explanations of Swedish income tax: net pay, municipal and state tax, the earned income tax credit and pension. No registration is needed.</p>
+
+    <h2>2. Estimates, not tax advice</h2>
+    <p>Results are <strong>estimates</strong> for information only. Your actual tax may differ because of individual deductions, capital income, church fee, mid-year rule changes or pension payments. Contact Skatteverket or an authorised adviser for binding information. The publisher is not liable for decisions based solely on the calculators.</p>
+
+    <h2>3. Personal data and cookies</h2>
+    <p>The calculators store nothing: the salary and municipality you enter are processed in your browser and are gone when you close the tab. The site sets no cookies and the publisher records no personal data. Only page stability is measured, technically and anonymously, with Microsoft Clarity running cookieless with content masked; the <a href="/en/privacy/">privacy policy</a> has the details.</p>
+
+    <h2>4. Intellectual property</h2>
+    <p>Texts, design, calculators and graphics are protected by copyright. Copying them beyond personal use requires written permission, except the embeddable widget used as described on the widget page.</p>
+
+    <h2>5. Applicable law</h2>
+    <p>These terms are governed by Swedish law. The Swedish version, <a href="/villkor/">Användarvillkor</a>, prevails in case of difference.</p>
+
+    <h2>6. Contact</h2>
+    <p>Questions about these terms: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+  </div>
+</CalculatorLayout>

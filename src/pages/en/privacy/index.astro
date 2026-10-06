@@ -1,0 +1,63 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import { CONTACT_EMAIL, LEGAL } from '../../../data/site-config';
+
+const faqs = [
+  {
+    question: "Is the salary I type into the Swedish tax calculator stored?",
+    answer:
+      "No. Monthly salary, municipality, year of birth and church fee are processed in your browser and never leave your device. They are not saved in the browser either, so closing the tab erases them. A service that never receives the figure has nothing to protect, delete or hand over.",
+  },
+  {
+    question: "Does lonkalkylator.se use cookies?",
+    answer:
+      "No. Neither the calculators nor the stability monitoring set cookies, and nothing is written to local storage. That is why no cookie banner appears: there is nothing to accept or decline. The site shows no advertising and uses no ad trackers.",
+  },
+];
+---
+
+<CalculatorLayout
+  slug="/en/privacy"
+  title="Privacy policy"
+  metaTitle="Privacy policy | Swedish salary calculator, no cookies"
+  metaDescription="The salary, municipality and age you enter stay in your browser. lonkalkylator.se sets no cookies and keeps no personal data; only page stability is measured."
+  h1="Privacy policy"
+  intro="No cookies and no stored personal data: how the Swedish salary calculator treats your visit."
+  faqs={faqs}
+  lang="en"
+>
+  <div class="prose prose-lg dark:prose-invert max-w-none">
+    <p><em>Last updated: 6 October 2026</em> · <a href="/integritetspolicy/" hreflang="sv" lang="sv">Svensk version</a></p>
+
+    <h2>1. In short</h2>
+    <p>lonkalkylator.se is published by {LEGAL.entityName}. This policy describes, under the General Data Protection Regulation (GDPR) and the Swedish Electronic Communications Act (LEK, 2022:482), what happens to information about your visit. The short answer: the site sets no cookies and the publisher stores no personal data about you.</p>
+
+    <h2>2. What you enter in the calculators</h2>
+    <p>The monthly salary, municipality, year of birth, church fee or pension figures you enter to estimate Swedish net pay, municipal tax, state income tax or pension are processed <strong>only in your browser</strong>. No salary figure is sent to a server, there is no database of calculations, and nothing is kept on your device once the tab is closed.</p>
+
+    <h2>3. Cookies</h2>
+    <p>Neither the site, its calculators nor the stability monitoring below set cookies, and nothing is written to the browser’s local or session storage. Since no information is stored on or read from your device within the meaning of Chapter 9, Section 28 of the LEK, there is no cookie banner: nothing has to be accepted or declined. No advertising, no ad trackers.</p>
+
+    <h2>4. Anonymous stability monitoring</h2>
+    <p>To detect script errors, slow loading, buttons that do not respond to clicks or scrolling that gets stuck, the site uses <strong>Microsoft Clarity without cookies</strong>. In this mode Clarity sets none of <code>_clck</code>, <code>_clsk</code>, <code>MUID</code> or <code>CLID</code>. Each page view has its own identifier and page views or visits are never linked. Page text and all field input are masked in the browser before anything is sent, so Microsoft never sees your salary or municipality.</p>
+    <ul>
+      <li><strong>Controller</strong>: Microsoft Ireland Operations Limited, One Microsoft Place, South County Business Park, Leopardstown, Dublin 18, Ireland; data may be processed in the United States under the EU–U.S. Data Privacy Framework and standard contractual clauses (<a href="https://privacy.microsoft.com/privacystatement" rel="nofollow noopener" target="_blank">Microsoft’s privacy statement</a>).</li>
+      <li><strong>Purpose</strong>: a technical, anonymous check that the salary and tax calculators display and compute correctly.</li>
+      <li><strong>Retention</strong>: 30 days for page-view recordings, 13 months for aggregated statistics.</li>
+      <li><strong>Legal basis</strong>: the publisher’s legitimate interest in calculators that work (Article 6(1)(f) GDPR).</li>
+      <li><strong>Objecting</strong>: block <code>clarity.ms</code> in your browser or content blocker (the calculators work exactly the same), or email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</li>
+    </ul>
+
+    <h2>5. Hosting logs</h2>
+    <p>The site is hosted on GitHub Pages (GitHub, Inc.), which logs technical request data (IP address, time, requested page, browser) for security and operation. The publisher has no access to these logs and does not use them.</p>
+
+    <h2>6. Email</h2>
+    <p>An email to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> is used only to reply. Your address is not added to any mailing and not passed on.</p>
+
+    <h2>7. Your rights and complaints</h2>
+    <p>You have rights of access, rectification, erasure, restriction and objection. As the publisher keeps nothing about you, in practice this concerns emails you have sent; for stability monitoring you can also contact Microsoft. Complaints go to the Swedish Authority for Privacy Protection, {LEGAL.supervisoryAuthority} (<a href={LEGAL.supervisoryAuthorityUrl} rel="nofollow noopener" target="_blank">imy.se</a>).</p>
+
+    <h2>8. Changes</h2>
+    <p>If the way the site works changes, this page is updated first and the date at the top moves forward. See also the <a href="/en/terms/">terms of use</a>.</p>
+  </div>
+</CalculatorLayout>

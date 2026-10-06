@@ -7,6 +7,8 @@
 
 const svToEn: Record<string, string> = {
   '/': '/en/',
+  '/integritetspolicy/': '/en/privacy/',
+  '/villkor/': '/en/terms/',
 };
 
 const enToSv: Record<string, string> = {};

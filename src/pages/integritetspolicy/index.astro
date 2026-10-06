@@ -1,30 +1,38 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import { CONTACT_EMAIL, LEGAL } from '../../data/site-config';
 
 const faqs = [
   {
-    question: "Vad mäter ni om besöken?",
+    question: "Vad mäts när jag besöker webbplatsen?",
     answer:
-      "Enbart att ett besök har skett, vilken sida som visats och ungefär varifrån trafiken kom. Ingen profil byggs, ingen besökare följs mellan sidor över tid och inga uppgifter säljs eller delas vidare. Mätningen räcker för att se vilka sidor som används och vilka som inte fyller någon funktion.",
+      "Bara sidans stabilitet: om ett skript ger fel, om sidan laddar långsamt, om en knapp inte reagerar eller om rullningen fastnar. Det görs med Microsoft Clarity utan kakor, med sidans text och dina inmatningar maskerade. Varje sidvisning får en egen identifierare, så inga besök kopplas ihop och ingen profil byggs.",
   },
   {
-    question: "Lagras det jag skriver in i kalkylatorn?",
+    question: "Lagras lönen jag skriver in i kalkylatorn?",
     answer:
-      "Nej, ingenstans. Beräkningen sker i din webbläsare och lönesiffran lämnar aldrig din enhet. Det är ett medvetet val snarare än en teknisk tillfällighet: en tjänst som inte tar emot uppgiften behöver varken skydda den, radera den eller redogöra för vem som haft tillgång till den.",
+      "Nej, ingenstans. Månadslön, kommun, ålder och kyrkoavgift räknas om i din webbläsare och lämnar aldrig din enhet. De sparas inte heller i webbläsaren: stänger du fliken är uppgifterna borta. En tjänst som aldrig tar emot uppgiften behöver varken skydda, radera eller lämna ut den.",
+  },
+  {
+    question: "Sätter ni några kakor?",
+    answer:
+      "Nej. Varken kalkylatorerna eller stabilitetsmätningen sätter kakor, och ingenting skrivs till webbläsarens lokala lagring eller sessionslagring. Därför finns ingen kakruta att klicka bort: det finns inget att godkänna eller avböja. Ingen reklam visas och inga annonsspårare används, vare sig från Google, Meta eller något annonsnätverk.",
+  },
+  {
+    question: "Kan jag stänga av stabilitetsmätningen?",
+    answer:
+      "Ja. Blockera domänen clarity.ms i webbläsaren eller med en innehållsblockerare, så laddas Clarity aldrig. Kalkylatorerna räknar exakt likadant utan den, eftersom hela beräkningen av nettolön och skatt sker lokalt. Du kan också mejla utgivaren och invända mot mätningen; eftersom inget kopplas till dig finns inget att radera i efterhand.",
+  },
+  {
+    question: "Vem ser loggarna när jag besöker sidan?",
+    answer:
+      "Webbplatsen ligger på GitHub Pages, och GitHub loggar som alla webbvärdar tekniska uppgifter om varje anrop, till exempel IP-adress, tidpunkt och begärd sida, för säkerhet och drift. Utgivaren har ingen tillgång till de loggarna och använder dem inte. Microsoft tar emot den maskerade stabilitetsmätningen och sparar den högst 13 månader.",
   },
   {
     question: "Vilka rättigheter har jag enligt GDPR?",
     answer:
-      "Rätt till tillgång, rättelse, radering, begränsning, dataportabilitet och att invända mot behandling. Eftersom vi inte lagrar några personuppgifter från kalkylatorn finns det i praktiken inget att begära ut eller radera i den delen. För eventuell mejlkorrespondens gäller rättigheterna fullt ut och begäran besvaras inom en månad.",
+      "Rätt till tillgång, rättelse, radering, begränsning och att invända mot behandling. Eftersom utgivaren inte sparar några personuppgifter om dig gäller rättigheterna i praktiken bara mejl du skickat, och för stabilitetsmätningen kan du även vända dig till Microsoft. Klagomål lämnas till Integritetsskyddsmyndigheten (IMY).",
   },
-  {
-    question: "Sätter ni några cookies alls?",
-    answer:
-      "Ja. Microsoft Clarity och Google Analytics 4 sätter cookies för besöksstatistik (_clck, _clsk, _ga och _ga_<id>), utan samtyckesruta, och de beskrivs i den här policyn och i cookiepolicyn. Utöver dem finns bara de som krävs för att sidan ska fungera, till exempel att komma ihåg om du valt mörkt läge. Inga cookies för annonsering. Du kan blockera dem i webbläsaren utan att kalkylatorn slutar fungera.",
-  },
-
-  { question: 'Lagrar Lönekalkylator mina löneuppgifter?', answer: 'Nej. Alla beräkningar sker helt i din webbläsare. Ingen lönedata, kommun eller personuppgifter skickas till eller lagras på våra servrar. Beräkningen sker i din egen webbläsare och siffran lämnar aldrig enheten. Det är ett medvetet val: en tjänst som inte tar emot uppgiften behöver varken skydda den, radera den eller redovisa vem som haft tillgång till den.' },
-  { question: 'Använder ni cookies?', answer: 'Vi använder Microsoft Clarity och Google Analytics 4 för användningsanalys. Inga personidentifierande uppgifter samlas in. Du kan blockera cookies i din webbläsare utan att påverka kalkylatorns funktion. Utöver dessa finns bara de som krävs för att sidan ska fungera, exempelvis för att komma ihåg mörkt läge. Inga cookies för annonsering och ingen försäljning av uppgifter.' },
 ];
 import SkattKontext from '../../components/SkattKontext.astro';
 import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
@@ -33,51 +41,53 @@ import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
 <CalculatorLayout
   slug="/integritetspolicy"
   title="Integritetspolicy"
-  metaTitle="Integritetspolicy | Lönekalkylator – Så skyddas din data"
-  metaDescription="Integritetspolicy för Lönekalkylator. Alla beräkningar sker i din webbläsare – ingen personlig data lagras på servrar. Läs om cookies och analysverktyg."
+  metaTitle="Integritetspolicy | Lönekalkylator – inga kakor sparas"
+  metaDescription="Lönen, kommunen och åldern du anger stannar i din webbläsare. Lönekalkylator sätter inga kakor och sparar inga personuppgifter; bara stabiliteten mäts anonymt."
   h1="Integritetspolicy"
-  intro="Din integritet är viktig. Läs hur vi hanterar data på Lönekalkylator."
+  intro="Inga kakor, inga sparade personuppgifter: så hanterar Lönekalkylator ditt besök."
   faqs={faqs}
 >
   <div class="prose prose-lg dark:prose-invert max-w-none">
-    <p><em>Senast uppdaterad: 4 oktober 2026</em></p>
+    <p><em>Senast uppdaterad: 6 oktober 2026</em> · <a href="/en/privacy/" hreflang="en" lang="en">English version</a></p>
 
-    <h2>1. Introduktion</h2>
-    <p>Denna integritetspolicy beskriver hur Lönekalkylator (lonkalkylator.se) hanterar information när du använder våra skattekalkylatorer och besöker vår webbplats. Vi är engagerade i att skydda din integritet.</p>
+    <h2>1. Kort sagt</h2>
+    <p>Lönekalkylator (lonkalkylator.se) ges ut av {LEGAL.entityName}. Den här policyn beskriver, utifrån dataskyddsförordningen (GDPR) och lagen (2022:482) om elektronisk kommunikation (LEK), vad som händer med uppgifter om ditt besök. Svaret i korthet: webbplatsen sätter inga kakor och utgivaren sparar inga personuppgifter om dig.</p>
 
-    <h2>2. Ingen personlig data lagras</h2>
-    <p>Alla skatteberäkningar sker <strong>helt i din webbläsare</strong> (klientsidan). Det innebär att:</p>
+    <h2>2. Det du skriver in i kalkylatorerna</h2>
+    <p>Månadslön, kommun, födelseår, kyrkoavgift eller pensionsuppgifter som du anger för att räkna ut nettolön, kommunalskatt, statlig skatt eller pension bearbetas <strong>enbart i din webbläsare</strong>. Det innebär att:</p>
     <ul>
-      <li>Ingen lönedata skickas till våra servrar</li>
-      <li>Ingen kommun- eller skatteinformation lagras</li>
-      <li>Vi har ingen databas med användarnas beräkningar</li>
-      <li>Inga personuppgifter samlas in via kalkylatorerna</li>
+      <li>ingen lönesiffra skickas till någon server,</li>
+      <li>ingen databas med beräkningar finns,</li>
+      <li>ingenting sparas på din enhet: stänger du fliken försvinner uppgifterna.</li>
     </ul>
-    <p>Du kan verifiera detta genom att använda kalkylatorerna offline eller genom att inspektera nätverkstrafiken i din webbläsare.</p>
 
-    <h2>3. Cookies och analysverktyg</h2>
-    <p>Kalkylatorerna använder inga kakor och webbplatsen visar ingen reklam.</p>
-    <p>Vi använder Microsoft Clarity för att förstå hur sidorna används. Clarity laddas när sidan öppnas; webbplatsen visar ingen samtyckesruta. Behandlingen grundar sig på vårt berättigade intresse av att förstå hur webbplatsen används (artikel 6.1 f i dataskyddsförordningen). Clarity registrerar klick, rullning, vilka sidor som visas och deras adress, typ av enhet och webbläsare samt ungefärlig plats utifrån IP-adressen. Det du skriver i fälten maskeras i webbläsaren och skickas inte. Clarity sätter kakorna <code>_clck</code> (ett år) och <code>_clsk</code> (ett dygn), och Microsoft kan sätta <code>MUID</code> och <code>CLID</code> på sina egna domäner.</p>
-    <p>Sessionsinspelningar sparas i 30 dagar och aggregerade uppgifter i upp till 13 månader. Microsoft kan behandla uppgifterna i USA, med stöd av EU–U.S. Data Privacy Framework och EU-kommissionens standardavtalsklausuler; se <a href="https://privacy.microsoft.com/privacystatement" rel="nofollow noopener" target="_blank">Microsofts sekretesspolicy</a>.</p>
-    <p>Du kan neka mätningen genom att blockera tredjepartskakor eller domänen <code>clarity.ms</code> i webbläsaren, och radera webbplatsdata för att ta bort kakor som redan har satts. Kalkylatorerna fungerar utan dem.</p>
-    <p>Vi använder också Google Analytics 4, som tillhandahålls av Google Ireland Limited (Google LLC för överföringar). Google Analytics 4 laddas på samma sätt när sidan öppnas, utan samtyckesruta, och används för besöksmätning med samma rättsliga grund, vårt berättigade intresse av att förstå hur webbplatsen används (artikel 6.1 f i dataskyddsförordningen). Det registrerar vilka sidor som visas, varifrån besöket kom, besökets längd och engagemang, typ av enhet och webbläsare samt ungefärlig plats (land, stad) utifrån IP-adressen, som Google Analytics 4 inte sparar. Google Analytics 4 sätter kakorna <code>_ga</code> (två år) och <code>_ga_&lt;id&gt;</code> (två år). Uppgifterna sparas i 14 månader (inställt för vår egendom) och överförs till Google LLC i USA, som är certifierat enligt EU–U.S. Data Privacy Framework.</p>
-    <p>Du kan neka Google Analytics genom att blockera tredjepartskakor eller domänen <code>google-analytics.com</code> i webbläsaren, eller genom att installera <a href="https://tools.google.com/dlpage/gaoptout?hl=sv" rel="nofollow noopener" target="_blank">Googles officiella tillägg för att inaktivera Google Analytics</a>. Webbplatsen fungerar som vanligt utan det.</p>
-    <p>Mottagare av uppgifterna från besöksmätningen: Microsoft (Clarity) samt Google Ireland Limited och Google LLC (Google Analytics 4).</p>
+    <h2>3. Kakor (cookies)</h2>
+    <p>Varken webbplatsen, kalkylatorerna eller stabilitetsmätningen nedan sätter kakor, och inget skrivs till webbläsarens lokala lagring eller sessionslagring. Eftersom ingen information lagras i eller hämtas från din enhet i den mening som avses i 9 kap. 28 § LEK visas ingen kakruta: det finns inget att godkänna eller avböja. Webbplatsen visar ingen reklam och använder inga annonsspårare.</p>
 
-    <h2>4. Tredjepartslänkar</h2>
-    <p>Vår webbplats kan innehålla länkar till externa webbplatser som Skatteverket (skatteverket.se). Vi ansvarar inte för dessa webbplatsers integritetspolicyer. Vi rekommenderar att du läser deras policyer innan du delar personlig information.</p>
+    <h2>4. Anonym mätning av stabiliteten</h2>
+    <p>För att upptäcka fel (skriptfel, långsam laddning, knappar som inte reagerar på klick, rullning som hakar upp sig) använder webbplatsen <strong>Microsoft Clarity utan kakor</strong>. I det läget sätter Clarity varken <code>_clck</code>, <code>_clsk</code>, <code>MUID</code> eller <code>CLID</code>. Varje sidvisning får en egen identifierare och olika sidvisningar eller besök kopplas aldrig ihop. Sidans text och allt du skriver i fälten maskeras i webbläsaren innan något skickas, så Microsoft ser aldrig din lön eller din kommun.</p>
+    <ul>
+      <li><strong>Personuppgiftsansvarig för mätningen</strong>: Microsoft Ireland Operations Limited, One Microsoft Place, South County Business Park, Leopardstown, Dublin 18, Irland. Uppgifterna kan behandlas i USA med stöd av EU–U.S. Data Privacy Framework och EU-kommissionens standardavtalsklausuler; se <a href="https://privacy.microsoft.com/sv-se/privacystatement" rel="nofollow noopener" target="_blank">Microsofts sekretesspolicy</a>.</li>
+      <li><strong>Ändamål</strong>: att tekniskt och anonymt kontrollera att löne- och skattekalkylatorerna visas och räknar som de ska.</li>
+      <li><strong>Lagringstid</strong>: 30 dagar för inspelade sidvisningar, 13 månader för sammanställd statistik.</li>
+      <li><strong>Rättslig grund</strong>: utgivarens berättigade intresse av fungerande kalkylatorer (artikel 6.1 f GDPR).</li>
+      <li><strong>Invända</strong>: blockera <code>clarity.ms</code> i webbläsaren eller med en innehållsblockerare (kalkylatorerna fungerar exakt likadant), eller mejla <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</li>
+    </ul>
 
-    <h2>5. Dataskydd enligt GDPR</h2>
-    <p>Eftersom vi inte samlar in, lagrar eller behandlar personuppgifter via kalkylatorerna, minimeras integritetsriskerna. Om du kontaktar oss via e-post behandlar vi din e-postadress och ditt meddelande enbart för att besvara din förfrågan.</p>
+    <h2>5. Webbvärdens loggar</h2>
+    <p>Webbplatsen ligger på GitHub Pages (GitHub, Inc.). Som alla webbservrar loggar den tekniska uppgifter om varje anrop (IP-adress, tidpunkt, begärd sida, webbläsare) för säkerhet och drift. Utgivaren har inte tillgång till loggarna och använder dem inte.</p>
 
-    <h2>6. Barns integritet</h2>
-    <p>Vår tjänst riktar sig inte till barn under 16 år. Vi samlar inte medvetet in information från barn.</p>
+    <h2>6. Om du mejlar oss</h2>
+    <p>Ett mejl till <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> används bara för att svara dig. Adressen läggs inte in i något utskick och lämnas inte vidare. Begäran om tillgång eller radering besvaras inom en månad.</p>
 
-    <h2>7. Ändringar i denna policy</h2>
-    <p>Vi kan uppdatera denna integritetspolicy. Väsentliga ändringar meddelas genom att uppdatera datumet överst på denna sida. Fortsatt användning av tjänsten efter ändringar innebär att du godkänner den uppdaterade policyn.</p>
+    <h2>7. Dina rättigheter och klagomål</h2>
+    <p>Du har rätt till tillgång, rättelse, radering, begränsning och att invända. Eftersom utgivaren inte sparar något om dig gäller det i praktiken mejlkorrespondens; för stabilitetsmätningen kan du även vända dig till Microsoft. Klagomål kan lämnas till {LEGAL.supervisoryAuthority}, via <a href={LEGAL.supervisoryAuthorityUrl} rel="nofollow noopener" target="_blank">imy.se</a>.</p>
 
-    <h2>8. Kontakt</h2>
-    <p>Frågor om vår integritetspolicy? Kontakta oss på <a href="mailto:contact@lonkalkylator.se">contact@lonkalkylator.se</a> eller besök vår <a href="/kontakt/">kontaktsida</a>.</p>
+    <h2>8. Tredjepartslänkar</h2>
+    <p>Webbplatsen länkar till bland annat Skatteverket och Försäkringskassan. Deras egna integritetspolicyer gäller när du besöker dem.</p>
+
+    <h2>9. Ändringar</h2>
+    <p>Om webbplatsens funktion ändras uppdateras den här sidan först och datumet överst flyttas fram. Se även <a href="/villkor/">användarvillkoren</a> och <a href="/kontakt/">kontaktsidan</a>.</p>
   </div>
   <SkattKontext />
   <OfficiellaKallor />
