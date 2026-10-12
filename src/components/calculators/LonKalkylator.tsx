@@ -76,6 +76,8 @@ export default function LonKalkylator({ initialGross = 35000 }: Props) {
           step={0.1}
           min={0}
           max={3}
+          visaNoll
+          decimaler={2}
         />
 
         <div className="mt-6">

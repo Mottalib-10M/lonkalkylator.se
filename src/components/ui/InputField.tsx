@@ -10,9 +10,13 @@ interface Props {
   max?: number;
   step?: number;
   help?: string;
+  /** Affiche « 0 » au lieu d'un champ vide (kyrkoavgift : 0 = pas membre, 2026-10-12). */
+  visaNoll?: boolean;
+  /** Décimales affichées (kyrkoavgift 1,2 %) ; 0 par défaut. */
+  decimaler?: number;
 }
 
-export default function InputField({ label, value, onChange, prefix = 'kr', suffix, min = 0, max, help }: Props) {
+export default function InputField({ label, value, onChange, prefix = 'kr', suffix, min = 0, max, help, visaNoll = false, decimaler = 0 }: Props) {
   const id = useId();
   // Texte brut pendant la saisie. Sans lui, un champ vide vaut zéro, React le
   // réécrit, et le champ ne peut plus être effacé.
@@ -20,8 +24,8 @@ export default function InputField({ label, value, onChange, prefix = 'kr', suff
 
   const affiche = texte !== null
     ? texte
-    : Number.isFinite(value) && value !== 0
-      ? Math.round(value).toLocaleString('sv-SE')
+    : Number.isFinite(value) && (value !== 0 || visaNoll)
+      ? value.toLocaleString('sv-SE', { maximumFractionDigits: decimaler })
       : '';
 
   return (
@@ -46,7 +50,7 @@ export default function InputField({ label, value, onChange, prefix = 'kr', suff
             const n = parseFloat(brut.replace(/[\s\u00a0\u202f]/g, '').replace(',', '.'));
             onChange(Number.isFinite(n) && n >= 0 ? (max !== undefined ? Math.min(n, max) : n) : 0);
           }}
-          onFocus={() => setTexte(value ? String(Math.round(value)) : '')}
+          onFocus={() => setTexte(value ? value.toLocaleString('sv-SE', { maximumFractionDigits: decimaler, useGrouping: false }) : '')}
           onBlur={() => setTexte(null)}
           className={`w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-surface py-3 text-lg font-medium tabular-nums text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-colors ${prefix ? 'pl-10' : 'pl-4'} ${suffix ? 'pr-16' : 'pr-4'}`}
           aria-describedby={help ? `${id}-help` : undefined}

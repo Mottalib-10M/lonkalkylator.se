@@ -43,6 +43,8 @@ const TEXT = {
         disclaimer: 'Stima indicativa: questo sito non sostituisce la decisione dell’autorità competente né il parere di un professionista.' },
   pt: { updated: 'Atualizado em', by: 'por', last: 'Última atualização:', method: 'Metodologia', about: 'Sobre o autor',
         disclaimer: 'Estimativa indicativa: este site não substitui a decisão do órgão competente nem a orientação de um profissional.' },
+  sv: { updated: 'Uppdaterad', by: 'av', last: 'Senast uppdaterad:', method: 'Metod', about: 'Om skribenten',
+        disclaimer: 'Vägledande uppskattning: webbplatsen ersätter varken beslut från behörig myndighet eller råd från en kvalificerad rådgivare.' },
 };
 
 /*
@@ -56,7 +58,7 @@ const TEXT = {
  * puis reaffichee dans le fuseau de la machine de build, ce qui la recule d'un
  * jour des que ce fuseau est a l'ouest de Greenwich.
  */
-const LOCALE = { en: 'en-GB', fr: 'fr-FR', es: 'es-ES', de: 'de-DE', it: 'it-IT', pt: 'pt-PT' };
+const LOCALE = { en: 'en-GB', fr: 'fr-FR', es: 'es-ES', de: 'de-DE', it: 'it-IT', pt: 'pt-PT', sv: 'sv-SE' };
 
 const dateLisible = (iso, lang) => {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(iso || '')) return iso;
