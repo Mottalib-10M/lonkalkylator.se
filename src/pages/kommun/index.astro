@@ -81,6 +81,8 @@ import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
   intro="Vad kommunalskatten är där du bor, och vad den kostar dig i kronor varje månad."
   faqs={faqs}
 >
+  {/* Premier écran (RECETTE §5, 2026-10-11) : le simulateur avant la liste. */}
+  <MiniSimAutonome client:visible kind="kommunal" lang="sv" locale="sv-SE" href="/" spacing="mt-0 mb-8" />
   <section class="mx-auto max-w-4xl px-4 py-8">
     <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
       Kommunalskatten är den största enskilda posten på de flesta lönebesked, större än den
@@ -88,7 +90,6 @@ import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
       procentsats på hela den beskattningsbara inkomsten, utan trappsteg. Tabellen nedan visar
       satsen i varje kommun och vad den ger i nettolön på {kr(REFERENCE)} i månaden.
     </p>
-<MiniSimAutonome client:visible kind="kommunal" lang="sv" locale="sv-SE" href="/" />
 
     <p class="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
       Genomsnittet för kommunerna nedan ligger på {pct(medel)}. Mellan {laegst.name}, som har den

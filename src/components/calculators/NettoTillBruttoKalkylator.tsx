@@ -2,6 +2,7 @@ import { formatDec } from '@/lib/format';
 import { useState } from 'react';
 import InputField from '../ui/InputField';
 import ResultPanel from '../ui/ResultPanel';
+import ResultatCollant from '../ui/ResultatCollant';
 import { calculateRequiredGross, calculateTakeHome } from '../../lib/tax-engine-se';
 import { KOMMUNER, DEFAULT_KOMMUNALSKATT } from '../../data/tax-2026';
 import { formatKr } from '../../lib/format';
@@ -47,8 +48,10 @@ export default function NettoTillBruttoKalkylator() {
             ))}
           </select>
         </div>
+      </div>
 
-        <div className="rounded-2xl border-2 border-accent-500 bg-accent-50 dark:bg-accent-500/10 p-6 text-center">
+      <div>
+        <ResultatCollant label="Du behöver en bruttolön på" value={`${formatKr(requiredGross)}/mån`} className="mb-6 rounded-2xl border-2 border-accent-500 bg-accent-50 dark:bg-accent-500/10 p-6 text-center">
           <p className="text-sm font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Du behöver en bruttolön på</p>
           <p className="mt-2 text-4xl font-bold text-gray-900 dark:text-white tabular-nums">
             {formatKr(requiredGross)}
@@ -56,11 +59,8 @@ export default function NettoTillBruttoKalkylator() {
           <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             per månad &middot; {formatKr(requiredGross * 12)}/år
           </p>
-        </div>
-      </div>
-
-      <div>
-        <ResultPanel result={result} />
+        </ResultatCollant>
+        <ResultPanel result={result} principal={false} />
       </div>
     </div>
   );

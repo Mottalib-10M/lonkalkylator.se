@@ -108,11 +108,12 @@ if (slug === '/') {
       </p>
     </div>
 
-    {resumeAffiche && (
-      <p class="mb-8 text-gray-700 leading-relaxed dark:text-gray-300">{resumeAffiche}</p>
-    )}
-
     <slot />
+
+    {/* Premier écran (RECETTE §5, 2026-10-11) : le paragraphe citable passe juste sous le simulateur. */}
+    {resumeAffiche && (
+      <p class="mt-8 text-gray-700 leading-relaxed dark:text-gray-300">{resumeAffiche}</p>
+    )}
 
     <div data-chrome class="mt-8 flex items-center gap-4 rounded-lg border border-gray-200 dark:border-gray-700 px-5 py-4">
       <div class="text-sm">

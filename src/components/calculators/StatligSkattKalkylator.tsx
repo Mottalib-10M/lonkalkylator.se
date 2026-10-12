@@ -3,6 +3,7 @@ import InputField from '../ui/InputField';
 import { calculateTakeHome, calculateStatligSkatt, calculateGrundavdrag } from '../../lib/tax-engine-se';
 import { SKIKTGRANS_STATLIG } from '../../data/tax-2026';
 import { formatKr, formatPercent } from '../../lib/format';
+import ResultatCollant from '../ui/ResultatCollant';
 
 export default function StatligSkattKalkylator() {
   const [monthlyGross, setMonthlyGross] = useState(55000);
@@ -73,7 +74,7 @@ export default function StatligSkattKalkylator() {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface overflow-hidden">
+      <ResultatCollant label="Statlig inkomstskatt" value={`${formatKr(statligSkatt)}/år`} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface overflow-hidden">
         <div className={`px-6 py-8 text-center ${overThreshold ? 'bg-red-600' : 'bg-brand-500'}`}>
           <p className="text-sm font-medium text-white/80 uppercase tracking-wider">Statlig inkomstskatt</p>
           <p className="mt-2 text-4xl sm:text-5xl font-bold text-white tabular-nums">
@@ -101,7 +102,7 @@ export default function StatligSkattKalkylator() {
             <span className="tabular-nums font-medium">{formatPercent(result.marginalTaxRate)}</span>
           </div>
         </div>
-      </div>
+      </ResultatCollant>
     </div>
   );
 }

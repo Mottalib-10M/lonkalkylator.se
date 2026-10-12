@@ -1,14 +1,18 @@
 import { formatDec } from '@/lib/format';
 import { formatCurrency, formatPercent, formatKr } from '../../lib/format';
 import type { TaxResult } from '../../lib/tax-engine-se';
+import ResultatCollant from './ResultatCollant';
 
 interface Props {
   result: TaxResult;
+  /** false quand la page a un autre chiffre clé (netto till brutto) : c'est lui qui porte data-resultat. */
+  principal?: boolean;
 }
 
-export default function ResultPanel({ result }: Props) {
-  return (
-    <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface overflow-hidden">
+export default function ResultPanel({ result, principal = true }: Props) {
+  const cadre = "rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface overflow-hidden";
+  const contenu = (
+    <>
       {/* Nettolön - huvudresultat */}
       <div className="bg-brand-500 px-6 py-8 text-center">
         <p className="text-sm font-medium text-brand-100 uppercase tracking-wider">Din nettolön</p>
@@ -56,8 +60,11 @@ export default function ResultPanel({ result }: Props) {
           <span className="tabular-nums font-medium">{formatPercent(result.marginalTaxRate)}</span>
         </div>
       </div>
-    </div>
+    </>
   );
+  return principal
+    ? <ResultatCollant label="Din nettolön" value={`${formatKr(result.netMonthly)}/mån`} className={cadre}>{contenu}</ResultatCollant>
+    : <div className={cadre}>{contenu}</div>;
 }
 
 function Row({ label, value, bold, negative, positive, accent, note }: {

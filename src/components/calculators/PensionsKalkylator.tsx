@@ -4,6 +4,7 @@ import InputField from '../ui/InputField';
 import { calculatePensionsavgift, calculateTakeHome } from '../../lib/tax-engine-se';
 import { PENSIONSAVGIFT_SATS, PENSIONSAVGIFT_TAK } from '../../data/tax-2026';
 import { formatKr, formatPercent } from '../../lib/format';
+import ResultatCollant from '../ui/ResultatCollant';
 
 export default function PensionsKalkylator() {
   const [monthlyGross, setMonthlyGross] = useState(40000);
@@ -70,7 +71,7 @@ export default function PensionsKalkylator() {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface overflow-hidden">
+      <ResultatCollant label="Allmän pensionsavgift" value={`${formatKr(pensionsavgift)}/år`} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface overflow-hidden">
         <div className="bg-brand-500 px-6 py-8 text-center">
           <p className="text-sm font-medium text-brand-100 uppercase tracking-wider">Allmän pensionsavgift</p>
           <p className="mt-2 text-4xl sm:text-5xl font-bold text-white tabular-nums">
@@ -99,7 +100,7 @@ export default function PensionsKalkylator() {
             <span className="tabular-nums font-medium">{formatPercent(result.effectiveTaxRate)}</span>
           </div>
         </div>
-      </div>
+      </ResultatCollant>
     </div>
   );
 }
