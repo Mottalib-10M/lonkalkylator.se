@@ -35,18 +35,21 @@ export default function NettoTillBruttoKalkylator() {
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Kommun
           </label>
-          <select
-            value={selectedKommun}
-            onChange={(e) => setSelectedKommun(e.target.value)}
-            className="w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-surface py-3 px-4 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-colors"
-          >
-            <option value="">Rikssnitt ({formatDec(DEFAULT_KOMMUNALSKATT, 2)}%)</option>
-            {KOMMUNER.map(k => (
-              <option key={k.slug} value={k.slug}>
-                {k.name} ({formatDec(k.rate, 2)}%)
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <select
+              value={selectedKommun}
+              onChange={(e) => setSelectedKommun(e.target.value)}
+              className="w-full appearance-none truncate rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-surface py-3 pl-4 pr-10 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-colors"
+            >
+              <option value="">Rikssnitt ({formatDec(DEFAULT_KOMMUNALSKATT, 2)}%)</option>
+              {KOMMUNER.map(k => (
+                <option key={k.slug} value={k.slug}>
+                  {k.name} ({formatDec(k.rate, 2)}%)
+                </option>
+              ))}
+            </select>
+            <svg className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500 dark:text-gray-400" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M5 7.5l5 5 5-5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </div>
         </div>
       </div>
 
