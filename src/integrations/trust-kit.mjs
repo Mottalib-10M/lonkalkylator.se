@@ -6,7 +6,7 @@
  * leur en-tête et leur pied : le plus sûr est d'intervenir sur le HTML construit, une fois,
  * au lieu de retoucher des centaines de pages. Après le build, pour chaque page indexable :
  *
- *   - en haut, juste avant le <h1> (il en prend l'alignement) : « Mis à jour le AAAA-MM-JJ »
+ *   - en haut, juste avant le <h1>, sur une page de lecture seulement (Article) : « Mis à jour le 7 octobre 2026 »
  *   - en bas, dans le dernier <footer>, avec la classe du conteneur du pied (même alignement) :
  *     disclaimer, date, liens méthode et auteur (rel="author")
  *   - dans <head> : Organization (founder = Person complet, foundingDate,
@@ -65,6 +65,19 @@ const dateLisible = (iso, lang) => {
   const d = new Date(`${iso}T12:00:00Z`);
   return new Intl.DateTimeFormat(LOCALE[lang] || 'en-GB',
     { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(d);
+};
+
+// Page de lecture = article déclaré (Article, BlogPosting) qui ne commence pas par un
+// simulateur (moins de 250 mots entre le titre et le premier champ). Ailleurs (simulateur,
+// accueil, page de rubrique), la date reste en bas de page (RECETTE §8.4, 2026-10-15).
+const pageDeLecture = (html) => {
+  if (!/"@type"\s*:\s*"(?:Article|BlogPosting|NewsArticle)"/.test(html)) return false;
+  const main = (html.match(/<main\b[\s\S]*?<\/main>/) || [html])[0];
+  const h1 = main.indexOf('</h1>');
+  const champ = main.search(/<input\b(?![^>]*type="(?:hidden|search|checkbox|radio|submit|button)")[^>]*>|<select\b|<button\b[^>]*\baria-pressed=|role="slider"/i);
+  if (champ < 0) return true;
+  const mots = main.slice(Math.max(h1, 0), champ).replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+  return mots >= 250;
 };
 
 const AUTHOR = {
@@ -163,7 +176,7 @@ export default function trustKit(opts) {
             const path = f.split('/dist')[1]?.replace(/index\.html$/, '') || '/';
             const { t, lang, about, method } = localeOf(path);
             const dateTexte = dateLisible(date, lang);
-            const top = `<p data-trust-kit class="trust-top" style="margin:0 0 0.5rem;font-size:0.8125rem;opacity:0.8">`
+            const top = !pageDeLecture(html) ? "" : `<p data-trust-kit class="trust-top" style="margin:0 0 0.5rem;font-size:0.8125rem;opacity:0.8">`
               + `${t.updated} <time datetime="${date}">${dateTexte}</time></p>`;
             // Largeur du pied de page : on ne recopie la classe d'un div du pied que si
             // c'est un conteneur de mise en page. Sans ce filtre, un filet décoratif placé
@@ -198,7 +211,7 @@ export default function trustKit(opts) {
             const navAt = mainAt >= 0 ? html.indexOf('<nav', mainAt) : -1;
             const navEnd = navAt >= 0 ? html.indexOf('</nav>', navAt) + 6 : -1;
             const inIsland = (p) => html.lastIndexOf('<astro-island', p) > html.lastIndexOf('</astro-island>', p);
-            if (h1 >= 0 && navAt > 0 && navEnd > navAt && navEnd < h1 && !inIsland(navAt) && /href="/.test(html.slice(navAt, navEnd))) {
+            if (top && h1 >= 0 && navAt > 0 && navEnd > navAt && navEnd < h1 && !inIsland(navAt) && /href="/.test(html.slice(navAt, navEnd))) {
               let nav = html.slice(navAt, navEnd); let mb = '';
               nav = nav.replace(/^<nav\b[^>]*>/, (open) => open.replace(/class="([^"]*)"/, (all, c) => {
                 const m = c.match(/(^|\s)(mb-\d+)(?=\s|$)/); if (m) mb = m[2];
