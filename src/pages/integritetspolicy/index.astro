@@ -1,12 +1,12 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
-import { CONTACT_EMAIL, LEGAL } from '../../data/site-config';
+import { CONTACT_EMAIL, GA4_ID, LEGAL } from '../../data/site-config';
 
 const faqs = [
   {
     question: "Vad mäts när jag besöker webbplatsen?",
     answer:
-      "Bara sidans stabilitet: om ett skript ger fel, om sidan laddar långsamt, om en knapp inte reagerar eller om rullningen fastnar. Det görs med Microsoft Clarity utan kakor, med sidans text och dina inmatningar maskerade. Varje sidvisning får en egen identifierare, så inga besök kopplas ihop och ingen profil byggs.",
+      "Två saker. Besöksstatistik med Google Analytics 4: vilka sidor som läses, varifrån besökaren kommer, besökets längd, typ av enhet och ungefärligt land, med två kakor (_ga och _ga_4DDP6SZV0V) som lever högst 13 månader. Och sidans stabilitet (skriptfel, långsam laddning, knappar som inte reagerar) med Microsoft Clarity utan kakor, med sidans text och dina inmatningar maskerade. Lönen du skriver in skickas aldrig till någon av dem.",
   },
   {
     question: "Lagras lönen jag skriver in i kalkylatorn?",
@@ -14,24 +14,24 @@ const faqs = [
       "Nej, ingenstans. Månadslön, kommun, ålder och kyrkoavgift räknas om i din webbläsare och lämnar aldrig din enhet. De sparas inte heller i webbläsaren: stänger du fliken är uppgifterna borta. En tjänst som aldrig tar emot uppgiften behöver varken skydda, radera eller lämna ut den.",
   },
   {
-    question: "Sätter ni några kakor?",
+    question: "Vilka kakor sätts på webbplatsen?",
     answer:
-      "Nej. Varken kalkylatorerna eller stabilitetsmätningen sätter kakor, och ingenting skrivs till webbläsarens lokala lagring eller sessionslagring. Därför finns ingen kakruta att klicka bort: det finns inget att godkänna eller avböja. Ingen reklam visas och inga annonsspårare används, vare sig från Google, Meta eller något annonsnätverk.",
+      "Bara Google Analytics kakor: _ga, som skiljer besökare åt med en slumpmässig identifierare, och _ga_4DDP6SZV0V, som håller reda på besöket. De lever högst 13 månader (390 dagar) och förlängs inte vid varje besök. Kalkylatorerna och stabilitetsmätningen med Clarity sätter inga kakor. Ingen reklam visas och inga annonsspårare används; annonslagring, annonspersonalisering och Googles signaler är avstängda.",
   },
   {
     question: "Kan jag stänga av stabilitetsmätningen?",
     answer:
-      "Ja. Blockera domänen clarity.ms i webbläsaren eller med en innehållsblockerare, så laddas Clarity aldrig. Kalkylatorerna räknar exakt likadant utan den, eftersom hela beräkningen av nettolön och skatt sker lokalt. Du kan också mejla utgivaren och invända mot mätningen; eftersom inget kopplas till dig finns inget att radera i efterhand.",
+      "Ja. För besöksstatistiken: blockera eller radera kakor i webbläsarens inställningar, eller installera Googles tillägg för att välja bort Google Analytics (tools.google.com/dlpage/gaoptout). För stabilitetsmätningen: blockera domänen clarity.ms. Kalkylatorerna räknar exakt likadant utan dem, eftersom hela beräkningen av nettolön och skatt sker lokalt. Du kan också mejla utgivaren och invända.",
   },
   {
     question: "Vem ser loggarna när jag besöker sidan?",
     answer:
-      "Webbplatsen ligger på GitHub Pages, och GitHub loggar som alla webbvärdar tekniska uppgifter om varje anrop, till exempel IP-adress, tidpunkt och begärd sida, för säkerhet och drift. Utgivaren har ingen tillgång till de loggarna och använder dem inte. Microsoft tar emot den maskerade stabilitetsmätningen och sparar den högst 13 månader.",
+      "Webbplatsen ligger på GitHub Pages, och GitHub loggar som alla webbvärdar tekniska uppgifter om varje anrop, till exempel IP-adress, tidpunkt och begärd sida, för säkerhet och drift. Utgivaren har ingen tillgång till de loggarna och använder dem inte. Google tar emot besöksstatistiken och sparar den på besöksnivå i 14 månader; Microsoft tar emot den maskerade stabilitetsmätningen och sparar den högst 13 månader.",
   },
   {
     question: "Vilka rättigheter har jag enligt GDPR?",
     answer:
-      "Rätt till tillgång, rättelse, radering, begränsning och att invända mot behandling. Eftersom utgivaren inte sparar några personuppgifter om dig gäller rättigheterna i praktiken bara mejl du skickat, och för stabilitetsmätningen kan du även vända dig till Microsoft. Klagomål lämnas till Integritetsskyddsmyndigheten (IMY).",
+      "Rätt till tillgång, rättelse, radering, begränsning och att invända mot behandling. Utgivaren sparar själv inga personuppgifter om dig utöver mejl du skickat; för besöksstatistiken och stabilitetsmätningen kan du även vända dig till Google respektive Microsoft. Klagomål lämnas till Integritetsskyddsmyndigheten (IMY).",
   },
 ];
 import SkattKontext from '../../components/SkattKontext.astro';
@@ -41,17 +41,17 @@ import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
 <CalculatorLayout
   slug="/integritetspolicy"
   title="Integritetspolicy"
-  metaTitle="Integritetspolicy | Lönekalkylator – inga kakor sparas"
-  metaDescription="Lönen, kommunen och åldern du anger stannar i din webbläsare. Lönekalkylator sätter inga kakor och sparar inga personuppgifter; bara stabiliteten mäts anonymt."
+  metaTitle="Integritetspolicy | Lönekalkylator – kakor och besöksstatistik"
+  metaDescription="Lönen, kommunen och åldern du anger stannar i din webbläsare. Besöksstatistik med Google Analytics (kakor i högst 13 månader), stabilitet med Clarity utan kakor."
   h1="Integritetspolicy"
-  intro="Inga kakor, inga sparade personuppgifter: så hanterar Lönekalkylator ditt besök."
+  intro="Inmatningarna stannar i webbläsaren, besöken räknas med Google Analytics: så hanterar Lönekalkylator ditt besök."
   faqs={faqs}
 >
   <div class="prose prose-lg dark:prose-invert max-w-none">
-    <p><em>Senast uppdaterad: 6 oktober 2026</em> · <a href="/en/privacy/" hreflang="en" lang="en">English version</a></p>
+    <p><em>Senast uppdaterad: 17 oktober 2026</em> · <a href="/en/privacy/" hreflang="en" lang="en">English version</a></p>
 
     <h2>1. Kort sagt</h2>
-    <p>Lönekalkylator (lonkalkylator.se) ges ut av {LEGAL.entityName}. Den här policyn beskriver, utifrån dataskyddsförordningen (GDPR) och lagen (2022:482) om elektronisk kommunikation (LEK), vad som händer med uppgifter om ditt besök. Svaret i korthet: webbplatsen sätter inga kakor och utgivaren sparar inga personuppgifter om dig.</p>
+    <p>Lönekalkylator (lonkalkylator.se) ges ut av {LEGAL.entityName}. Den här policyn beskriver, utifrån dataskyddsförordningen (GDPR) och lagen (2022:482) om elektronisk kommunikation (LEK), vad som händer med uppgifter om ditt besök. Svaret i korthet: det du skriver in stannar i din webbläsare; besöken räknas med Google Analytics, som sätter två kakor; ingen reklam visas.</p>
 
     <h2>2. Det du skriver in i kalkylatorerna</h2>
     <p>Månadslön, kommun, födelseår, kyrkoavgift eller pensionsuppgifter som du anger för att räkna ut nettolön, kommunalskatt, statlig skatt eller pension bearbetas <strong>enbart i din webbläsare</strong>. Det innebär att:</p>
@@ -61,8 +61,16 @@ import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
       <li>ingenting sparas på din enhet: stänger du fliken försvinner uppgifterna.</li>
     </ul>
 
-    <h2>3. Kakor (cookies)</h2>
-    <p>Varken webbplatsen, kalkylatorerna eller stabilitetsmätningen nedan sätter kakor, och inget skrivs till webbläsarens lokala lagring eller sessionslagring. Eftersom ingen information lagras i eller hämtas från din enhet i den mening som avses i 9 kap. 28 § LEK visas ingen kakruta: det finns inget att godkänna eller avböja. Webbplatsen visar ingen reklam och använder inga annonsspårare.</p>
+    <h2>3. Kakor (cookies) och besöksstatistik</h2>
+    <p>Webbplatsen använder <strong>Google Analytics 4</strong> för att räkna besök och se vilka sidor som är till nytta: visade sidor, hänvisande sida, besökets längd, typ av enhet och webbläsare, ungefärligt land och ort. Google Analytics sätter då två kakor på din enhet: <code>_ga</code>, som skiljer besökare åt med en slumpmässig identifierare, och <code>_ga_{GA4_ID.replace('G-', '')}</code>, som håller reda på besöket. Deras livslängd är begränsad till högst 13 månader (390 dagar) och förlängs inte vid varje besök; Googles standard är 2 år. Kalkylatorerna och stabilitetsmätningen med Clarity nedan sätter inga kakor.</p>
+    <ul>
+      <li><strong>IP-adress</strong>: Google Analytics 4 varken loggar eller sparar den; den används bara vid insamlingen för att ta fram ungefärligt land och ort. Sidadressen som skickas saknar parametrar.</li>
+      <li><strong>Ingen reklam</strong>: annonslagring, annonsdata, annonspersonalisering och Googles signaler är avstängda, och uppgifterna delas inte med någon annonsör.</li>
+      <li><strong>Leverantör</strong>: Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland, som personuppgiftsbiträde (artikel 28 GDPR). Uppgifterna kan överföras till Google LLC i USA med stöd av EU–U.S. Data Privacy Framework och EU-kommissionens standardavtalsklausuler.</li>
+      <li><strong>Lagringstid hos Google</strong>: 14 månader för uppgifter på besöks- och identifierarnivå, därefter radering; bara anonyma summor finns kvar.</li>
+      <li><strong>Rättslig grund</strong>: utgivarens berättigade intresse av att mäta webbplatsens användning (artikel 6.1 f GDPR). Ingen kakruta visas.</li>
+      <li><strong>Invända</strong>: blockera eller radera kakor i webbläsarens inställningar, eller installera <a href="https://tools.google.com/dlpage/gaoptout" rel="nofollow noopener" target="_blank">Googles tillägg för att välja bort Google Analytics</a>. Webbplatsen fungerar likadant.</li>
+    </ul>
 
     <h2>4. Anonym mätning av stabiliteten</h2>
     <p>För att upptäcka fel (skriptfel, långsam laddning, knappar som inte reagerar på klick, rullning som hakar upp sig) använder webbplatsen <strong>Microsoft Clarity utan kakor</strong>. I det läget sätter Clarity varken <code>_clck</code>, <code>_clsk</code>, <code>MUID</code> eller <code>CLID</code>. Varje sidvisning får en egen identifierare och olika sidvisningar eller besök kopplas aldrig ihop. Sidans text och allt du skriver i fälten maskeras i webbläsaren innan något skickas, så Microsoft ser aldrig din lön eller din kommun.</p>
@@ -81,7 +89,7 @@ import OfficiellaKallor from '../../components/OfficiellaKallor.astro';
     <p>Ett mejl till <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> används bara för att svara dig. Adressen läggs inte in i något utskick och lämnas inte vidare. Begäran om tillgång eller radering besvaras inom en månad.</p>
 
     <h2>7. Dina rättigheter och klagomål</h2>
-    <p>Du har rätt till tillgång, rättelse, radering, begränsning och att invända. Eftersom utgivaren inte sparar något om dig gäller det i praktiken mejlkorrespondens; för stabilitetsmätningen kan du även vända dig till Microsoft. Klagomål kan lämnas till {LEGAL.supervisoryAuthority}, via <a href={LEGAL.supervisoryAuthorityUrl} rel="nofollow noopener" target="_blank">imy.se</a>.</p>
+    <p>Du har rätt till tillgång, rättelse, radering, begränsning och att invända. Utgivaren sparar själv inget om dig utöver mejlkorrespondens; för besöksstatistiken kan du även vända dig till Google och för stabilitetsmätningen till Microsoft. Klagomål kan lämnas till {LEGAL.supervisoryAuthority}, via <a href={LEGAL.supervisoryAuthorityUrl} rel="nofollow noopener" target="_blank">imy.se</a>.</p>
 
     <h2>8. Tredjepartslänkar</h2>
     <p>Webbplatsen länkar till bland annat Skatteverket och Försäkringskassan. Deras egna integritetspolicyer gäller när du besöker dem.</p>

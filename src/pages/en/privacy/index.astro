@@ -1,6 +1,6 @@
 ---
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
-import { CONTACT_EMAIL, LEGAL } from '../../../data/site-config';
+import { CONTACT_EMAIL, GA4_ID, LEGAL } from '../../../data/site-config';
 
 const faqs = [
   {
@@ -11,7 +11,7 @@ const faqs = [
   {
     question: "Does lonkalkylator.se use cookies?",
     answer:
-      "No. Neither the calculators nor the stability monitoring set cookies, and nothing is written to local storage. That is why no cookie banner appears: there is nothing to accept or decline. The site shows no advertising and uses no ad trackers.",
+      "Only Google Analytics does: _ga, which tells visitors apart with a random identifier, and _ga_4DDP6SZV0V, which keeps the state of the visit. They last 13 months at most (390 days) and are not extended on each visit. The calculators and the Clarity stability monitoring set no cookies. The site shows no advertising; ad storage, ad personalisation and Google signals are switched off.",
   },
 ];
 ---
@@ -19,24 +19,32 @@ const faqs = [
 <CalculatorLayout
   slug="/en/privacy"
   title="Privacy policy"
-  metaTitle="Privacy policy | Swedish salary calculator, no cookies"
-  metaDescription="The salary, municipality and age you enter stay in your browser. lonkalkylator.se sets no cookies and keeps no personal data; only page stability is measured."
+  metaTitle="Privacy policy | Swedish salary calculator, cookies and analytics"
+  metaDescription="The salary, municipality and age you enter stay in your browser. Visits are counted with Google Analytics (cookies for 13 months at most), stability with cookie-free Clarity."
   h1="Privacy policy"
-  intro="No cookies and no stored personal data: how the Swedish salary calculator treats your visit."
+  intro="Your inputs stay in your browser, visits are counted with Google Analytics: how the Swedish salary calculator treats your visit."
   faqs={faqs}
   lang="en"
 >
   <div class="prose prose-lg dark:prose-invert max-w-none">
-    <p><em>Last updated: 6 October 2026</em> · <a href="/integritetspolicy/" hreflang="sv" lang="sv">Svensk version</a></p>
+    <p><em>Last updated: 17 October 2026</em> · <a href="/integritetspolicy/" hreflang="sv" lang="sv">Svensk version</a></p>
 
     <h2>1. In short</h2>
-    <p>lonkalkylator.se is published by {LEGAL.entityName}. This policy describes, under the General Data Protection Regulation (GDPR) and the Swedish Electronic Communications Act (LEK, 2022:482), what happens to information about your visit. The short answer: the site sets no cookies and the publisher stores no personal data about you.</p>
+    <p>lonkalkylator.se is published by {LEGAL.entityName}. This policy describes, under the General Data Protection Regulation (GDPR) and the Swedish Electronic Communications Act (LEK, 2022:482), what happens to information about your visit. The short answer: what you type stays in your browser; visits are counted with Google Analytics, which sets two cookies; no advertising is shown.</p>
 
     <h2>2. What you enter in the calculators</h2>
     <p>The monthly salary, municipality, year of birth, church fee or pension figures you enter to estimate Swedish net pay, municipal tax, state income tax or pension are processed <strong>only in your browser</strong>. No salary figure is sent to a server, there is no database of calculations, and nothing is kept on your device once the tab is closed.</p>
 
-    <h2>3. Cookies</h2>
-    <p>Neither the site, its calculators nor the stability monitoring below set cookies, and nothing is written to the browser’s local or session storage. Since no information is stored on or read from your device within the meaning of Chapter 9, Section 28 of the LEK, there is no cookie banner: nothing has to be accepted or declined. No advertising, no ad trackers.</p>
+    <h2>3. Cookies and audience measurement</h2>
+    <p>The site uses <strong>Google Analytics 4</strong> to count visits and see which pages are useful: pages viewed, referring page, visit length, device and browser type, approximate country and city. To do so Google Analytics sets two cookies on your device: <code>_ga</code>, which tells visitors apart with a random identifier, and <code>_ga_{GA4_ID.replace('G-', '')}</code>, which keeps the state of the visit. Their lifetime is set to 13 months at most (390 days) and is not extended on each visit; Google’s default is 2 years. The calculators and the Clarity stability monitoring below set no cookies.</p>
+    <ul>
+      <li><strong>IP address</strong>: Google Analytics 4 neither logs nor stores it, and only uses it at collection time to derive an approximate country and city. The page address sent is stripped of its parameters.</li>
+      <li><strong>No advertising</strong>: ad storage, ad user data, ad personalisation and Google signals are switched off, and measurement data is shared with no advertiser.</li>
+      <li><strong>Provider</strong>: Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland, acting as processor (Article 28 GDPR). Data may be transferred to Google LLC in the United States under the EU–U.S. Data Privacy Framework and the European Commission’s standard contractual clauses.</li>
+      <li><strong>Retention at Google</strong>: 14 months for visit-level and identifier-level data, then deletion; only anonymous totals remain.</li>
+      <li><strong>Legal basis</strong>: the publisher’s legitimate interest in measuring how the site is used (Article 6(1)(f) GDPR).</li>
+      <li><strong>Objecting</strong>: block or delete cookies in your browser settings, or install the <a href="https://tools.google.com/dlpage/gaoptout" rel="nofollow noopener" target="_blank">Google Analytics opt-out browser add-on</a>. The site works the same way.</li>
+    </ul>
 
     <h2>4. Anonymous stability monitoring</h2>
     <p>To detect script errors, slow loading, buttons that do not respond to clicks or scrolling that gets stuck, the site uses <strong>Microsoft Clarity without cookies</strong>. In this mode Clarity sets none of <code>_clck</code>, <code>_clsk</code>, <code>MUID</code> or <code>CLID</code>. Each page view has its own identifier and page views or visits are never linked. Page text and all field input are masked in the browser before anything is sent, so Microsoft never sees your salary or municipality.</p>
@@ -55,7 +63,7 @@ const faqs = [
     <p>An email to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> is used only to reply. Your address is not added to any mailing and not passed on.</p>
 
     <h2>7. Your rights and complaints</h2>
-    <p>You have rights of access, rectification, erasure, restriction and objection. As the publisher keeps nothing about you, in practice this concerns emails you have sent; for stability monitoring you can also contact Microsoft. Complaints go to the Swedish Authority for Privacy Protection, {LEGAL.supervisoryAuthority} (<a href={LEGAL.supervisoryAuthorityUrl} rel="nofollow noopener" target="_blank">imy.se</a>).</p>
+    <p>You have rights of access, rectification, erasure, restriction and objection. The publisher itself keeps nothing about you beyond emails you have sent; for audience measurement you can also contact Google, and for stability monitoring Microsoft. Complaints go to the Swedish Authority for Privacy Protection, {LEGAL.supervisoryAuthority} (<a href={LEGAL.supervisoryAuthorityUrl} rel="nofollow noopener" target="_blank">imy.se</a>).</p>
 
     <h2>8. Changes</h2>
     <p>If the way the site works changes, this page is updated first and the date at the top moves forward. See also the <a href="/en/terms/">terms of use</a>.</p>
