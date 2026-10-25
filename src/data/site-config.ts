@@ -2,7 +2,9 @@
  * Site configuration for lonkalkylator.se
  */
 
-export const SITE_NAME = 'Lönekalkylator';
+export const SITE_NAME = 'Lönkalkylator';
+// Partie du nom en couleur dans l'en-tete ('' = aucune).
+export const BRAND_ACCENT = 'kalkylator';
 export const SITE_URL = 'https://lonkalkylator.se';
 export const CURRENCY = 'SEK';
 export const CURRENCY_SYMBOL = 'kr';

@@ -3,7 +3,7 @@
  */
 export const en: Record<string, string> = {
   // General
-  'site.name': 'Salary After Tax',
+  'site.name': 'Lönkalkylator',
   'site.tagline': 'Calculate your net salary, simple and free salary calculator',
   'site.description': 'Calculate your salary after tax in Sweden 2026. See net salary, municipal tax, state tax, employment tax credit and basic deduction. Free and always up to date.',
   'nav.home': 'Home',
@@ -79,7 +79,7 @@ export const en: Record<string, string> = {
   'footer.privacy': '100% calculated in your browser',
   'footer.free': 'Free & private',
   'footer.disclaimer': 'This calculator provides estimates for informational purposes only. It is not tax advice. Consult a qualified tax professional for personalized guidance. Results may differ from your actual tax liability.',
-  'footer.copyright': 'Salary After Tax Sweden. All rights reserved.',
+  'footer.copyright': 'Lönkalkylator. All rights reserved.',
   'footer.about': 'About',
   'footer.contact': 'Contact',
   'footer.privacy_policy': 'Privacy Policy',

@@ -49,7 +49,7 @@ export default defineConfig({
     },
   },
   integrations: [
-    trustKit({ lang: 'sv', siteUrl: 'https://lonkalkylator.se', siteName: 'Lönekalkylator', founded: '2026-06-27', about: '/om-oss/', method: '/metod/',
+    trustKit({ lang: 'sv', siteUrl: 'https://lonkalkylator.se', siteName: 'Lönkalkylator', founded: '2026-06-27', about: '/om-oss/', method: '/metod/',
       // Pages anglaises : date et mentions en anglais (2026-10-12).
       i18n: [{ prefix: '/en/', lang: 'en', about: '/om-oss/', method: '/metod/' }] }), react(),
     // /embed/ : page d'iframe en noindex, hors sitemap
