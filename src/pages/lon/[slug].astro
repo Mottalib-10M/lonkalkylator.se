@@ -190,7 +190,7 @@ const visadeKommuner = KOMMUNER.slice(kommunOffset * 3, kommunOffset * 3 + 10).s
         </thead>
         <tbody>
           {visadeKommuner.map((k) => {
-            const r = calculateTakeHome({ monthlyGross: amount, kommunalskattRate: k.rate });
+            const r = calculateTakeHome({ monthlyGross: amount, kommunalskattRate: k.rate, begravningsavgiftRate: k.begravning });
             return (
               <tr class="border-b border-gray-100 dark:border-gray-700 last:border-0">
                 <td class="px-3 py-2 font-medium">{k.name}</td>

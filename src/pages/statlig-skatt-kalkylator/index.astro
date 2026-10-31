@@ -62,15 +62,15 @@ import SkattKontext from '../../components/SkattKontext.astro';
       <thead><tr><th>Kommun</th><th>Utan statlig skatt</th><th>Med statlig skatt</th></tr></thead>
       <tbody>
         {MARGINAL_RADER.map((k) => (
-          <tr><td>{k.name} ({pctSE(k.rate)})</td><td>{pct1SE(k.rate + (k.slug === 'stockholm' ? 0.07 : BEGRAVNINGSAVGIFT))}</td><td>{pct1SE(k.rate + (k.slug === 'stockholm' ? 0.07 : BEGRAVNINGSAVGIFT) + 20)}</td></tr>
+          <tr><td>{k.name} ({pctSE(k.rate)})</td><td>{pct1SE(k.rate + (k.begravning ?? BEGRAVNINGSAVGIFT))}</td><td>{pct1SE(k.rate + (k.begravning ?? BEGRAVNINGSAVGIFT) + 20)}</td></tr>
         ))}
       </tbody>
     </table>
     <p><em>Inkluderar begravningsavgift (0,292%, i Stockholm 0,07%). Jobbskatteavdraget sänker den faktiska skatten ytterligare.</em></p>
 
-    <h2>Tre satt att undvika en onodig marginaleffekt</h2>
-    <p>Skiktgransen galler arsinkomst efter grundavdrag, och det oppnar tre handlingsutrymmen som inte har med skattesatser att gora. Det forsta ar loneavaxling till tjanstepension: en avsattning minskar den beskattningsbara inkomsten det aret, och pensionen beskattas senare, ofta under gransen. Det andra ar periodiseringen av en bonus, som i vissa avtal kan flyttas over ett arsskifte och da beskattas i ett ar med lagre ovrig inkomst. Det tredje ar avdrag som ligger i deklarationen och inte hos arbetsgivaren: reseavdrag, avdrag for dubbelt boende och ranteavdrag minskar den beskattningsbara inkomsten och kan sanka den under gransen.</p>
-    <p>Det fjarde alternativet, att avsta fran en loneokning, ar sallan rationellt: marginalskatten ar hog men aldrig over hundra procent, sa en okning ger alltid mer i handen. Det som daremot kan vara rationellt ar att valja formen for okningen, eftersom en avsattning till pension eller en formaan med lagre beskattning ar vart mer per krona for arbetsgivaren an lon over gransen.</p>
+    <h2>Tre sätt att undvika en onödig marginaleffekt</h2>
+    <p>Skiktgränsen gäller årsinkomst efter grundavdrag, och det öppnar tre handlingsutrymmen som inte har med skattesatser att göra. Det första är löneväxling till tjänstepension: en avsättning minskar den beskattningsbara inkomsten det året, och pensionen beskattas senare, ofta under gränsen. Det andra är periodiseringen av en bonus, som i vissa avtal kan flyttas över ett årsskifte och då beskattas i ett år med lägre övrig inkomst. Det tredje är avdrag som ligger i deklarationen och inte hos arbetsgivaren: reseavdrag, avdrag för dubbelt boende och ränteavdrag minskar den beskattningsbara inkomsten och kan sänka den under gränsen.</p>
+    <p>Det fjärde alternativet, att avstå från en löneökning, är sällan rationellt: marginalskatten är hög men aldrig över hundra procent, så en ökning ger alltid mer i handen. Det som däremot kan vara rationellt är att välja formen för ökningen, eftersom en avsättning till pension eller en förmån med lägre beskattning är värt mer per krona för arbetsgivaren än lön över gränsen.</p>
   </div>
   <OfficiellaKallor />
   <SkattKontext />

@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { ALLA_KOMMUNER } from '../data/kommuner-2026';
 import {
   calculateGrundavdrag,
   calculateKommunalskatt,
@@ -215,5 +216,21 @@ describe('calculateRequiredGross', () => {
   it('bruttolön är alltid högre än nettolön', () => {
     const gross = calculateRequiredGross(30_000);
     expect(gross).toBeGreaterThan(30_000);
+  });
+});
+
+// Audit du 2026-10-28 : Stockholm sköter sina begravningsplatser, begravningsavgift 0,07 % (Skatteverkets öppna data
+// « Skattesatser per kommun och församling », år 2026, hämtad 2026-10-31), Tranås 0,285 %, övriga 0,292 %.
+describe('begravningsavgift per kommun', () => {
+  it('Stockholm, 35 000 kr : 0,07 % i stället för 0,292 %', () => {
+    const r = calculateTakeHome({ monthlyGross: 35_000, kommunalskattRate: 30.55, begravningsavgiftRate: 0.07 });
+    expect(Math.abs(r.begravningsavgift - 278.6)).toBeLessThan(1); // 398 000 × 0,07 % (audit : 278 kr, avrundat nedåt)
+    expect(r.netMonthly).toBe(28_501);
+  });
+  it('alla 290 kommuner finns, med Stockholms och Tranås egna avgifter', () => {
+    expect(ALLA_KOMMUNER).toHaveLength(290);
+    expect(ALLA_KOMMUNER.find((k) => k.name === 'Stockholm')).toMatchObject({ rate: 30.55, begravning: 0.07 });
+    expect(ALLA_KOMMUNER.find((k) => k.name === 'Tranås')?.begravning).toBe(0.285);
+    expect(ALLA_KOMMUNER.filter((k) => k.begravning !== 0.292)).toHaveLength(2);
   });
 });

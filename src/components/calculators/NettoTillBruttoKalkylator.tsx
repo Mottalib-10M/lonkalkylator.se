@@ -1,21 +1,23 @@
 import { formatDec } from '@/lib/format';
-import { useState } from 'react';
+import { useState, useId } from 'react';
 import InputField from '../ui/InputField';
 import ResultPanel from '../ui/ResultPanel';
 import ResultatCollant from '../ui/ResultatCollant';
 import { calculateRequiredGross, calculateTakeHome } from '../../lib/tax-engine-se';
-import { KOMMUNER, DEFAULT_KOMMUNALSKATT } from '../../data/tax-2026';
+import { DEFAULT_KOMMUNALSKATT } from '../../data/tax-2026';
+import { ALLA_KOMMUNER } from '../../data/kommuner-2026';
 import { formatKr } from '../../lib/format';
 
 export default function NettoTillBruttoKalkylator() {
   const [targetNet, setTargetNet] = useState(25000);
   const [selectedKommun, setSelectedKommun] = useState('');
+  const kommunId = useId();
 
-  const kommun = KOMMUNER.find(k => k.slug === selectedKommun);
+  const kommun = ALLA_KOMMUNER.find(k => k.name === selectedKommun);
   const kommunalskattRate = kommun?.rate ?? DEFAULT_KOMMUNALSKATT;
 
-  const requiredGross = calculateRequiredGross(targetNet, kommunalskattRate);
-  const result = calculateTakeHome({ monthlyGross: requiredGross, kommunalskattRate });
+  const requiredGross = calculateRequiredGross(targetNet, kommunalskattRate, undefined, kommun?.begravning);
+  const result = calculateTakeHome({ monthlyGross: requiredGross, kommunalskattRate, begravningsavgiftRate: kommun?.begravning });
 
   return (
     <div className="grid gap-8 lg:grid-cols-2">
@@ -32,18 +34,19 @@ export default function NettoTillBruttoKalkylator() {
         />
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label htmlFor={kommunId} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Kommun
           </label>
           <div className="relative">
             <select
+              id={kommunId}
               value={selectedKommun}
               onChange={(e) => setSelectedKommun(e.target.value)}
               className="w-full appearance-none truncate rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-surface py-3 pl-4 pr-10 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-colors"
             >
               <option value="">Rikssnitt ({formatDec(DEFAULT_KOMMUNALSKATT, 2)}%)</option>
-              {KOMMUNER.map(k => (
-                <option key={k.slug} value={k.slug}>
+              {ALLA_KOMMUNER.map(k => (
+                <option key={k.name} value={k.name}>
                   {k.name} ({formatDec(k.rate, 2)}%)
                 </option>
               ))}

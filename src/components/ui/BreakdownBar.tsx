@@ -24,8 +24,8 @@ export default function BreakdownBar({ segments, total }: Props) {
           return (
             <div
               key={i}
-              className="bar-segment relative group"
-              style={{ '--bar-width': `${pct}%`, backgroundColor: seg.color } as React.CSSProperties}
+              className="bar-segment relative group h-full"
+              style={{ width: `${pct}%`, backgroundColor: seg.color }}
               title={`${seg.label}: ${formatPercent(pct)}`}
               role="img"
               aria-label={`${seg.label}: ${formatPercent(pct)}`}

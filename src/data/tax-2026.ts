@@ -40,7 +40,8 @@ export const DEFAULT_KOMMUNALSKATT = 32.38;
 /** Kyrkoavgift (medel, valfri, endast för Svenska kyrkan) */
 export const KYRKOAVGIFT_DEFAULT = 0;
 
-/** Begravningsavgift 2026, enhetlig sats utom i Stockholm (0,07 %) och Tranås */
+/** Begravningsavgift 2026, enhetlig sats utom i Stockholm (0,07 %) och Tranås (0,285 %) : se Kommun.begravning
+ *  och kommuner-2026.ts (Skatteverkets öppna data, år 2026, hämtad 2026-10-31). */
 export const BEGRAVNINGSAVGIFT = 0.292;
 
 /** Public service-avgift : 1 % av beskattningsbar förvärvsinkomst, högst 1 % av 1,42 inkomstbasbelopp */
@@ -65,6 +66,8 @@ export interface Kommun {
   name: string;
   slug: string;
   rate: number; // Total kommunal + landstingsskatt i %
+  /** Begravningsavgift i %, om den avviker från BEGRAVNINGSAVGIFT (Stockholm och Tranås sköter sina begravningsplatser) */
+  begravning?: number;
   lan: string;
 }
 
@@ -89,7 +92,7 @@ export const KOMMUNER_MED_SIDA: string[] = [
 ];
 
 export const KOMMUNER: Kommun[] = [
-  { name: 'Stockholm', slug: 'stockholm', rate: 30.55, lan: 'Stockholms län' },
+  { name: 'Stockholm', slug: 'stockholm', rate: 30.55, lan: 'Stockholms län', begravning: 0.07 },
   { name: 'Göteborg', slug: 'goteborg', rate: 32.60, lan: 'Västra Götalands län' },
   { name: 'Malmö', slug: 'malmo', rate: 32.42, lan: 'Skåne län' },
   { name: 'Uppsala', slug: 'uppsala', rate: 32.85, lan: 'Uppsala län' },

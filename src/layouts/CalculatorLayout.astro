@@ -117,13 +117,14 @@ if (slug === '/') {
 
     <div data-chrome class="mt-8 flex items-center gap-4 rounded-lg border border-gray-200 dark:border-gray-700 px-5 py-4">
       <div class="text-sm">
-        <p class="font-semibold text-gray-900 dark:text-white">Av <a href="/om-oss/" class="text-brand-600 hover:underline dark:text-brand-400">Radif Partners</a></p>
-        <p class="text-gray-500 dark:text-gray-400">Publisher of calculators and practical guides &middot; Finansexpert</p>
+        <p class="font-semibold text-gray-900 dark:text-white">{lang === 'en' ? 'By' : 'Av'} <a href="/om-oss/" class="text-brand-600 hover:underline dark:text-brand-400">Radif Partners</a></p>
+        <p class="text-gray-500 dark:text-gray-400">{lang === 'en' ? 'Publisher of calculators and practical guides' : 'Utgivare av kalkylatorer och praktiska guider'}</p>
       </div>
     </div>
 
     <p data-chrome class="mt-4 text-sm text-gray-500 dark:text-gray-500">
-      Uppdaterad för skatteår 2026 &middot; Senast verifierad {LAST_UPDATED}
+      {/* Une seule date sur la page : celle de la dernière mise à jour, posée par trust-kit (audit 2026-10-28). */}
+      {lang === 'en' ? 'Rates for the 2026 tax year' : 'Skattesatser för inkomståret 2026'}
     </p>
 
     <slot name="content" />

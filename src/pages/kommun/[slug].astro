@@ -28,7 +28,7 @@ const _moyenne = KOMMUNER.reduce((s, k) => s + k.rate, 0) / KOMMUNER.length;
 const _ecartPts = kommun.rate - _moyenne;
 
 const salaryTable = SALARY_AMOUNTS.map((gross) => {
-  const result = calculateTakeHome({ monthlyGross: gross, kommunalskattRate: kommun.rate });
+  const result = calculateTakeHome({ monthlyGross: gross, kommunalskattRate: kommun.rate, begravningsavgiftRate: kommun.begravning });
   return { gross, net: result.netMonthly, tax: Math.round(result.totalSkatt / 12), rate: result.effectiveTaxRate };
 });
 

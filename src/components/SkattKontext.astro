@@ -31,8 +31,8 @@ const effektiv = (1 - bas.netMonthly / referens) * 100;
 const sorterade = [...KOMMUNER].sort((a, b) => a.rate - b.rate);
 const lagst = sorterade[0];
 const hogst = sorterade[sorterade.length - 1];
-const nettoLagst = calculateTakeHome({ monthlyGross: referens, kommunalskattRate: lagst.rate }).netMonthly;
-const nettoHogst = calculateTakeHome({ monthlyGross: referens, kommunalskattRate: hogst.rate }).netMonthly;
+const nettoLagst = calculateTakeHome({ monthlyGross: referens, kommunalskattRate: lagst.rate, begravningsavgiftRate: lagst.begravning }).netMonthly;
+const nettoHogst = calculateTakeHome({ monthlyGross: referens, kommunalskattRate: hogst.rate, begravningsavgiftRate: hogst.begravning }).netMonthly;
 const spann = nettoLagst - nettoHogst;
 
 const pc = (v: number) => formatDec(v, 1) + ' %';

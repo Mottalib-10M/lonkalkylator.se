@@ -1,10 +1,11 @@
 import { formatDec } from '@/lib/format';
-import { useState } from 'react';
+import { useState, useId } from 'react';
 import InputField from '../ui/InputField';
 import ResultPanel from '../ui/ResultPanel';
 import BreakdownBar from '../ui/BreakdownBar';
 import { calculateTakeHome } from '../../lib/tax-engine-se';
-import { KOMMUNER, DEFAULT_KOMMUNALSKATT } from '../../data/tax-2026';
+import { DEFAULT_KOMMUNALSKATT } from '../../data/tax-2026';
+import { ALLA_KOMMUNER } from '../../data/kommuner-2026';
 
 interface Props {
   initialGross?: number;
@@ -13,23 +14,30 @@ interface Props {
 export default function LonKalkylator({ initialGross = 35000 }: Props) {
   const [monthlyGross, setMonthlyGross] = useState(initialGross);
   const [selectedKommun, setSelectedKommun] = useState('');
+  const kommunId = useId();
   const [kyrkoavgift, setKyrkoavgift] = useState(0);
 
-  const kommun = KOMMUNER.find(k => k.slug === selectedKommun);
+  const kommun = ALLA_KOMMUNER.find(k => k.name === selectedKommun);
   const kommunalskattRate = kommun?.rate ?? DEFAULT_KOMMUNALSKATT;
 
   const result = calculateTakeHome({
     monthlyGross,
     kommunalskattRate,
     kyrkoavgift,
+    begravningsavgiftRate: kommun?.begravning,
   });
 
+  // Andelar som summerar till bruttolönen : skattereduktionerna dras av där motorn räknar av dem
+  // (pensionsavgiftens reduktion först mot statlig skatt, sedan mot kommunalskatten ; jobbskatteavdrag och
+  // förvärvsreduktion mot kommunalskatten), annars blir summan över 100 % (audit 2026-10-28).
+  const pensRedStatlig = Math.min(result.pensionsavgiftReduktion, result.statligSkatt);
+  const pensRedKommunal = result.pensionsavgiftReduktion - pensRedStatlig;
   const segments = [
     { label: 'Nettolön', value: result.netAnnual, color: '#005293' },
-    { label: 'Kommunalskatt', value: result.kommunalskatt, color: '#ef4444' },
-    { label: 'Statlig skatt', value: result.statligSkatt, color: '#f97316' },
-    { label: 'Pensionsavgift', value: Math.max(0, result.pensionsavgift - result.pensionsavgiftReduktion), color: '#eab308' },
-    { label: 'Begravnings- och public service-avgift', value: result.begravningsavgift + result.publicServiceAvgift, color: '#8b5cf6' },
+    { label: 'Kommunalskatt efter skattereduktioner', value: result.kommunalskatt - pensRedKommunal - result.jobbskatteavdrag - result.forvarvsreduktion, color: '#ef4444' },
+    { label: 'Statlig skatt', value: result.statligSkatt - pensRedStatlig, color: '#f97316' },
+    { label: 'Pensionsavgift', value: result.pensionsavgift, color: '#eab308' },
+    { label: result.kyrkoavgift > 0 ? 'Begravnings-, public service- och kyrkoavgift' : 'Begravnings- och public service-avgift', value: result.begravningsavgift + result.publicServiceAvgift + result.kyrkoavgift, color: '#8b5cf6' },
   ].filter(s => s.value > 0);
 
   return (
@@ -47,18 +55,19 @@ export default function LonKalkylator({ initialGross = 35000 }: Props) {
         />
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label htmlFor={kommunId} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Kommun
           </label>
           <div className="relative">
             <select
+              id={kommunId}
               value={selectedKommun}
               onChange={(e) => setSelectedKommun(e.target.value)}
               className="w-full appearance-none truncate rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-surface py-3 pl-4 pr-10 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-colors"
             >
               <option value="">Rikssnitt ({formatDec(DEFAULT_KOMMUNALSKATT, 2)}%)</option>
-              {KOMMUNER.map(k => (
-                <option key={k.slug} value={k.slug}>
+              {ALLA_KOMMUNER.map(k => (
+                <option key={k.name} value={k.name}>
                   {k.name} ({formatDec(k.rate, 2)}%)
                 </option>
               ))}

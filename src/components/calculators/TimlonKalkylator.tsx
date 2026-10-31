@@ -1,24 +1,26 @@
 import { formatDec } from '@/lib/format';
-import { useState } from 'react';
+import { useState, useId } from 'react';
 import InputField from '../ui/InputField';
 import ResultPanel from '../ui/ResultPanel';
 import { calculateTakeHome } from '../../lib/tax-engine-se';
-import { KOMMUNER, DEFAULT_KOMMUNALSKATT } from '../../data/tax-2026';
+import { DEFAULT_KOMMUNALSKATT } from '../../data/tax-2026';
+import { ALLA_KOMMUNER } from '../../data/kommuner-2026';
 import { formatKr } from '../../lib/format';
 
 export default function TimlonKalkylator() {
   const [hourlyRate, setHourlyRate] = useState(200);
   const [hoursPerWeek, setHoursPerWeek] = useState(40);
   const [selectedKommun, setSelectedKommun] = useState('');
+  const kommunId = useId();
 
-  const kommun = KOMMUNER.find(k => k.slug === selectedKommun);
+  const kommun = ALLA_KOMMUNER.find(k => k.name === selectedKommun);
   const kommunalskattRate = kommun?.rate ?? DEFAULT_KOMMUNALSKATT;
 
   // Beräkna: timmar/vecka * 52 veckor / 12 månader = timmar/månad
   const hoursPerMonth = (hoursPerWeek * 52) / 12;
   const monthlyGross = Math.round(hourlyRate * hoursPerMonth);
 
-  const result = calculateTakeHome({ monthlyGross, kommunalskattRate });
+  const result = calculateTakeHome({ monthlyGross, kommunalskattRate, begravningsavgiftRate: kommun?.begravning });
 
   // Nettotimlön
   const netHourlyRate = result.netAnnual > 0 ? Math.round((result.netAnnual / 52 / hoursPerWeek) * 100) / 100 : 0;
@@ -51,18 +53,19 @@ export default function TimlonKalkylator() {
         />
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label htmlFor={kommunId} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Kommun
           </label>
           <div className="relative">
             <select
+              id={kommunId}
               value={selectedKommun}
               onChange={(e) => setSelectedKommun(e.target.value)}
               className="w-full appearance-none truncate rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-surface py-3 pl-4 pr-10 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-colors"
             >
               <option value="">Rikssnitt ({formatDec(DEFAULT_KOMMUNALSKATT, 2)}%)</option>
-              {KOMMUNER.map(k => (
-                <option key={k.slug} value={k.slug}>
+              {ALLA_KOMMUNER.map(k => (
+                <option key={k.name} value={k.name}>
                   {k.name} ({formatDec(k.rate, 2)}%)
                 </option>
               ))}

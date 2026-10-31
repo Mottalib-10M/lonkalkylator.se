@@ -23,7 +23,7 @@ const REFERENCE = 35000;
 
 const lignes = KOMMUNER
   .map((k) => {
-    const r = calculateTakeHome({ monthlyGross: REFERENCE, kommunalskattRate: k.rate });
+    const r = calculateTakeHome({ monthlyGross: REFERENCE, kommunalskattRate: k.rate, begravningsavgiftRate: k.begravning });
     return { ...k, net: r.netMonthly, harSida: KOMMUNER_MED_SIDA.includes(k.slug) };
   })
   .sort((a, b) => a.rate - b.rate);

@@ -29,6 +29,8 @@ export interface TaxInput {
   kommunalskattRate?: number;
   /** Kyrkoavgift i % (0 om ej medlem) */
   kyrkoavgift?: number;
+  /** Begravningsavgift i % (standard BEGRAVNINGSAVGIFT ; Stockholm 0,07, Tranås 0,285) */
+  begravningsavgiftRate?: number;
   /** Ålder (under 65/över 65 påverkar jobbskatteavdrag) */
   age?: number;
   /** Internt : hoppa över marginalskatten (används när motorn anropar sig själv) */
@@ -186,9 +188,9 @@ export function calculatePublicService(taxableIncome: number): number {
 /**
  * Beräkna begravningsavgift
  */
-export function calculateBegravningsavgift(taxableIncome: number): number {
+export function calculateBegravningsavgift(taxableIncome: number, rate: number = BEGRAVNINGSAVGIFT): number {
   if (taxableIncome <= 0) return 0;
-  return Math.round(taxableIncome * (BEGRAVNINGSAVGIFT / 100));
+  return Math.round(taxableIncome * (rate / 100));
 }
 
 /**
@@ -224,7 +226,7 @@ export function calculateTakeHome(input: TaxInput): TaxResult {
   const jobbskatteavdrag = jsaUtnyttjat;
 
   // 7. Begravningsavgift och public service-avgift : påverkas inte av skattereduktionerna
-  const begravningsavgift = calculateBegravningsavgift(taxableIncome);
+  const begravningsavgift = calculateBegravningsavgift(taxableIncome, input.begravningsavgiftRate);
   const publicServiceAvgift = calculatePublicService(taxableIncome);
 
   // 8. Kyrkoavgift
@@ -280,6 +282,7 @@ export function calculateRequiredGross(
   targetNetMonthly: number,
   kommunalskattRate?: number,
   kyrkoavgift?: number,
+  begravningsavgiftRate?: number,
 ): number {
   if (targetNetMonthly <= 0) return 0;
 
@@ -287,14 +290,14 @@ export function calculateRequiredGross(
   let high = targetNetMonthly * 2.5;
 
   // Utöka övre gräns om det behövs
-  while (calculateTakeHome({ monthlyGross: high, kommunalskattRate, kyrkoavgift }).netMonthly < targetNetMonthly) {
+  while (calculateTakeHome({ monthlyGross: high, kommunalskattRate, kyrkoavgift, begravningsavgiftRate }).netMonthly < targetNetMonthly) {
     high *= 2;
   }
 
   // Binär sökning
   for (let i = 0; i < 100; i++) {
     const mid = Math.round((low + high) / 2);
-    const result = calculateTakeHome({ monthlyGross: mid, kommunalskattRate, kyrkoavgift });
+    const result = calculateTakeHome({ monthlyGross: mid, kommunalskattRate, kyrkoavgift, begravningsavgiftRate });
 
     if (Math.abs(result.netMonthly - targetNetMonthly) <= 1) {
       return mid;
