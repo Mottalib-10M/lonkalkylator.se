@@ -51,11 +51,12 @@ import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
   metaTitle="Skattenyheter Sverige 2026 | Senaste uppdateringar"
   metaDescription="Varje ändring i skattesatser, skiktgräns och avdrag som påverkar beräkningarna, med datum och den publikation från Skatteverket som ligger bakom var och en."
   h1="Skattenyheter"
-  intro="De senaste uppdateringarna om svenska skatter och hur de påverkar din nettolön."
+  intro="De senaste uppdateringarna om skatter i Sverige och hur de påverkar din nettolön."
   faqs={faqs}
 >
   {/* Premier écran (RECETTE §5, 2026-10-11) : le simulateur avant la liste. */}
   <MiniSimAutonome client:visible kind="netto" lang="sv" locale="sv-SE" href="/" spacing="mt-0 mb-8" />
+  <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">Skattenyheter 2026</h2>
   <div class="space-y-4">
     {articles.map((article) => (
       <a href={article.href} class="block group rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface p-6 hover:border-brand-500 dark:hover:border-brand-400 hover:shadow-md transition-all">

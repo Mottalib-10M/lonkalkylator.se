@@ -55,6 +55,7 @@ import MiniSimAutonome from '../../components/calc/MiniSimAutonome';
 >
   {/* Premier écran (RECETTE §5, 2026-10-11) : le simulateur avant la liste. */}
   <MiniSimAutonome client:visible kind="netto" lang="sv" locale="sv-SE" href="/" spacing="mt-0 mb-8" />
+  <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">Alla skattekalkylatorer för Sverige</h2>
   <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {calculators.map((calc) => (
       <a href={calc.href} class="group rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-dark-surface p-6 hover:border-brand-300 dark:hover:border-brand-700 hover:shadow-md transition-all">

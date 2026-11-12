@@ -47,7 +47,7 @@ import SkattKontext from '../../components/SkattKontext.astro';
   metaTitle={`Lön efter skatt i ${kommun.name} 2026, ${taux(kommun.rate)} % kommunalskatt i ${kommun.lan}`.slice(0, 60)}
   metaDescription={`Beräkna din nettolön i ${kommun.name} med ${taux(kommun.rate)} % kommunalskatt. Se lön efter skatt för alla lönenivåer i kommunen 2026. Gratis kalkylator med Skatteverkets data.`}
   h1={`Lön efter skatt i ${kommun.name} 2026`}
-  intro={`Beräkna din nettolön i ${kommun.name} med ${taux(kommun.rate)} % kommunalskatt (${kommun.lan}). Uppdaterad med Skatteverkets 2026-data.`}
+  intro={`Beräkna din lön efter skatt i ${kommun.name} med ${taux(kommun.rate)} % kommunalskatt (${kommun.lan}). Uppdaterad med Skatteverkets 2026-data.`}
   faqs={faqs}
 >
   <div data-chrome>
@@ -57,7 +57,7 @@ import SkattKontext from '../../components/SkattKontext.astro';
   {/* §6.4 : ce bloc ne varie que par le nom et le taux, que le contrôle
       neutralise : c'est du mobilier, pas du contenu propre à la page. */}
   <div slot="content" data-chrome class="prose prose-lg dark:prose-invert max-w-none mt-12">
-    <h2>Lönetabell {kommun.name} 2026</h2>
+    <h2>Lön efter skatt i {kommun.name} 2026: lönetabell</h2>
     <p>Nettolön i {kommun.name} med {kommun.rate}% kommunalskatt, ingen kyrkoavgift:</p>
     <table>
       <thead><tr><th>Bruttolön/mån</th><th>Nettolön/mån</th><th>Skatt/mån</th><th>Effektiv skatt</th></tr></thead>
