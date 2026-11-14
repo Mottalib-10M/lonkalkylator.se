@@ -20,6 +20,8 @@ mention « site indépendant » : elle se place après l'introduction.
 Usage : python3 check-motcle.py <dossier-du-site | dossier dist>   -> code 1 s'il reste des pages en écart.
 Pages de service élargies le 2026-11-12 (methodiek, tietoa, terminos, politica-*, cookie-policy, mission…) :
 7 pages légales ou « à propos » étaient contrôlées à tort sur 3 sites du lot du 2026-11-11.
+Flexion tolérée le 2026-11-13 (fonction proche) : cas bons naretke.pl, zusatzbeitragrechner.de, elsueldoneto.es,
+benefitscalc.co.uk restent à 0 ; cas mauvais plans65.com 94/102, mypaydaycal.com 14/19 inchangés.
 Validé le 2026-11-10 : 0 écart sur 11 sites corrigés le 2026-11-09 (cas bons), écarts trouvés sur les
 sites non corrigés et sur une page dont on a retiré le terme du H1 (cas mauvais).
 """
@@ -37,19 +39,25 @@ der die das den dem des ein eine einen und für fur von mit im zu wie viel was i
 el los las del por para con y que cuánto cuanto cómo como mi tu su al
 il lo gli dei delle degli una e per con nel nella come quanto quanti di da
 o os as do da dos das um uma com no na quanto
-het een van voor op hoe wat
+het een van voor op hoe wat naar met uit bij
+dla jak ile przy oraz czy
+avec sans where when hasta desde
+för och eller med och til fra
+في من على إلى الى عن مع حسب لكل عند ما هل كم كيف
 """.split())
 SERVICE = re.compile(
     r"/(about|about-us|a-propos|qui-sommes-nous|sobre|sobre-nosotros|quienes-somos|chi-siamo|ueber-uns|uber-uns"
     r"|over-ons|quem-somos|tietoa|om-oss|o-nas|hakkimizda|tentang|mission|notre-mission|our-mission"
-    r"|method|methode|methodology|methodologie|metodologia|methodik|methodiek|metodiikka|laskentatapa|metod|metode|metodologi|yontem"
+    r"|method|methode|methodology|methodologie|metodologia|methodik|methodiek|metodiikka|laskentatapa|metodo|methodologia|metod|metode|metodologi|yontem"
     r"|legal|legal-notice|mentions|mentions-legales|impressum|aviso-legal|note-legali|disclaimer|haftungsausschluss"
-    r"|privacy|privacy-policy|privacybeleid|confidentialite|datenschutz|privacidad|tietosuoja|integritetspolicy|polityka-prywatnosci|gizlilik|kebijakan-privasi"
-    r"|cookies?|cookie-policy|cookiebeleid|evasteet|cerezler"
-    r"|terms|terms-of-use|terms-of-service|terms-and-conditions|conditions|cgu|cgv|agb|nutzungsbedingungen|voorwaarden|algemene-voorwaarden"
+    r"|privacy|privacy-policy|privacidade|protection-donnees|protection-des-donnees|colofon|colophon|privacybeleid|confidentialite|datenschutz|privacidad|tietosuoja|integritetspolicy|polityka-prywatnosci|gizlilik|kebijakan-privasi"
+    r"|personvern|vilkar|vilkaar|integritet|cookies?|cookie-policy|cookiebeleid|evasteet|cerezler"
+    r"|terms|terms-of-use|conditions-utilisation|conditions-generales|terms-of-service|terms-and-conditions|conditions|cgu|cgv|agb|nutzungsbedingungen|voorwaarden|algemene-voorwaarden"
     r"|terminos|termini|condizioni|kayttoehdot|villkor|regulamin|kullanim-kosullari|syarat"
     r"|contact|kontakt|contacto|contatti|contato|yhteystiedot|kontakta|iletisim|hubungi|widget|embed"
     r"|editorial|editorial-policy|charte-editoriale|politique-editoriale|redactiebeleid|redaktionsrichtlinien|politica-editorial|politica-editoriale"
+    r"|(methode|metodo|method|methodology)-(de-|di-|of-)?(calcul|calculo|calcolo|calculation)[a-z-]*|calculation-method|how-we-calculate"
+    r"|tietoa-meista|om-oss|meista|[a-z]+-policy|redaktionelle-grundsaetze|redactiestatuut|metodik|methodik(-[a-z-]+)?|termos|termos-de-uso|(methodologie|methodology|metodologia|methode|method)-[a-z-]+"
     r"|(politica|politique|politika|policy|polityka|kebijakan)(-de)?-[a-z-]+)(/|$)")
 
 
@@ -73,8 +81,36 @@ def premier_texte(apres):
     return ""
 
 
+def proche(k, ws):
+    """Même mot à la flexion près (2026-11-13) : « umowa »/« umowy », « bonus »/« bonuses », « tax »/« taxes »,
+    « składka »/« składki ». Avant, seule la forme exacte comptait et poussait à des tournures raides."""
+    if k in ws:
+        return True
+    for w in ws:
+        c = len(os.path.commonprefix([k, w]))
+        court = min(len(k), len(w))
+        if c == court and abs(len(k) - len(w)) <= 2 and court >= 3:
+            return True
+        if c >= max(4, court - 2):
+            return True
+    return False
+
+
+CJK = re.compile(r"[\u3040-\u30ff\u3400-\u9fff\uac00-\ud7af]")
+
+
 def norm(s):
-    return re.findall(r"[^\W_]+", html.unescape(s).lower())
+    """Mots du texte. Japonais, chinois et coréen s'écrivent sans espaces (ou presque) : un titre entier faisait un
+    seul « mot » (pensionretraite.com, 2026-11-13). Ces suites sont découpées en paires de caractères."""
+    out = []
+    s = re.sub(r"[\u064B-\u0652\u0670\u0640]", "", html.unescape(s))  # voyelles et tatweel arabes (goldmizan, 2026-11-13)
+    s = s.replace("İ", "i")  # turc : « İ ».lower() donnait « i » + point combinant (bayramkacgun, 2026-11-13)
+    for w in re.findall(r"[^\W_]+", s.lower()):
+        if CJK.search(w) and len(w) > 2:
+            out += [w[i:i + 2] for i in range(len(w) - 1)]
+        else:
+            out.append(w)
+    return out
 
 
 def attr(h, pat):
@@ -88,18 +124,18 @@ def texte(s):
 
 def analyse(h):
     t = html.unescape(attr(h, r"<title[^>]*>(.*?)</title>")).strip()
-    key = re.split(r"[:|(—–?]| 20\d\d", t)[0].strip()
-    kw = [w for w in norm(key) if w not in STOP and (len(w) > 2 or w.isdigit())]
+    key = re.split(r"[:|(—–?｜：（【？]| 20\d\d", t)[0].strip()
+    kw = [w for w in norm(key) if w not in STOP and (len(w) > 2 or w.isdigit() or CJK.search(w))]
     main = re.sub(r"<(script|style|nav|footer)[\s\S]*?</\1>", " ", h)
     h1 = texte(attr(main, r"<h1[^>]*>(.*?)</h1>"))
     apres = main.split("</h1>", 1)[-1]
-    m = re.search(r"<p[^>]*>(.*?)</p>", apres, re.S)
+    m = re.search(r"<p(?:\s[^>]*)?>(.*?)</p>", apres, re.S)  # pas <path> des icônes SVG (ksefnarzedzia, 2026-11-13)
     p1 = texte(m.group(1) if m else "")
     h2s = [texte(x) for x in re.findall(r"<h2[^>]*>(.*?)</h2>", main, re.S)]
 
     def a(txt):
         ws = {x.rstrip("s") for x in norm(txt)}
-        n = sum(k.rstrip("s") in ws for k in kw)
+        n = sum(proche(k.rstrip("s"), ws) for k in kw)
         return n >= max(1, round(len(kw) * 2 / 3)) if kw else True
 
     manque = [z for z, ok in (("H1", a(h1)), ("1er paragraphe", a(p1)), ("H2", any(a(x) for x in h2s))) if not ok]
