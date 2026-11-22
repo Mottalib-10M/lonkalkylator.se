@@ -59,6 +59,24 @@ export const JSA_2026 = {
   tak: 3.027,
 };
 
+/**
+ * Beskattningsåret 2027.
+ * - Prisbasbelopp 59 600 kr : regeringen, pressmeddelande 2026-09-24 (fastställt).
+ * - Inkomstbasbelopp 86 600 kr : regeringen, 2026-11-12 (fastställt).
+ * - Skiktgräns : UPPSKATTNING 660 400 kr (643 000 kr uppräknat med KPI-förändringen juni 2025–juni 2026
+ *   plus 2 procentenheter, avrundat uppåt till hundratal). Skatteverket har inte publicerat beloppet ;
+ *   ersätt när « Belopp och procent, inkomstår 2027 » publiceras (väntas december 2026).
+ * - Budgetpropositionen för 2027 (prop. 2026/27:1, 2026-11-06) ändrar inte grundavdraget eller
+ *   jobbskatteavdraget för personer under 66 år : samma regler i prisbasbelopp som 2026.
+ * - Kommunalskatterna 2027 är inte publicerade (SCB, december 2026) : 2026 års satser används.
+ */
+export const AR_2027 = {
+  PRISBASBELOPP: 59_600,
+  INKOMSTBASBELOPP: 86_600,
+  SKIKTGRANS_STATLIG: 660_400,
+  SKIKTGRANS_ARUPPSKATTNING: true,
+} as const;
+
 /** Skattereduktion för förvärvsinkomst : 0,75 % av inkomsten över 40 000 kr, högst 1 500 kr */
 export const FORVARVSREDUKTION = { fran: 40_000, sats: 0.0075, max: 1_500 };
 

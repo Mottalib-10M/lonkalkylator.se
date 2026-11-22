@@ -22,6 +22,8 @@ export const headerCalcLinks: Record<string, NavGroup> = {
     label: 'Kalkylatorer',
     children: [
       { href: '/', label: 'Lönekalkylator' },
+    { href: '/lonekalkylator-2027/', label: 'Lönekalkylator 2027' },
+      { href: '/lonekalkylator-2027/', label: 'Lönekalkylator 2027' },
       { href: '/statlig-skatt-kalkylator/', label: 'Statlig skatt-kalkylator' },
       { href: '/pensionskalkylator/', label: 'Pensionskalkylator' },
       { href: '/netto-till-brutto/', label: 'Netto till brutto' },

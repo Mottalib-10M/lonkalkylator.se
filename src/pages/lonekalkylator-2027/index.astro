@@ -1,0 +1,118 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import LonKalkylator from '../../components/calculators/LonKalkylator';
+import { calculateTakeHome, calculateGrundavdrag, arsBelopp } from '../../lib/tax-engine-se';
+import { DEFAULT_KOMMUNALSKATT } from '../../data/tax-2026';
+
+const kr = (n: number) => n.toLocaleString('sv-SE') + ' kr';
+const b26 = arsBelopp(2026);
+const b27 = arsBelopp(2027);
+const brytpunkt = (ar: 2026 | 2027) => {
+  // Lägsta årsinkomst där beskattningsbar inkomst överstiger skiktgränsen (grundavdraget är 0,293 PBB där)
+  return arsBelopp(ar).skiktgrans + calculateGrundavdrag(1_000_000, ar);
+};
+const loner = [25_000, 35_000, 45_000, 55_000, 65_000, 80_000];
+const rader = loner.map((m) => {
+  const a = calculateTakeHome({ monthlyGross: m }).netMonthly;
+  const b = calculateTakeHome({ monthlyGross: m, year: 2027 }).netMonthly;
+  return { m, a, b, d: b - a };
+});
+const r45 = rader.find((r) => r.m === 45_000)!;
+
+const faqs = [
+  {
+    question: 'Vilka belopp för 2027 är redan fastställda?',
+    answer: `Regeringen har fastställt prisbasbeloppet för 2027 till 59 600 kr (24 september 2026) och inkomstbasbeloppet till 86 600 kr (12 november 2026). Grundavdraget och jobbskatteavdraget räknas i prisbasbelopp och följer därmed med automatiskt. Skiktgränsen för statlig skatt publicerar Skatteverket i december, liksom kommunernas skattesatser för 2027.`,
+  },
+  {
+    question: 'Ändras jobbskatteavdraget 2027?',
+    answer: 'För dig under 66 år föreslår budgetpropositionen för 2027 (6 november 2026) ingen ny förstärkning. Reglerna är desamma som 2026, men eftersom de uttrycks i prisbasbelopp blir avdraget i kronor något större när prisbasbeloppet höjs från 59 200 till 59 600 kr. Förslaget om höjd åldersgräns för jobbskatteavdraget för seniorer gäller bara äldre.',
+  },
+  {
+    question: 'Hur har skiktgränsen 2027 uppskattats?',
+    answer: `Lagen räknar upp skiktgränsen med förändringen av konsumentprisindex mellan juni 2025 och juni 2026 plus två procentenheter. Med 643 000 kr som utgångspunkt ger det ${kr(b27.skiktgrans)}. Det är en uppskattning tills Skatteverket publicerar beloppet för inkomstår 2027, vilket väntas i december 2026.`,
+  },
+  {
+    question: 'Får jag mer i plånboken 2027?',
+    answer: `Vid samma bruttolön blir nettolönen 2027 något högre, eftersom grundavdraget och jobbskatteavdraget följer det högre prisbasbeloppet. Vid 45 000 kr i månaden och rikssnittets kommunalskatt blir skillnaden ${r45.d >= 0 ? '+' : ''}${r45.d} kr i månaden. En löneökning eller en ändrad kommunalskatt påverkar betydligt mer.`,
+  },
+  {
+    question: 'När ändras skatteavdraget på lönen?',
+    answer: 'Arbetsgivaren drar skatt enligt Skatteverkets skattetabeller för 2027 från och med januarilönen. Tabellerna bygger på samma belopp som denna kalkylator, med din kommuns sats. Den slutliga skatten räknas fram i deklarationen våren 2028, så ett avdrag som blivit för högt eller för lågt jämnas ut då.',
+  },
+  {
+    question: 'Påverkar 2027 års belopp pensionsavgiften?',
+    answer: `Den allmänna pensionsavgiften är fortfarande 7 % av lönen, men taket räknas i inkomstbasbelopp. När inkomstbasbeloppet höjs till 86 600 kr stiger taket från ${kr(b26.pensionsavgiftTak)} till ${kr(b27.pensionsavgiftTak)} per år. Avgiften räknas fullt av mot skatten, så den ändrar inte nettolönen för de flesta ; den bygger däremot upp mer pensionsrätt för den som tjänar över det gamla taket.`,
+  },
+];
+---
+
+<CalculatorLayout
+  slug="/lonekalkylator-2027"
+  title="Lönekalkylator 2027"
+  metaTitle="Lönekalkylator 2027: din nettolön med 2027 års belopp"
+  metaDescription="Lönekalkylator 2027: räkna ut nettolön efter skatt med prisbasbelopp 59 600 kr och inkomstbasbelopp 86 600 kr. Jämför med 2026 och se skillnaden per månad."
+  h1="Lönekalkylator 2027"
+  intro="Lönekalkylatorn 2027 räknar din nettolön med de belopp som regeringen redan har fastställt för 2027 och jämför med 2026."
+  faqs={faqs}
+>
+  <LonKalkylator client:idle year={2027} initialGross={45000} />
+
+  <div slot="content" class="prose prose-lg dark:prose-invert max-w-none mt-12">
+    <h2>Lönekalkylator 2027 : belopp 2026 och 2027</h2>
+    <p>
+      Lönekalkylatorn 2027 använder prisbasbeloppet och inkomstbasbeloppet för 2027, som regeringen har fastställt.
+      Grundavdraget, jobbskatteavdraget och pensionsavgiftens tak räknas fram ur dem. Två belopp saknas ännu :
+      skiktgränsen för statlig skatt och kommunernas skattesatser för 2027. Skiktgränsen är därför en uppskattning,
+      markerad i tabellen, och kommunalskatten är 2026 års sats.
+    </p>
+    <div class="overflow-x-auto">
+      <table>
+        <thead><tr><th>Belopp</th><th>2026</th><th>2027</th></tr></thead>
+        <tbody>
+          <tr><td>Prisbasbelopp</td><td>{kr(b26.pbb)}</td><td>{kr(b27.pbb)}</td></tr>
+          <tr><td>Inkomstbasbelopp</td><td>{kr(b26.ibb)}</td><td>{kr(b27.ibb)}</td></tr>
+          <tr><td>Lägsta grundavdrag</td><td>{kr(calculateGrundavdrag(1_000_000))}</td><td>{kr(calculateGrundavdrag(1_000_000, 2027))}</td></tr>
+          <tr><td>Högsta grundavdrag</td><td>{kr(calculateGrundavdrag(170_000))}</td><td>{kr(calculateGrundavdrag(170_000, 2027))}</td></tr>
+          <tr><td>Skiktgräns, statlig skatt</td><td>{kr(b26.skiktgrans)}</td><td>{kr(b27.skiktgrans)} (uppskattning)</td></tr>
+          <tr><td>Brytpunkt, under 66 år</td><td>{kr(brytpunkt(2026))}</td><td>{kr(brytpunkt(2027))} (uppskattning)</td></tr>
+          <tr><td>Tak för allmän pensionsavgift</td><td>{kr(b26.pensionsavgiftTak)}</td><td>{kr(b27.pensionsavgiftTak)}</td></tr>
+          <tr><td>Statlig skattesats</td><td>20 %</td><td>20 %</td></tr>
+          <tr><td>Genomsnittlig kommunalskatt</td><td>{DEFAULT_KOMMUNALSKATT.toLocaleString('sv-SE')} %</td><td>ej publicerad</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Nettolön 2026 och 2027 vid samma bruttolön</h2>
+    <p>
+      Beräknat med rikssnittets kommunalskatt ({DEFAULT_KOMMUNALSKATT.toLocaleString('sv-SE')} %), utan kyrkoavgift, för en person under 66 år.
+      Skillnaden kommer från grundavdraget och jobbskatteavdraget, som växer med prisbasbeloppet. Över brytpunkten
+      (cirka 55 000 kr i månaden) kommer den större delen från den högre skiktgränsen, som ännu är en uppskattning.
+    </p>
+    <div class="overflow-x-auto">
+      <table>
+        <thead><tr><th>Bruttolön per månad</th><th>Netto 2026</th><th>Netto 2027</th><th>Skillnad</th></tr></thead>
+        <tbody>
+          {rader.map((r) => (
+            <tr><td>{kr(r.m)}</td><td>{kr(r.a)}</td><td>{kr(r.b)}</td><td>{r.d >= 0 ? '+' : '−'}{Math.abs(r.d)} kr</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Vad som återstår att publicera</h2>
+    <ul>
+      <li><strong>Skiktgränsen 2027</strong> : uppskattad till {kr(b27.skiktgrans)} (643 000 kr uppräknat med konsumentprisindex juni 2025–juni 2026 plus två procentenheter). Skatteverket publicerar beloppet i december 2026 ; sidan uppdateras då.</li>
+      <li><strong>Kommunalskatterna 2027</strong> : kommunerna beslutar under hösten och SCB publicerar satserna i december 2026. Tills dess används 2026 års satser.</li>
+      <li><strong>Budgetpropositionen för 2027</strong> lämnades den 6 november 2026 av övergångsregeringen. Den innehåller ingen ny förstärkning av jobbskatteavdraget för personer under 66 år ; riksdagen röstar om budgeten i december.</li>
+    </ul>
+
+    <h2>Källor</h2>
+    <ul>
+      <li><a href="https://regeringen.se/pressmeddelanden/2026/09/prisbasbeloppfor-2027-faststallt/" rel="noopener">Regeringen, prisbasbelopp för 2027 fastställt</a> (24 september 2026)</li>
+      <li><a href="https://www.regeringen.se/artiklar/2026/11/inkomstbasbelopp-och-inkomstindex-for-ar-2027-faststallt/" rel="noopener">Regeringen, inkomstbasbelopp och inkomstindex för år 2027 fastställt</a> (12 november 2026)</li>
+      <li><a href="https://www.regeringen.se/contentassets/8fc046c8c0af47b487c3263425c3780a/forslag-till-statens-budget-for-2027-finansplan-kapitel-1-12-bilagor-1-5.pdf" rel="noopener">Prop. 2026/27:1, budgetpropositionen för 2027</a> (6 november 2026)</li>
+      <li><a href="https://www.skatteverket.se/privat/skatter/beloppochprocent/2026" rel="noopener">Skatteverket, belopp och procent inkomstår 2026</a></li>
+    </ul>
+  </div>
+</CalculatorLayout>

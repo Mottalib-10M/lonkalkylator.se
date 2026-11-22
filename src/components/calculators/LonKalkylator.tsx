@@ -9,9 +9,11 @@ import { ALLA_KOMMUNER } from '../../data/kommuner-2026';
 
 interface Props {
   initialGross?: number;
+  /** Beskattningsår : 2027 visar även skillnaden mot 2026 */
+  year?: 2026 | 2027;
 }
 
-export default function LonKalkylator({ initialGross = 35000 }: Props) {
+export default function LonKalkylator({ initialGross = 35000, year = 2026 }: Props) {
   const [monthlyGross, setMonthlyGross] = useState(initialGross);
   const [selectedKommun, setSelectedKommun] = useState('');
   const kommunId = useId();
@@ -25,7 +27,12 @@ export default function LonKalkylator({ initialGross = 35000 }: Props) {
     kommunalskattRate,
     kyrkoavgift,
     begravningsavgiftRate: kommun?.begravning,
+    year,
   });
+  const netto2026 = year === 2027
+    ? calculateTakeHome({ monthlyGross, kommunalskattRate, kyrkoavgift, begravningsavgiftRate: kommun?.begravning }).netMonthly
+    : 0;
+  const skillnad = result.netMonthly - netto2026;
 
   // Andelar som summerar till bruttolönen : skattereduktionerna dras av där motorn räknar av dem
   // (pensionsavgiftens reduktion först mot statlig skatt, sedan mot kommunalskatten ; jobbskatteavdrag och
@@ -99,6 +106,12 @@ export default function LonKalkylator({ initialGross = 35000 }: Props) {
 
       <div>
         <ResultPanel result={result} />
+        {year === 2027 && (
+          <p className="mt-4 rounded-xl border border-gray-200 dark:border-gray-600 p-4 text-sm text-gray-700 dark:text-gray-300">
+            Jämfört med 2026 : <strong className="tabular-nums">{skillnad >= 0 ? '+' : '−'}{Math.abs(skillnad).toLocaleString('sv-SE')} kr</strong> i nettolön per månad
+            ({netto2026.toLocaleString('sv-SE')} kr 2026). Skiktgränsen 2027 är en uppskattning och kommunalskatten är 2026 års sats.
+          </p>
+        )}
       </div>
     </div>
   );

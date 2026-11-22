@@ -234,3 +234,23 @@ describe('begravningsavgift per kommun', () => {
     expect(ALLA_KOMMUNER.filter((k) => k.begravning !== 0.292)).toHaveLength(2);
   });
 });
+
+// Beskattningsåret 2027 : prisbasbelopp 59 600 kr (regeringen 2026-09-24), inkomstbasbelopp 86 600 kr
+// (regeringen 2026-11-12), skiktgräns 660 400 kr (uppskattning, se AR_2027).
+describe('Beskattningsåret 2027', () => {
+  it('grundavdrag i 2027 års prisbasbelopp', () => {
+    expect(calculateGrundavdrag(20_000, 2027)).toBe(20_000);
+    expect(calculateGrundavdrag(50_000, 2027)).toBe(25_300); // 0,423 × 59 600 = 25 210,8, uppåt till hundratal
+    expect(calculateGrundavdrag(1_000_000, 2027)).toBe(17_500); // 0,293 × 59 600 = 17 462,8
+  });
+  it('skiktgräns och pensionsavgiftens tak 2027', () => {
+    expect(calculateStatligSkatt(660_400, 2027)).toBe(0);
+    expect(calculateStatligSkatt(670_400, 2027)).toBe(2_000);
+    expect(calculatePensionsavgift(1_000_000, 2027)).toBe(48_900); // 7 % av 8,07 × 86 600 = 48 920,34
+  });
+  it('nettolön 2027 är minst lika hög som 2026 vid samma bruttolön', () => {
+    for (const m of [25_000, 45_000, 60_000, 90_000]) {
+      expect(calculateTakeHome({ monthlyGross: m, year: 2027 }).netMonthly).toBeGreaterThanOrEqual(calculateTakeHome({ monthlyGross: m }).netMonthly);
+    }
+  });
+});
