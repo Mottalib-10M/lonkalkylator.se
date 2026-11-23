@@ -39,6 +39,10 @@ const faqs = [
     question: 'Vad är grundavdrag och hur beräknas det?',
     answer: 'Grundavdraget är ett avdrag som alla skattebetalare i Sverige har rätt till. Det minskar den beskattningsbara inkomsten och varierar beroende på inkomstnivå. År 2026 ligger grundavdraget på cirka 17 400–45 600 kr beroende på inkomst. Avdraget baseras på prisbasbeloppet som är 59 200 kr för 2026.'
   },
+  {
+    question: 'Vilka belopp gäller för lön efter skatt 2027?',
+    answer: 'Prisbasbeloppet för 2027 är 59 600 kr och inkomstbasbeloppet 86 600 kr, fastställda av regeringen i september och november 2026, så grundavdraget och jobbskatteavdraget för 2027 är kända. Skiktgränsen för statlig skatt publiceras av Skatteverket och kommunalskatterna av SCB i december 2026, och riksdagen röstar om budgeten i december. Kalkylatorn går över till 2027 när beloppen är publicerade.',
+  },
 ];
 import OfficiellaKallor from '../components/OfficiellaKallor.astro';
 import SkattKontext from '../components/SkattKontext.astro';
@@ -65,9 +69,19 @@ import SkattKontext from '../components/SkattKontext.astro';
       Den genomsnittliga kommunalskattesatsen 2026 ligger på 32,38%, men spannet går från under 30% i exempelvis
       Täby och Solna till över 35% i vissa norrlandskommuner.
     </p>
+    <h3>Lön efter skatt 2027: vad som är klart och vad som återstår</h3>
     <p>
-      Vill du se nästa år ? <a href="/lonekalkylator-2027/">Lönekalkylatorn 2027</a> räknar med prisbasbeloppet och
-      inkomstbasbeloppet för 2027 och visar skillnaden mot 2026 vid samma bruttolön.
+      Regeringen har fastställt prisbasbeloppet för 2027 till 59 600 kr (24 september 2026) och inkomstbasbeloppet till
+      86 600 kr (12 november 2026). Därmed är grundavdraget och jobbskatteavdraget för 2027 kända.
+      <a href="/lonekalkylator-2027/">Lönekalkylatorn 2027</a> räknar redan med dem och visar skillnaden mot 2026.
+    </p>
+    <ul>
+      <li><strong>Skiktgränsen för statlig skatt 2027</strong>: publiceras av Skatteverket i december 2026.</li>
+      <li><strong>Kommunalskatterna 2027</strong>: beslutas av kommunerna och regionerna under hösten och publiceras av SCB i december 2026.</li>
+      <li><strong>Budgeten för 2027</strong>: propositionen lämnades den 6 november 2026 och riksdagen röstar om den i december.</li>
+    </ul>
+    <p>
+      Den här kalkylatorn räknar med 2026 års regler och går över till 2027 när beloppen är publicerade.
     </p>
 
     <h3>Kommunalskatt: din största skattekostnad</h3>
