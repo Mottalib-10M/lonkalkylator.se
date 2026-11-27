@@ -122,3 +122,67 @@
   header, footer, nav, .no-print { display: none !important; }
   body { background: #fff; color: #000; }
 }
+
+/* === Charte du pays (refonte d'identité validée par l'éditeur, appliquée le 2026-11-25) ===
+   En-tête plein, bandeau héros, simulateur en carte, sections alternées, chiffres-résultats, boutons et pied
+   aux couleurs du pays ; l'échelle --color-accent-* du @theme porte la couleur forte. */
+:root { --color-accent-50: #EDF3F7; --color-accent-100: #DBE7F0; --color-accent-200: #B2CBDF; --color-accent-300: #80A8C9; --color-accent-400: #407DAE; --color-accent-500: #005293; --color-accent-600: #004881; --color-accent-700: #003E6E; --color-accent-800: #003158; --color-accent-900: #002542; }
+/* En-tete plein + filet de la 2e couleur */
+body header.sticky { background:#005293 !important; border-bottom:5px solid #FECC02 !important; backdrop-filter:none !important; }
+body header.sticky nav > a, body header.sticky nav > a span, body header.sticky nav > div > div > button, body header.sticky nav > div > button, body header.sticky nav > div > a { color:#fff !important; }
+body header.sticky img { background:#fff; border-radius:8px; padding:2px; }
+body header.sticky nav [class*="absolute"], #mobile-menu { background:#fff !important; }
+body header.sticky nav [class*="absolute"], #mobile-menu a, body header.sticky nav [class*="absolute"], #mobile-menu button, body header.sticky nav [class*="absolute"], #mobile-menu span { color:#0F172A !important; }
+/* Bandeau heros pleine largeur */
+main > div.mb-8:first-child { background:#005293 !important; box-shadow:0 0 0 100vmax #005293; clip-path:inset(-3rem -100vmax 0 -100vmax); margin-bottom:0 !important; padding-top:.25rem !important; padding-bottom:1.5rem !important; border:0 !important; }
+main > div.mb-8:first-child h1, main > div.mb-8:first-child h1 *, main > div.mb-8:first-child > p, main > div.mb-8:first-child > div > p, main > div.mb-8:first-child p, main > div.mb-8:first-child li, main > div.mb-8:first-child label, main > div.mb-8:first-child span:not([class*="bg-"]) { color:#fff !important; }
+main > div.mb-8:first-child h1 { letter-spacing:-0.02em; }
+main > div.mb-8:first-child a { color:#fff !important; text-decoration:underline; text-decoration-color:#FECC02; text-decoration-thickness:2px; }
+main > [data-chrome] { background:#005293 !important; box-shadow:0 0 0 100vmax #005293; clip-path:inset(0 -100vmax); padding-bottom:2.25rem !important; margin-bottom:2.25rem !important; border:0 !important; }
+main > [data-chrome] .grid > div { background:#fff !important; border:0 !important; border-top:6px solid #FECC02 !important; border-radius:14px !important; box-shadow:0 10px 30px rgba(0,0,0,.18) !important; }
+main > [data-chrome] .grid > div, main > [data-chrome] .grid > div p, main > [data-chrome] .grid > div label, main > [data-chrome] .grid > div span, main > [data-chrome] .grid > div h2, main > [data-chrome] .grid > div h3, main > [data-chrome] .grid > div li, main > [data-chrome] .grid > div dt, main > [data-chrome] .grid > div dd, main > [data-chrome] .grid > div td, main > [data-chrome] .grid > div th { color:#0F172A; }
+/* Chiffres-resultats grands, dans l'accent, sur fond teinte */
+main [aria-live] :is([class*="text-2xl"],[class*="text-3xl"],[class*="text-4xl"]), main [data-resultat] :is([class*="text-2xl"],[class*="text-3xl"]), main .prose strong.big { font-size:2.1rem !important; line-height:1.15 !important; color:#005293 !important; background:#EDF3F7; border-radius:8px; padding:.05em .3em; }
+/* Sections alternees blanc / teinte */
+main > [data-chrome] ~ :is(div,section):nth-of-type(odd) { background:#DBE7F0; box-shadow:0 0 0 100vmax #DBE7F0; clip-path:inset(0 -100vmax); padding-top:1.5rem; padding-bottom:1.5rem; }
+main h2 { color:#005293 !important; border-left:8px solid #FECC02; padding-left:.6rem; }
+main h3 { color:#005293; }
+/* Boutons pleins 2e couleur, liens soulignes colores */
+main button[type="submit"], main a[class*="bg-accent"], main button[class*="bg-accent"], main a[class*="border-accent"], main a[class*="bg-brand"], main button[class*="bg-brand"], main a[class*="bg-primary"], main button[class*="bg-primary"] { background:#FECC02 !important; color:#0F172A !important; border-color:#FECC02 !important; border-radius:10px !important; font-weight:700; }
+main button[type="submit"]:hover, main a[class*="bg-accent"]:hover, main a[class*="border-accent"]:hover, main a[class*="bg-brand"]:hover, main a[class*="bg-primary"]:hover { background:#D5AB02 !important; }
+main .prose a, main p > a, main li > a { color:#005293 !important; text-decoration:underline; text-decoration-color:#FECC02; text-decoration-thickness:2px; text-underline-offset:3px; }
+/* Encadres et tableaux */
+main .bg-accent-50 { background:#EDF3F7 !important; border-left:6px solid #FECC02; }
+main table thead th { color:#005293 !important; border-bottom:3px solid #FECC02 !important; background:#EDF3F7; }
+/* Pied de page plein sombre */
+footer { background:#00264A !important; border-top:6px solid #FECC02 !important; }
+footer, footer *:not(svg):not(path) { color:#E5E7EB !important; border-color:rgba(255,255,255,.16) !important; }
+footer a { color:#fff !important; text-decoration:underline; text-decoration-color:#FECC02; }
+footer [class*="bg-"] { background:transparent !important; }
+/* --- corrections hors trame (maquette verifiee) --- */
+#mobile-menu-btn, #mobile-menu-btn svg { color:#fff !important; }
+main > section[data-chrome]:not(:has(astro-island)) { background:transparent !important; box-shadow:none !important; clip-path:none !important; }
+main > [data-chrome] .grid > div { padding:1.25rem 1.25rem 1.5rem !important; }
+/* reprise du 2026-11-25 */
+/* reprise : bloc résultat bleu dans la carte, encadré auteur */
+main > [data-chrome] .grid [class*="bg-brand-5"], main > [data-chrome] .grid [class*="bg-brand-5"] *, main > [data-chrome] .grid [class*="bg-brand-6"], main > [data-chrome] .grid [class*="bg-brand-6"] * { color: #FFFFFF !important; }
+main > div.mt-8.flex { background: #FFFFFF !important; position: relative; z-index: 1; }
+main > div.mt-8.flex a { color: #005293 !important; text-decoration: underline; text-decoration-color: #FECC02; }
+main > [data-chrome] .grid [class*="bg-brand-5"] [class*="text-"] { background: transparent !important; }
+/* Mode sombre du site : la carte du simulateur reste claire, le reste de la page garde son fond sombre */
+@media (prefers-color-scheme: dark) {
+  main > [data-chrome] .grid > div [class*="dark:bg-"], main > [data-chrome] .grid > div :is(input,select,textarea) { background:#fff !important; border-color:#CBD5E1 !important; }
+  main > [data-chrome] .grid > div :is(input,select,textarea,span,p,dt,dd,td,th,strong) { color:#0F172A !important; }
+  main > [data-chrome] .grid > div [class*="text-green"] { color:#15803d !important; }
+  main > [data-chrome] .grid > div [class*="text-red"] { color:#b91c1c !important; }
+  main > [data-chrome] ~ :is(div,section):nth-of-type(odd) { background:#0D2A45; box-shadow:0 0 0 100vmax #0D2A45; }
+  main h2, main h3, main a[class*="text-brand"] { color:#9CC3E6 !important; }
+  main > [data-chrome] .grid > div :is(h2,h3,a) { color:#005293 !important; }
+  /* encart auteur (fond blanc) et liens du texte : contraste en mode sombre */
+  main > div[data-chrome].mt-8 p:not(#z) { color:#0F172A !important; }
+  main > div[data-chrome].mt-8 a:not(#z) { color:#005293 !important; }
+  main > section.prose a:not(#z) { color:#9CC3E6 !important; }
+}
+/* pages de texte (à propos, guides) : un vrai blanc sous le bandeau */
+main > div.mb-8:first-child + .prose { margin-top:2rem; }
+/* === fin de la charte du pays === */
